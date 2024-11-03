@@ -16,17 +16,20 @@ class SideBar extends HTMLElement {
         openMenu.addEventListener("click", () => {
             sidebar.classList.add("active")
             overlay.classList.add('active')
+            openMenu.style.display = "none"
         })
 
         closeMenu.addEventListener("click", () => {
 
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
+            openMenu.style.display = "block"
         })
 
         overlay.addEventListener("click", () => {
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
+            openMenu.style.display = "block"
         })
 
     }
