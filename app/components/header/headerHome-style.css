@@ -14,3 +14,10 @@
     margin: auto;
 }
 
+@media screen and (min-width: 1024px) {
+    #containerHeadHome {
+        display: none;
+    }
+    
+}
+

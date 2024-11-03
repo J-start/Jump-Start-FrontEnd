@@ -7,11 +7,20 @@ class SideBar extends HTMLElement {
 
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/sideBar/sideBar-style.css")
+        this.createStyles("app/components/sideBar/sideBar-style-responsive.css")
+
 
         const openMenu = this.shadow.querySelector("#openMenu")
         const closeMenu = this.shadow.querySelector("#closeMenu")
         const sidebar = this.shadow.querySelector("#sidebar")
         const overlay = this.shadow.querySelector("#overlay")
+
+        this.verifyWidtgScreen(sidebar, openMenu, closeMenu)
+
+        window.addEventListener('resize', () => {
+            this.verifyWidtgScreen(sidebar, openMenu, closeMenu)
+          });
+        
 
         openMenu.addEventListener("click", () => {
             sidebar.classList.add("active")
@@ -43,7 +52,7 @@ class SideBar extends HTMLElement {
            
         </div>
     </div>
- <button id="openMenu">☰ </button>
+ <button id="openMenu"> ☰ </button>
     <div id="sidebar" class="sidebar">
         <button id="closeMenu" class="close-btn">&times;</button>
         <div class="wrapImageLogo">
@@ -126,6 +135,20 @@ class SideBar extends HTMLElement {
         link.setAttribute("rel", "stylesheet");
         link.setAttribute("href", linkStyle);
         return link
+    }
+
+    verifyWidtgScreen(sideBar, openMenu, closeMenu){
+        var width = window.innerWidth;
+        if (width >= 1024) {
+             sideBar.classList.add("active")
+             openMenu.style.display = "none"
+             closeMenu.style.display = "none"
+            
+        }else{
+            sideBar.classList.remove("active")
+            openMenu.style.display = "block"
+            closeMenu.style.display = "block"
+        }
     }
 }
 
