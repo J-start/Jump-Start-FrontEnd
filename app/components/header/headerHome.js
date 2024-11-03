@@ -7,6 +7,7 @@ class HeaderHome extends HTMLElement {
 
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/header/headerHome-style.css")
+        this.createStyles("app/components/header/headerHome-style-responsive.css")
 
     }
 

@@ -51,10 +51,6 @@
     align-items: center;
 }
 
-.sidebar ul li a:hover {
-    background-color: #575757;
-}
-
 .wrapItensMenu {
     display: flex;
     justify-content: flex-start;
@@ -64,6 +60,20 @@
     border-radius: 10px;
     width: 95%;
 }
+
+.wrapItensMenu:hover {
+    background-color: #3575ecf5;
+    position: relative;
+    top:2px;
+     transition: all 0.1s;
+}
+
+.wrapItensMenu:active{
+    position: relative;
+    top:-2px
+    
+}
+
 .close-btn {
     position: absolute;
     top: 20px;

@@ -6,6 +6,7 @@ class SideBar extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
+
         this.createStyles("app/components/sideBar/sideBar-style.css")
         this.createStyles("app/components/sideBar/sideBar-style-responsive.css")
 
@@ -15,30 +16,26 @@ class SideBar extends HTMLElement {
         const sidebar = this.shadow.querySelector("#sidebar")
         const overlay = this.shadow.querySelector("#overlay")
 
-        this.verifyWidtgScreen(sidebar, openMenu, closeMenu)
+        this.verifyWidthgScreen(sidebar, openMenu, closeMenu)
 
         window.addEventListener('resize', () => {
-            this.verifyWidtgScreen(sidebar, openMenu, closeMenu)
-          });
-        
+            this.verifyWidthgScreen(sidebar, openMenu, closeMenu)
+            if (overlay.classList.contains('active')) {
+                overlay.classList.remove('active')
+            }
+        });
+
 
         openMenu.addEventListener("click", () => {
-            sidebar.classList.add("active")
-            overlay.classList.add('active')
-            openMenu.style.display = "none"
+            this.showSideBar(sidebar, overlay, openMenu)
         })
 
         closeMenu.addEventListener("click", () => {
-
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            openMenu.style.display = "block"
+            this.hideSideBar(sidebar, overlay, openMenu)
         })
 
         overlay.addEventListener("click", () => {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            openMenu.style.display = "block"
+            this.hideSideBar(sidebar, overlay, openMenu)
         })
 
     }
@@ -58,6 +55,7 @@ class SideBar extends HTMLElement {
         <div class="wrapImageLogo">
             <img src="app/assets/images/logo.PNG" alt="logo jumpStart">
         </div>
+
         <ul>
 
             <li>
@@ -85,6 +83,7 @@ class SideBar extends HTMLElement {
                     </div>
                 </a>
             </li>
+
            <li>
                 <a href="#"> 
                     <div class="wrapItensMenu">
@@ -97,7 +96,8 @@ class SideBar extends HTMLElement {
                     </div>
                 </a>
             </li>
-                       <li>
+
+            <li>
                 <a href="#"> 
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
@@ -109,7 +109,9 @@ class SideBar extends HTMLElement {
                     </div>
                 </a>
             </li>
+
         </ul>
+
     </div>
 
     <div id="overlay" class="overlay">
@@ -137,18 +139,31 @@ class SideBar extends HTMLElement {
         return link
     }
 
-    verifyWidtgScreen(sideBar, openMenu, closeMenu){
+    verifyWidthgScreen(sideBar, openMenu, closeMenu) {
         var width = window.innerWidth;
         if (width >= 1024) {
-             sideBar.classList.add("active")
-             openMenu.style.display = "none"
-             closeMenu.style.display = "none"
-            
-        }else{
+            sideBar.classList.add("active")
+            openMenu.style.display = "none"
+            closeMenu.style.display = "none"
+
+        } else {
             sideBar.classList.remove("active")
             openMenu.style.display = "block"
             closeMenu.style.display = "block"
+  
         }
+    }
+
+    showSideBar(sideBar, overlay, openMenu) {
+        sideBar.classList.add("active")
+        overlay.classList.add('active')
+        openMenu.style.display = "none"
+    }
+
+    hideSideBar(sideBar, overlay, openMenu) {
+        sideBar.classList.remove('active');
+        overlay.classList.remove('active');
+        openMenu.style.display = "block"
     }
 }
 
