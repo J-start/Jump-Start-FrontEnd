@@ -42,27 +42,69 @@ class HeaderHome extends HTMLElement {
 
         <div id="headHomeContents">
             <h1>Olá, Fulano</h1>
-            <h2>Saldo: R$ 230,00</h2>
         </div>
     </div>
 
     <div id="sidebar" class="sidebar">
         <button id="closeMenu" class="close-btn">&times;</button>
+        <div class="wrapImageLogo">
+            <img src="app/assets/images/logo.PNG" alt="logo jumpStart">
+        </div>
         <ul>
-            <li><a href="#"> <div class="containerItensMenu"><img src="app/assets/images/home_icon.png" alt="home"> <p>Home</p></div> </a></li>
-            <li><a href="#">Carteira</a></li>
-            <li><a href="#">Notificações</a></li>
-            <li><a href="#">Perfil</a></li>
+
+            <li>
+                <a href="#"> 
+                    <div class="wrapItensMenu">
+                        <div class="containerItensMenu">
+                            <div class="wrapImageMenu" id="imageHome">
+                                <img src="app/assets/images/home_icon.png" alt="home">  
+                            </div>
+                            <p>Home</p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="#"> 
+                    <div class="wrapItensMenu">
+                        <div class="containerItensMenu">
+                        <div class="wrapImageMenu" id="imageWallet">
+                            <img src="app/assets/images/wallet_icon.png" alt="Carteira">  
+                        </div>
+                            <p>Carteira</p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+           <li>
+                <a href="#"> 
+                    <div class="wrapItensMenu">
+                        <div class="containerItensMenu">
+                        <div class="wrapImageMenu" id="imageNotifications">
+                            <img src="app/assets/images/notifications_icon.png" alt="Notificações icone">  
+                        </div>
+                            <p>Notificações</p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+                       <li>
+                <a href="#"> 
+                    <div class="wrapItensMenu">
+                        <div class="containerItensMenu">
+                        <div class="wrapImageMenu" id="imageProfile">
+                            <img src="app/assets/images/profile_icon.png" alt="Perfil icone">  
+                        </div>
+                            <p>Perfil</p>
+                        </div>
+                    </div>
+                </a>
+            </li>
         </ul>
     </div>
 
-    <div id="overlay" class="overlay"></div><div class="quemSomos-container">
-            <section class="quemSomos">
-            <h1 class="quemSomos-titulo">Quem somos ?</h1>
-            <p class="quemSomos-subtitulo"></p>
-            <p class="quemSomos-descricao"></p>
-        </section>
-        </div>
+    <div id="overlay" class="overlay">
         `
 
         const componentRoot = document.createElement("div");
