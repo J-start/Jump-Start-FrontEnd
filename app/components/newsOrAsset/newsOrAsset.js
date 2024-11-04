@@ -1,4 +1,4 @@
-class HeaderHome extends HTMLElement {
+class NewsOrAsset extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -6,8 +6,8 @@ class HeaderHome extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/header/headerHome-style.css")
-        this.createStyles("app/components/header/headerHome-style-responsive.css")
+        this.createStyles("app/components/newsOrAsset/newsOrAsset-style.css")
+        this.createStyles("app/components/newsOrAsset/newsOrAsset-style-responsive.css")
 
     }
 
@@ -15,12 +15,20 @@ class HeaderHome extends HTMLElement {
 
         const template =
             `
-    <div id="containerHeadHome">
-        <div id="headHomeContents">
-            <h1>Olá, Fulano</h1>
-        </div>
-    </div>
-    <div class="lineHeader"></div>
+         <div class="wrapAllElements">
+
+           <div class="containerFatherElements">
+                <button>Ativos</button>
+                <button>Notícias</button>
+           </div>
+            <div class="lineHeader"></div>
+           <div class="containerChildrenElements">
+                <button>Ações</button>
+                <button>Moedas</button>
+                <button>Criptomoedas</button>
+           </div>
+            
+         </div>
 
         `
 
@@ -47,4 +55,4 @@ class HeaderHome extends HTMLElement {
     }
 }
 
-customElements.define("header-component", HeaderHome);
+customElements.define("switch-component", NewsOrAsset);

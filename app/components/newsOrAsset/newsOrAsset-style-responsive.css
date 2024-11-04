@@ -1,0 +1,12 @@
+@media screen and (min-width: 1024px) {
+
+    .wrapAllElements {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background-color: #1C2029;
+        width: calc(100% - 280px);
+        margin-left: 280px;
+        flex-direction: column;
+    }
+}

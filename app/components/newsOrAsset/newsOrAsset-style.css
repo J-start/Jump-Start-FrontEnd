@@ -1,0 +1,37 @@
+.wrapAllElements{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #1C2029;
+    width: 100%;
+    flex-direction: column;
+
+}
+
+.containerFatherElements{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.containerChildrenElements{
+    margin: 20px;
+    margin-left: 6%;
+}
+
+button{
+
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 22px;
+}
+
+.lineHeader{
+    width: 100%;
+    height: 1.2px;
+    background-color: white;
+}
