@@ -20,6 +20,7 @@
 .containerChildrenElements{
     margin: 20px;
     margin-left: 6%;
+    display: none;
 }
 
 button{
@@ -28,6 +29,12 @@ button{
     border: none;
     color: white;
     font-size: 22px;
+    cursor: pointer;
+    color:#1465FF;
+}
+
+button:hover{
+    color: #C6FE1F;
 }
 
 .lineHeader{

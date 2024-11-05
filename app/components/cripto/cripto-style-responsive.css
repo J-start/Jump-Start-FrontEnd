@@ -1,0 +1,11 @@
+@media screen and (min-width: 1024px) {
+    .WrapAllElements{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        flex-direction: column;
+        margin-left: 280px;
+    }
+}
