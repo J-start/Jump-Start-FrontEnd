@@ -7,7 +7,7 @@
     color: white;
     font-size: 35px;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     top: 8%;
     left: 18px;
     z-index: 2222;

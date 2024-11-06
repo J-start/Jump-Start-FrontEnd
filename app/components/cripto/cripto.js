@@ -59,13 +59,23 @@ class Cripto extends HTMLElement {
             });
     }
 
-    async buildComponent() {
+     async buildComponent() {
         const datas = await this.makeRequest();
 
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
 
+      
+        datas.sort((a, b) => {
+            if (a.pair < b.pair) {
+                return -1;
+            }
+            if (a.pair > b.pair) {
+                return 1;
+            }
+            return 0;
+        });
+        
         datas.forEach(element => {
-            console.log(element)
             const wrapElement = document.createElement("div");
             wrapElement.classList.add("wrapElement");
 
