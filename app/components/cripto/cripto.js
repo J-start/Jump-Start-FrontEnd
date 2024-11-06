@@ -9,6 +9,8 @@ class Cripto extends HTMLElement {
         this.createStyles("app/components/cripto/cripto-style.css")
         this.createStyles("app/components/cripto/cripto-style-responsive.css")
 
+        this.buildComponent()
+
     }
 
     createHTML() {
@@ -17,95 +19,13 @@ class Cripto extends HTMLElement {
             `
     <div class="WrapAllElements">
 
-        <div class="wrapElement">
-                <div class="NameAndPrice">
-                    <h3>BTC</h3>
-                <h4>R$ 200.000,00</h4>
-            </div>
-
-            <div class="wrapButtonSeeMore">
-                <button>Ver mais</button>
-            </div>
-        </div>
-
-        <div class="wrapElement">
-                <div class="NameAndPrice">
-                    <h3>ETH</h3>
-                <h4>R$ 100.000,00</h4>
-            </div>
-            
-
-            <div class="wrapButtonSeeMore">
-                <button>Ver mais</button>
-            </div>
-        </div>
-
-        <div class="wrapElement">
-                <div class="NameAndPrice">
-                    <h3>DOGE</h3>
-                <h4>R$ 102.001,00</h4>
-            </div>
-            
-
-            <div class="wrapButtonSeeMore">
-                <button>Ver mais</button>
-            </div>
-        </div>
-
-                <div class="wrapElement">
-                <div class="NameAndPrice">
-                    <h3>DOGE</h3>
-                <h4>R$ 102.001,00</h4>
-            </div>
-            
-
-            <div class="wrapButtonSeeMore">
-                <button>Ver mais</button>
-            </div>
-        </div>
-
-                <div class="wrapElement">
-                <div class="NameAndPrice">
-                    <h3>DOGE</h3>
-                <h4>R$ 102.001,00</h4>
-            </div>
-            
-
-            <div class="wrapButtonSeeMore">
-                <button>Ver mais</button>
-            </div>
-        </div>
-
-                <div class="wrapElement">
-                <div class="NameAndPrice">
-                    <h3>DOGE</h3>
-                <h4>R$ 102.001,00</h4>
-            </div>
-            
-
-            <div class="wrapButtonSeeMore">
-                <button>Ver mais</button>
-            </div>
-        </div>
-
-                <div class="wrapElement">
-                <div class="NameAndPrice">
-                    <h3>DOGE</h3>
-                <h4>R$ 102.001,00</h4>
-            </div>
-            
-
-            <div class="wrapButtonSeeMore">
-                <button>Ver mais</button>
-            </div>
-        </div>
 
     </div>
 
         `
 
         const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "home-component");
+        componentRoot.setAttribute("class", "cripto-component");
         componentRoot.innerHTML = template;
         return componentRoot
 
@@ -124,6 +44,69 @@ class Cripto extends HTMLElement {
         link.setAttribute("rel", "stylesheet");
         link.setAttribute("href", linkStyle);
         return link
+    }
+
+    async makeRequest() {
+        return fetch('https://api.mercadobitcoin.net/api/v4/tickers?symbols=BTC-BRL,LTC-BRL,ETH-BRL,XRP-BRL,BCH-BRL,USDT-BRL,LINK-BRL,ADA-BRL,EOS-BRL,XLM-BRL,CHZ-BRL,AXS-BRL')
+            .then(response => {
+                if (!response.ok) {
+                    alert("Erro na requisição");
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+    }
+
+    async buildComponent() {
+        const datas = await this.makeRequest();
+
+        const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
+
+        datas.forEach(element => {
+            console.log(element)
+            const wrapElement = document.createElement("div");
+            wrapElement.classList.add("wrapElement");
+
+            
+            const nameAndPrice = document.createElement("div");
+            nameAndPrice.classList.add("NameAndPrice");
+
+            
+            const name = document.createElement("h3");
+            name.textContent = String(element.pair).replace("-BRL", "");
+
+            
+            const price = document.createElement("h4");
+            price.textContent = "R$: "+ Number(element.last).toFixed(2);
+
+            
+            const maxValue = document.createElement("h4");
+            maxValue.textContent ="Máximo: "+ Number(element.high).toFixed(2);
+
+           
+            nameAndPrice.appendChild(name);
+            nameAndPrice.appendChild(price);
+            nameAndPrice.appendChild(maxValue);
+
+            
+            const wrapButtonSeeMore = document.createElement("div");
+            wrapButtonSeeMore.classList.add("wrapButtonSeeMore");
+
+            
+            const buttonSeeMore = document.createElement("button");
+            buttonSeeMore.textContent = "Ver mais";
+
+            
+            wrapButtonSeeMore.appendChild(buttonSeeMore);
+
+            
+            wrapElement.appendChild(nameAndPrice);
+            wrapElement.appendChild(wrapButtonSeeMore);
+
+            wrapAllElements.appendChild(wrapElement);
+        });
     }
 }
 
