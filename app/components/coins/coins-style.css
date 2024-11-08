@@ -5,6 +5,7 @@
     align-items: center;
     margin-top: 20px;
     flex-direction: column;
+    background-color: #1C2029;
     
 }
 
@@ -18,6 +19,7 @@
     background-color: #444549;
     border-radius: 10px;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .NameAndPrice{
@@ -51,6 +53,3 @@
     
 }
 
-.divToUpdateValues{
-    
-}

@@ -63,8 +63,8 @@ class Coin extends HTMLElement {
     }
 
     async makeRequest() {
-
-        return fetch(`https://economia.awesomeapi.com.br/json/last/${this.coinsToFetch}`)
+       const url = `https://economia.awesomeapi.com.br/json/last/${this.coinsToFetch}`
+        return fetch(url)
             .then(response => {
                 if (!response.ok) {
                     alert("Erro na requisição");
@@ -78,7 +78,7 @@ class Coin extends HTMLElement {
 
     async buildComponent() {
         const datas = await this.makeRequest()
-
+        
         const positionObjects = this.manipulationStringCoins()
 
         const wrapAllElements = document.createElement("div");
