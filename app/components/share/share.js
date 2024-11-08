@@ -45,6 +45,9 @@ class Share extends HTMLElement {
      }
 
     async buildComponent() {
+
+        //TODO Add text hover numbers assets
+
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
 
         const datas = await this.makeRequest()
