@@ -1,13 +1,14 @@
 class NewsOrAsset extends HTMLElement {
     shadow = this.attachShadow({ mode: "open" });
-
+    isOPtionsAssetOpen = false;
     constructor() {
         super();
 
         this.shadow.appendChild(this.createHTML());
         this.createStyles("app/components/newsOrAsset/newsOrAsset-style.css");
         this.createStyles("app/components/newsOrAsset/newsOrAsset-style-responsive.css");
-
+        this.handleResourcesClick()
+        this.handleAcoesClick()
         this.addEventListeners();
     }
 
@@ -55,13 +56,14 @@ class NewsOrAsset extends HTMLElement {
         this.shadow.querySelector("#moedas-btn").addEventListener("click", () => this.handleMoedasClick());
         this.shadow.querySelector("#criptomoedas-btn").addEventListener("click", () => this.handleCriptoClick());
         this.shadow.querySelector("#resources-bnt").addEventListener("click", () => this.handleResourcesClick());
+        this.shadow.querySelector("#news-bnt").addEventListener("click", () => this.handleNewsClick());
     }
 
     
     handleAcoesClick() {
         this.clearContainer()
         this.shadow.querySelector(".ContainerSwitchOption").innerHTML = '<share-component></share-component>';
-
+        this.isOPtionsAssetOpen = true;
         this.managerColorsButtons("acoes");
         
     }
@@ -69,7 +71,7 @@ class NewsOrAsset extends HTMLElement {
     handleMoedasClick() {
         this.clearContainer()
         this.shadow.querySelector(".ContainerSwitchOption").innerHTML = '<coin-component></coin-component>';
-
+        this.isOPtionsAssetOpen = true;
         this.managerColorsButtons("moedas");
         
     }
@@ -77,15 +79,43 @@ class NewsOrAsset extends HTMLElement {
     handleCriptoClick() {
         this.clearContainer()
         this.shadow.querySelector(".ContainerSwitchOption").innerHTML = '<cripto-component></cripto-component>';
-        
+        this.isOPtionsAssetOpen = true;
         this.managerColorsButtons("criptomoedas");
+     
     }
 
     handleResourcesClick() {
-        this.shadow.querySelector(".containerChildrenElements").style.display = "block";
+        if(this.isOPtionsAssetOpen){
+            this.shadow.querySelector(".containerChildrenElements").style.display = "none";
+            this.isOPtionsAssetOpen = false;
+        }else{
+            this.isOPtionsAssetOpen = true;
+            this.shadow.querySelector(".containerChildrenElements").style.display = "block";
+        }
+      
         
-        this.shadow.querySelector("#resources-bnt").style.color = "#C6FE1F";
-       
+        this.managerBackGroundColors("resources");
+    }
+
+    handleNewsClick() {
+        this.shadow.querySelector(".containerChildrenElements").style.display = "none";
+        this.managerBackGroundColors("news");
+        this.clearContainer()
+        this.resetStateButtons()
+        this.isOPtionsAssetOpen = false;
+    }
+
+    managerBackGroundColors(state){
+        switch(state){
+            case "resources":
+                this.shadow.querySelector("#resources-bnt").style.backgroundColor = "#444549";
+                this.shadow.querySelector("#news-bnt").style.backgroundColor = "transparent";
+                break;
+            case "news":
+                this.shadow.querySelector("#resources-bnt").style.backgroundColor = "transparent";
+                this.shadow.querySelector("#news-bnt").style.backgroundColor = "#444549";
+                break;
+        }
     }
 
     managerColorsButtons(option){
@@ -95,25 +125,31 @@ class NewsOrAsset extends HTMLElement {
 
         switch (option){
             case "acoes":
-                cripto.style.color = "#1465FF";
-                moedas.style.color = "#1465FF";
-                acoes.style.color = "#C6FE1F";
+                cripto.style.backgroundColor  = "transparent";
+                moedas.style.backgroundColor  = "transparent";
+                acoes.style.backgroundColor = "#44454985";
                 break;
             case "moedas":
-                cripto.style.color = "#1465FF";
-                moedas.style.color = "#C6FE1F";
-                acoes.style.color = "#1465FF";
+                cripto.style.backgroundColor  = "transparent";
+                moedas.style.backgroundColor  = "#44454985";
+                acoes.style.backgroundColor  = "transparent";
                 break;
             case "criptomoedas":
-                cripto.style.color = "#C6FE1F";
-                moedas.style.color = "#1465FF";
-                acoes.style.color = "#1465FF";
+                cripto.style.backgroundColor  = "#44454985";
+                moedas.style.backgroundColor  = "transparent";
+                acoes.style.backgroundColor  = "transparent";
                 break;
         }
     }
 
     clearContainer() {
         this.shadow.querySelector(".ContainerSwitchOption").innerHTML = "";
+    }
+
+    resetStateButtons(){
+        this.shadow.querySelector("#criptomoedas-btn").style.backgroundColor  = "transparent";
+        this.shadow.querySelector("#moedas-btn").style.backgroundColor  = "transparent";
+        this.shadow.querySelector("#acoes-btn").style.backgroundColor  = "transparent";
     }
 }
 

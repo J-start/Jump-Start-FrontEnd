@@ -13,6 +13,17 @@
 
 @media screen and (min-width: 260px) and (max-width: 300px) {
 
-
+    button {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 17px;
+        cursor: pointer;
+        color: #1465FF;
+        padding: 10px;
+        background-color: #444549;
+        border-radius: 5px;
+        margin-top: 5px;
+    }
 
 }
