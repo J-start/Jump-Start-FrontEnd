@@ -39,7 +39,6 @@ class Coin extends HTMLElement {
 
 
         `
-
         const componentRoot = document.createElement("div");
         componentRoot.setAttribute("class", "coin-container-component");
         componentRoot.innerHTML = template;
@@ -87,7 +86,7 @@ class Coin extends HTMLElement {
         const objects = this.convertObjectToArray(datas, positionObjects)
 
         this.sortArray(objects)
-
+       console.log(objects)
         objects.forEach(e => {
 
             const wrapElement = document.createElement("div");
@@ -116,6 +115,13 @@ class Coin extends HTMLElement {
 
             const buttonSeeMore = document.createElement("button");
             buttonSeeMore.textContent = "Ver mais";
+            buttonSeeMore.addEventListener("click", () => {
+                localStorage.setItem("assetType", "COIN")
+                localStorage.setItem("assetName", `${String(e.code)}`+"-BRL")
+                localStorage.setItem("dateOperation", `${new Date().toLocaleString()}`)
+
+            })
+
 
 
             nameAndPrice.appendChild(name);
@@ -156,6 +162,7 @@ class Coin extends HTMLElement {
 
     manipulationStringCoins(){
         let positionObjects = this.coinsToFetch.split(",")
+
         positionObjects = positionObjects.map((e, i) => {
 
             return e.replace("-", "")

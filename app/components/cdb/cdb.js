@@ -47,4 +47,4 @@ class CDB extends HTMLElement {
     }
 }
 
-customElements.define("cdb-component", HeaderHome);
+customElements.define("cdb-component", CDB);
