@@ -24,6 +24,7 @@ class NewsOrAsset extends HTMLElement {
                 <button id="acoes-btn">Ações</button>
                 <button id="moedas-btn">Moedas</button>
                 <button id="criptomoedas-btn">Criptomoedas</button>
+                <button id="selic-btn">Selic</button>
            </div>
            
          </div>
@@ -57,6 +58,7 @@ class NewsOrAsset extends HTMLElement {
         this.shadow.querySelector("#criptomoedas-btn").addEventListener("click", () => this.handleCriptoClick());
         this.shadow.querySelector("#resources-bnt").addEventListener("click", () => this.handleResourcesClick());
         this.shadow.querySelector("#news-bnt").addEventListener("click", () => this.handleNewsClick());
+        this.shadow.querySelector("#selic-btn").addEventListener("click", () => this.handleSelicClick());
     }
 
     
@@ -105,6 +107,14 @@ class NewsOrAsset extends HTMLElement {
         this.isOPtionsAssetOpen = false;
     }
 
+    handleSelicClick() {
+        //TODO make logic component selic
+        this.clearContainer()
+
+        this.managerColorsButtons("selic");
+
+    }
+
     managerBackGroundColors(state){
         switch(state){
             case "resources":
@@ -122,22 +132,32 @@ class NewsOrAsset extends HTMLElement {
         const cripto = this.shadow.querySelector("#criptomoedas-btn")
         const moedas = this.shadow.querySelector("#moedas-btn")
         const acoes = this.shadow.querySelector("#acoes-btn")
+        const selic = this.shadow.querySelector("#selic-btn")
 
         switch (option){
             case "acoes":
                 cripto.style.backgroundColor  = "transparent";
                 moedas.style.backgroundColor  = "transparent";
                 acoes.style.backgroundColor = "#44454985";
+                selic.style.backgroundColor  = "transparent";
                 break;
             case "moedas":
                 cripto.style.backgroundColor  = "transparent";
                 moedas.style.backgroundColor  = "#44454985";
                 acoes.style.backgroundColor  = "transparent";
+                selic.style.backgroundColor  = "transparent";
                 break;
             case "criptomoedas":
                 cripto.style.backgroundColor  = "#44454985";
                 moedas.style.backgroundColor  = "transparent";
                 acoes.style.backgroundColor  = "transparent";
+                selic.style.backgroundColor  = "transparent";
+                break;
+            case "selic":
+                cripto.style.backgroundColor  = "transparent";
+                moedas.style.backgroundColor  = "transparent";
+                acoes.style.backgroundColor  = "transparent";
+                selic.style.backgroundColor  = "#44454985";
                 break;
         }
     }
