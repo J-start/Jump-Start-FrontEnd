@@ -103,11 +103,12 @@ class Coin extends HTMLElement {
 
 
             const price = document.createElement("h4");
-            price.textContent = "Compra: " + Number(e.bid).toFixed(3);
-
+            price.textContent = "Compra. R$ " + Number(e.bid).toFixed(3);
+            price.setAttribute("title", `Valor ${String(e.name).replace("/Real Brasileiro", "")} para compra`);
 
             const maxValue = document.createElement("h4");
-            maxValue.textContent = "Venda: " + Number(e.ask).toFixed(3)+1;
+            maxValue.textContent = "Venda. R$ " + Number(e.ask).toFixed(3);
+            maxValue.setAttribute("title", `Valor ${String(e.name).replace("/Real Brasileiro", "")} para venda`);
 
             const wrapButtonSeeMore = document.createElement("div");
             wrapButtonSeeMore.classList.add("wrapButtonSeeMore");

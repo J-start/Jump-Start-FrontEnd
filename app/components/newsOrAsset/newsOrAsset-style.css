@@ -50,3 +50,29 @@ button:hover{
     margin-top: -19px;
     background-color: #444549;
 }
+
+#resources-bnt{
+    background-color: #444549;
+    padding: 10px;
+    border-radius: 10px;
+    color:#C6FE1F;
+    margin-right: 10px;
+    font-size: 17px;
+    padding-right: 25px;
+    padding-left: 25px;
+
+}
+#news-bnt{
+    background-color: #444549;
+    padding: 10px;
+    border-radius: 10px;
+    color:#C6FE1F;
+    font-size: 17px;
+    padding-right: 25px;
+    padding-left: 25px;
+
+}
+
+#news-bnt:hover,#resources-bnt:hover{
+    background-color: #1C2029;
+}

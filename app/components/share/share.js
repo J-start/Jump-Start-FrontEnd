@@ -46,8 +46,6 @@ class Share extends HTMLElement {
 
     async buildComponent() {
 
-        //TODO Add text hover numbers assets
-
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
 
         const datas = await this.makeRequest()
@@ -64,15 +62,18 @@ class Share extends HTMLElement {
 
             
             const name = document.createElement("h3");
-            name.textContent = String(element.NameShare)
+            const names = this.buildMapShareNames()
+            name.textContent = String(names.get(element.NameShare))
 
             
             const price = document.createElement("h4");
-            price.textContent = "Abertura: "+ Number(element.OpenShare).toFixed(2);
+            price.textContent = "Abertura. R$: "+ Number(element.OpenShare).toFixed(2);
+            price.setAttribute("title", "Valor da ação no momento da abertura do mercado");
 
             
             const maxValue = document.createElement("h4");
-            maxValue.textContent ="Fechamento: "+ Number(element.CloseShare).toFixed(2);
+            maxValue.textContent ="Fechamento. R$: "+ Number(element.CloseShare).toFixed(2);
+            maxValue.setAttribute("title", "Maior Valor que a ação alcançou no dia");
 
            
             nameAndPrice.appendChild(name);
@@ -98,7 +99,22 @@ class Share extends HTMLElement {
         })
     }
 
+    buildMapShareNames(){
+        const shareNames = new Map();
 
+        shareNames.set('PETR4.SA', 'PETROBRAS PN (PETR4.SA)')
+        shareNames.set('BBAS3.SA', 'Banco do Brasil (BBAS3.SA)')
+        shareNames.set('ITSA4.SA', 'Itaúsa PN (ITSA4.SA)')
+        shareNames.set('TRPL4.SA', 'CTEEP (TRPL4.SA)')
+        shareNames.set('VALE3.SA', 'Vale S.A (VALE3.SA)')
+        shareNames.set('CMIG4.SA', 'Cemig (CMIG4.SA)')
+        shareNames.set('SANB11.SA', 'Banco Santander (SANB11.SA)')
+        shareNames.set('USIM5.SA', 'USIMINAS PNA (USIM5.SA)')
+        shareNames.set('ABEV3.SA', 'AMBEV S/A ON (ABEV3.SA)')
+        shareNames.set('MGLU3.SA', 'Magazine Luiza S.A. (MGLU3.SA)')
+
+        return shareNames
+    }
 
     createStyles(...linksUser) {
 

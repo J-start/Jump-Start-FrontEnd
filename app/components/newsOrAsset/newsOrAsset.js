@@ -16,7 +16,7 @@ class NewsOrAsset extends HTMLElement {
          <div class="wrapAllElements">
            <div class="containerFatherElements">
                 <button id="resources-bnt">Ativos</button>
-                <button>Notícias</button>
+                <button id="news-bnt">Notícias</button>
            </div>
            <div class="lineHeader"></div>
            <div class="containerChildrenElements">

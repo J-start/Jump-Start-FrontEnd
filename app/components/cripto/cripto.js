@@ -64,15 +64,7 @@ class Cripto extends HTMLElement {
 
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
     
-        datas.sort((a, b) => {
-            if (a.pair < b.pair) {
-                return -1;
-            }
-            if (a.pair > b.pair) {
-                return 1;
-            }
-            return 0;
-        });
+        this.sortArray(datas)
         
         datas.forEach(element => {
             const wrapElement = document.createElement("div");
@@ -89,10 +81,12 @@ class Cripto extends HTMLElement {
             
             const price = document.createElement("h4");
             price.textContent = "R$: "+ Number(element.last).toFixed(2);
+            price.setAttribute("title", `Valor atual ${String(element.pair).replace("-BRL", "")} `);
 
             
             const maxValue = document.createElement("h4");
-            maxValue.textContent ="Máximo: "+ Number(element.high).toFixed(2);
+            maxValue.textContent ="Máximo. R$: "+ Number(element.high).toFixed(2);
+            maxValue.setAttribute("title", `Valor máximo que ${String(element.pair).replace("-BRL", "")} alcançou `);
 
            
             nameAndPrice.appendChild(name);
@@ -115,6 +109,18 @@ class Cripto extends HTMLElement {
             wrapElement.appendChild(wrapButtonSeeMore);
 
             wrapAllElements.appendChild(wrapElement);
+        });
+    }
+
+    sortArray(array){
+        array.sort((a, b) => {
+            if (a.pair < b.pair) {
+                return -1;
+            }
+            if (a.pair > b.pair) {
+                return 1;
+            }
+            return 0;
         });
     }
 }
