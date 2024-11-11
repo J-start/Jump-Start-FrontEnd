@@ -23,10 +23,7 @@ class Coin extends HTMLElement {
             divToUpdate.appendChild(component);
         });
           
-        
-      
-       
-
+    
     }
 
     createHTML() {
@@ -86,54 +83,11 @@ class Coin extends HTMLElement {
         const objects = this.convertObjectToArray(datas, positionObjects)
 
         this.sortArray(objects)
-       console.log(objects)
+
         objects.forEach(e => {
 
-            const wrapElement = document.createElement("div");
-            wrapElement.classList.add("wrapElement");
-
-
-            const nameAndPrice = document.createElement("div");
-            nameAndPrice.classList.add("NameAndPrice");
-
-
-            const name = document.createElement("h3");
-            name.textContent = String(e.name).replace("/Real Brasileiro", "");
-
-
-            const price = document.createElement("h4");
-            price.textContent = "Compra. R$ " + Number(e.bid).toFixed(3);
-            price.setAttribute("title", `Valor ${String(e.name).replace("/Real Brasileiro", "")} para compra`);
-
-            const maxValue = document.createElement("h4");
-            maxValue.textContent = "Venda. R$ " + Number(e.ask).toFixed(3);
-            maxValue.setAttribute("title", `Valor ${String(e.name).replace("/Real Brasileiro", "")} para venda`);
-
-            const wrapButtonSeeMore = document.createElement("div");
-            wrapButtonSeeMore.classList.add("wrapButtonSeeMore");
-
-
-            const buttonSeeMore = document.createElement("button");
-            buttonSeeMore.textContent = "Ver mais";
-            buttonSeeMore.addEventListener("click", () => {
-                localStorage.setItem("assetType", "COIN")
-                localStorage.setItem("assetName", `${String(e.code)}`+"-BRL")
-                localStorage.setItem("dateOperation", `${new Date().toLocaleString()}`)
-
-            })
-
-
-
-            nameAndPrice.appendChild(name);
-            nameAndPrice.appendChild(price);
-            nameAndPrice.appendChild(maxValue);
-
-            wrapButtonSeeMore.appendChild(buttonSeeMore);
-
-            wrapElement.appendChild(nameAndPrice);
-            wrapElement.appendChild(wrapButtonSeeMore);
-
-            wrapAllElements.appendChild(wrapElement);
+            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3),`${String(e.code)}`+"-BRL"));
+       
         })
         return wrapAllElements
     }
