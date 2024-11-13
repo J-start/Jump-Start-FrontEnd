@@ -19,3 +19,28 @@
     margin: auto;
 }
 
+.containerBalance{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 50%;
+    flex-direction: row;
+}
+
+.assetDetails{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 20px;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.balanceDetails{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    flex-direction: column;
+    margin-left: 20px;
+}
+

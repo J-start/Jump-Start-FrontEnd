@@ -16,7 +16,7 @@ class AssetDetails extends HTMLElement {
         const template =
             `
           <div class="containerImageBack">
-            <img src="app/assets/images/back_icon.png" alt="Imagem voltar" class="imageBack">
+            <a href="index.html"><img src="app/assets/images/back_icon.png" alt="Imagem voltar" class="imageBack"></a>
           </div>
 
           <div class="containerAssetAndBalance">
@@ -26,11 +26,7 @@ class AssetDetails extends HTMLElement {
                 </div>
 
                 <div class="balanceDetails">
-                    <h3>Saldo: </h3>
-                </div>
-
-                <div class="balanceValue">
-                    <h3>R$ 1000</h3>
+                    <h3>Saldo: R$ 1000 </h3>
                 </div>
                 
           
