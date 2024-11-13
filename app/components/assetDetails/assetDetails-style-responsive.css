@@ -1,6 +1,9 @@
-@media screen and (min-width: 280px) and (max-width: 490px) {
-    .containerAssetAndBalance{
-        align-items: baseline;
-        flex-direction: column;
+@media screen and (min-width: 260px) and (max-width: 455px) {
+    .containerAssetAndBalance {
+        display: flow;
+
+    }
+    .containerBalance{
+        width: 100%;
     }
 }

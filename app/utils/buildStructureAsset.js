@@ -46,7 +46,7 @@ function BuildAsset(typeAsset,nameAsset,valueField1,valueField2,codeCoin) {
         else
             localStorage.setItem("assetName", `${nameAsset}`)
         localStorage.setItem("dateOperation", `${new Date().toLocaleString()}`)
-        //window.location.href = "details.html"
+        window.location.href = "details.html"
     })
     
     wrapButtonSeeMore.appendChild(buttonSeeMore);
