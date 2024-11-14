@@ -41,10 +41,20 @@ function BuildAsset(typeAsset,nameAsset,valueField1,valueField2,codeCoin) {
     buttonSeeMore.addEventListener("click", () => {
         localStorage.setItem("assetType", `${typeAsset}`)
 
-        if(typeAsset === "COIN")
-            localStorage.setItem("assetName", `${codeCoin}`)
-        else
+        if(typeAsset === "COIN"){
+            localStorage.setItem("assetCode", `${codeCoin}`)
+        }else if(typeAsset === "SHARE"){
+            localStorage.setItem("assetCode", `${nameAsset}`)
+        }else{
+            localStorage.setItem("assetCode", `${nameAsset}-BRL`)
+        }
+
+        if(typeAsset === "SHARE"){
+            localStorage.setItem("assetName", `${names.get(nameAsset)}`)
+        }else{
             localStorage.setItem("assetName", `${nameAsset}`)
+        }
+        
         localStorage.setItem("dateOperation", `${new Date().toLocaleString()}`)
         window.location.href = "details.html"
     })
@@ -113,7 +123,7 @@ function buildMapShareNames(){
     shareNames.set('TRPL4.SA', 'CTEEP (TRPL4.SA)')
     shareNames.set('VALE3.SA', 'Vale S.A (VALE3.SA)')
     shareNames.set('CMIG4.SA', 'Cemig (CMIG4.SA)')
-    shareNames.set('SANB11.SA', 'Banco Santander (SANB11.SA)')
+    shareNames.set('SANB11.SA','Banco Santander (SANB11.SA)')
     shareNames.set('USIM5.SA', 'USIMINAS PNA (USIM5.SA)')
     shareNames.set('ABEV3.SA', 'AMBEV S/A ON (ABEV3.SA)')
     shareNames.set('MGLU3.SA', 'Magazine Luiza S.A. (MGLU3.SA)')

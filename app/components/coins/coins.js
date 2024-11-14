@@ -60,6 +60,7 @@ class Coin extends HTMLElement {
 
     async makeRequest() {
        const url = `https://economia.awesomeapi.com.br/json/last/${this.coinsToFetch}`
+       console.log(url)
         return fetch(url)
             .then(response => {
                 if (!response.ok) {

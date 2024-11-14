@@ -8,7 +8,7 @@ class AssetDetails extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/assetDetails/assetDetails-style.css")
         this.createStyles("app/components/assetDetails/assetDetails-style-responsive.css")
-        this.showResponse()
+        this.buildResponse()
     }
 
     createHTML() {
@@ -41,6 +41,7 @@ class AssetDetails extends HTMLElement {
         })
 
     }
+  
     createLink(linkStyle) {
         const link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
@@ -48,11 +49,10 @@ class AssetDetails extends HTMLElement {
         return link
     }
 
-    async makeRequestApi() {
-        let asset = localStorage.getItem("assetName")
-        const url = `https://economia.awesomeapi.com.br/json/last/${asset}`
-        console.log(url)
-
+    async makeRequestApi(urlparam) {
+        let asset = localStorage.getItem("assetCode")
+        const url = `${urlparam}${asset}`
+        
         return fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -65,17 +65,42 @@ class AssetDetails extends HTMLElement {
             });
     }
 
+
+
     async showResponse() {
-        let asset = localStorage.getItem("assetName")
-        asset = String(asset).replaceAll("-", "")
 
-        const data = await this.makeRequestApi()
-        let assetName = data[asset]["name"]
-        assetName = String(assetName).replaceAll("/Real Brasileiro", "")
-        let assetCode = data[asset]["code"]
+        const data = await this.makeRequestApi(this.buildUrl())
+        
 
-        this.createNameAsset(assetName, assetCode)
-        this.createBalance()
+        //this.createNameAsset(assetName, assetCode)
+        //this.createBalance()
+    }
+
+    buildUrl(){
+        let url = ""
+
+        if(localStorage.getItem("assetType") === "SHARE"){
+            url = "http://localhost:8080/datas/shares"
+        }else if(localStorage.getItem("assetType") === "COIN"){
+             url = "https://economia.awesomeapi.com.br/json/last/"
+        }else{
+            url = "https://api.mercadobitcoin.net/api/v4/tickers?symbols="
+        }
+
+        return url
+    }
+
+    buildResponse() {
+        if(localStorage.getItem("assetType") === "SHARE"){
+            //this.createNameAsset(localStorage.getItem("assetName"), String(localStorage.getItem("assetName")).replace("-BRL", ""))
+            //this.createBalance()
+        }else if(localStorage.getItem("assetType") === "CRYPTO"){
+            this.createNameAsset("",localStorage.getItem("assetName"))
+            this.createBalance()
+        }else{
+            this.createNameAsset(localStorage.getItem("assetCode").replace("-BRL", ""), String(localStorage.getItem("assetName")))
+            this.createBalance()
+        }
     }
 
     createNameAsset(assetName, assetCode) {
@@ -85,6 +110,7 @@ class AssetDetails extends HTMLElement {
         let containerAsset = document.createElement("div")
         containerAsset.setAttribute("class", "containerAsset")
         let h1 = document.createElement("h1")
+        
         h1.innerHTML = assetCode
         let h3 = document.createElement("h3")
         h3.innerHTML = assetName
