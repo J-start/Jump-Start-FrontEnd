@@ -7,3 +7,14 @@
         width: 100%;
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .assetdetails-component{
+        margin-left: 280px;
+    }
+
+    .containerAssetAndBalance {
+        margin-left: 55px;
+        margin-right: 57px;
+    }
+}
