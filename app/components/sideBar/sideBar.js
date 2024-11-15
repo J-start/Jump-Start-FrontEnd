@@ -59,7 +59,7 @@ class SideBar extends HTMLElement {
         <ul>
 
             <li>
-                <a href="#"> 
+                <a href="index.html"> 
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
                             <div class="wrapImageMenu" id="imageHome">

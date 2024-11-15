@@ -8,7 +8,7 @@ class AssetDetails extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/assetDetails/assetDetails-style.css")
         this.createStyles("app/components/assetDetails/assetDetails-style-responsive.css")
-        this.buildResponse()
+        this.showResponse()
     }
 
     createHTML() {
@@ -18,12 +18,15 @@ class AssetDetails extends HTMLElement {
             <div class="containerAssetAndBalance">
               
             </div>
-
+            
             <div class="line"></div>
-
+            
+            <div class="containerAssetValue">
+                <p>Cotação atual:</p>
+                <h2 id="valueAsset"></h2>
+            </div>
 
             
-
         `
 
         const componentRoot = document.createElement("div");
@@ -50,10 +53,8 @@ class AssetDetails extends HTMLElement {
     }
 
     async makeRequestApi(urlparam) {
-        let asset = localStorage.getItem("assetCode")
-        const url = `${urlparam}${asset}`
         
-        return fetch(url)
+        return fetch(urlparam)
             .then(response => {
                 if (!response.ok) {
                     alert("Erro na requisição");
@@ -70,30 +71,47 @@ class AssetDetails extends HTMLElement {
     async showResponse() {
 
         const data = await this.makeRequestApi(this.buildUrl())
+        const value = this.getValueAsset(data)
         
+        this.buildResponse()
+        this.shadow.querySelector("#valueAsset").innerHTML = "R$ "+value
 
-        //this.createNameAsset(assetName, assetCode)
-        //this.createBalance()
+      
     }
 
     buildUrl(){
         let url = ""
-
+        let asset = localStorage.getItem("assetCode")
+    
         if(localStorage.getItem("assetType") === "SHARE"){
-            url = "http://localhost:8080/datas/shares"
+            url = `http://localhost:8080/data/share/?shareName=${asset}`
         }else if(localStorage.getItem("assetType") === "COIN"){
-             url = "https://economia.awesomeapi.com.br/json/last/"
+             url = `https://economia.awesomeapi.com.br/json/last/${asset}`
         }else{
-            url = "https://api.mercadobitcoin.net/api/v4/tickers?symbols="
+            url = `https://api.mercadobitcoin.net/api/v4/tickers?symbols=${asset}`
         }
 
         return url
     }
 
+    getValueAsset(data){
+        let value = ""
+        if(localStorage.getItem("assetType") === "SHARE"){
+            value = data.CloseShare
+        }else if(localStorage.getItem("assetType") === "CRYPTO"){
+            value = parseFloat(data[0].last).toFixed(2)
+        }else{
+             let coin =String(localStorage.getItem("assetCode")).replace("-", "")
+            value = parseFloat(data[coin].bid).toFixed(2)
+        }
+
+        return value
+    }
+
     buildResponse() {
         if(localStorage.getItem("assetType") === "SHARE"){
-            //this.createNameAsset(localStorage.getItem("assetName"), String(localStorage.getItem("assetName")).replace("-BRL", ""))
-            //this.createBalance()
+            this.createNameAsset(localStorage.getItem("assetName"), localStorage.getItem("assetCode"))
+            this.createBalance()
         }else if(localStorage.getItem("assetType") === "CRYPTO"){
             this.createNameAsset("",localStorage.getItem("assetName"))
             this.createBalance()
