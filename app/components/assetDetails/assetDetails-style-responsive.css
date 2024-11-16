@@ -22,3 +22,9 @@
         margin-left: 55px;
     }
 }
+
+@media screen and (min-width: 260px) and (max-width: 600px) {
+    #buttonBuy, #buttonSell {
+        width: 40%;
+    }
+}
