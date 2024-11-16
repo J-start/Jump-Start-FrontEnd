@@ -6,9 +6,9 @@ class AssetGraphic extends HTMLElement {
 
         this.shadow.appendChild(this.createHTML());
         this.createStyles("app/components/assetGraphic/assetGraphic-style.css");
-        //this.createStyles("app/components/header/headerHome-style-responsive.css");
+        this.createStyles("app/components/assetGraphic/assetGraphic-style-responsive.css");
 
-        this.makeTest()
+       
     }
 
     createHTML() {
@@ -38,61 +38,82 @@ class AssetGraphic extends HTMLElement {
         return link;
     }
 
-    async makeRequest(urlparam){
-        return fetch(urlparam)
-        .then(response => {
+    async makeRequest(urlparam) {
+        try {
+            const response = await fetch(urlparam);
+    
             if (!response.ok) {
-                alert("Erro na requisição");
+                throw new Error("Erro na requisição: " + response.statusText);
             }
-            return response.json();
-        })
-        .catch(error => {
-            console.error('Erro na requisição:', error);
-        });
-    }
-
-    filterDatas(data){
-        let datas = []
-        let assetType = localStorage.getItem("assetType")
-        if(assetType === "SHARE"){
-            datas = data.map(item => {
-                return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) }
-            })
-        }else if(assetType === "COIN"){
-            datas = data.map(item => {
-                return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) }
-            })
+    
+            return await response.json();
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+            return []; 
         }
-
-        return datas.reverse()
     }
 
-    async makeTest(){
-        const response = await this.makeRequest(this.buildUrl())
-        const data = this.filterDatas(response)
-        console.log(data)
-    }
     connectedCallback() {
-        this.initChart(); 
+        this.makeGraphic(); 
     }
 
-    initChart() {
-        const data = [
-            { "timestamp": "1731704380", "bid": "5.7947" },
-            { "timestamp": "1731619797", "bid": "5.789" },
-            { "timestamp": "1731533401", "bid": "5.8061" },
-            { "timestamp": "1731447000", "bid": "5.749" },
-            { "timestamp": "1731358780", "bid": "5.7559" },
-            { "timestamp": "1731110398", "bid": "5.7376" },
-        ];
+    filterDatas(data) {
+        if (!Array.isArray(data) || data.length === 0) {
+            console.error("Os dados fornecidos são inválidos ou vazios.");
+            return [];
+        }
+    
+        let datas = [];
+        const assetType = localStorage.getItem("assetType");
+    
+        if (assetType === "SHARE") {
+            datas = data.map(item => {
+                return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) };
+            });
+        } else if (assetType === "COIN") {
+            datas = data.map(item => {
+                return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) };
+            });
+        } else {
+            const step = Math.floor(data.length / 30);
+            let atualPosition = 0;
+            let dataAux = [];
+    
+            for (let i = 0; i < 30; i++) {
+                dataAux.push(data[atualPosition]);
+                atualPosition += step;
+            }
+    
+            datas = dataAux.map(item => {
+                return { "date": this.fomatDataTimestamp(item.date), "value": parseFloat(item.price).toFixed(3) };
+            });
+        }
+    
+        return datas.reverse();
+    }
+    
+    async makeGraphic() {
+        const response = await this.makeRequest(this.buildUrl());
+    
+        if (!response || response.length === 0) {
+            console.error("Nenhum dado retornado ou falha na requisição.");
+            return;
+        }
+    
+        const data = this.filterDatas(response);
+    
+        if (data.length === 0) {
+            console.error("Nenhum dado válido para exibir no gráfico.");
+            return;
+        }
+    
+        this.initChart(data);
+    }
 
-        const formatTimestamp = (timestamp) => {
-            const date = new Date(timestamp * 1000);
-            return date.toLocaleDateString("pt-BR");
-        };
+    initChart(data) {
 
-        const labels = data.map(item => formatTimestamp(item.timestamp));
-        const bids = data.map(item => parseFloat(item.bid));
+        const labels = data.map(item => item.date);
+        const bids = data.map(item => item.value);
 
         const canvas = this.shadow.getElementById('bidChart'); 
         const ctx = canvas.getContext('2d');
@@ -102,7 +123,7 @@ class AssetGraphic extends HTMLElement {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: '', 
+                    label: '',
                     data: bids,
                     borderColor: '#1465FF',
                     backgroundColor: '#C6FE1F',
@@ -112,7 +133,8 @@ class AssetGraphic extends HTMLElement {
                 }]
             },
             options: {
-                responsive: true,
+                responsive: true, 
+                maintainAspectRatio: false, 
                 plugins: {
                     legend: {
                         display: false 
@@ -152,7 +174,7 @@ class AssetGraphic extends HTMLElement {
         }else if(localStorage.getItem("assetType") === "COIN"){
              url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
         }else{
-            url = `https://api.mercadobitcoin.net/api/v4/BTC-BRL/trades?limit=1000&from=1729032425&to=1731710825000`
+            url = `https://api.mercadobitcoin.net/api/v4/${asset}/trades?limit=1000&from=1729032425&to=1731710825000`
         }
 
         return url

@@ -26,6 +26,17 @@ class AssetDetails extends HTMLElement {
                 <h2 id="valueAsset"></h2>
             </div>
 
+            <div class="containerGraphicPage">
+                <graphic-component></graphic-component>
+            </div>
+
+            <div class="containerButtons">
+                <button id="buttonSell">Vender</button>
+                <button id="buttonBuy">Comprar</button>
+            </div>
+
+           
+
             
         `
 
