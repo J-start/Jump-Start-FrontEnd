@@ -33,10 +33,14 @@ button{
     font-size: 17px;
     cursor: pointer;
     color:#1465FF;
+    padding: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 5px;
 }
 
 button:hover{
-    color: #C6FE1F;
+    background-color: #44454985;
 }
 
 .lineHeader{
@@ -48,5 +52,29 @@ button:hover{
 .ContainerSwitchOption{
     width: 100%;
     margin-top: -19px;
-    background-color: #444549;
+    background-color: #1C2029;
+}
+
+#resources-bnt{
+    padding: 10px;
+    border-radius: 10px;
+    color:#C6FE1F;
+    margin-right: 10px;
+    font-size: 17px;
+    padding-right: 25px;
+    padding-left: 25px;
+
+}
+#news-bnt{
+    padding: 10px;
+    border-radius: 10px;
+    color:#C6FE1F;
+    font-size: 17px;
+    padding-right: 25px;
+    padding-left: 25px;
+
+}
+
+#news-bnt:hover,#resources-bnt:hover{
+    background-color: #1C2029;
 }

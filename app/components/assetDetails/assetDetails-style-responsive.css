@@ -1,0 +1,24 @@
+@media screen and (min-width: 260px) and (max-width: 455px) {
+    .containerAssetAndBalance {
+        display: flow;
+
+    }
+    .containerBalance{
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .assetdetails-component{
+        margin-left: 280px;
+    }
+
+    .containerAssetAndBalance {
+        margin-left: 55px;
+        margin-right: 57px;
+    }
+
+    .containerAssetValue {
+        margin-left: 55px;
+    }
+}

@@ -9,7 +9,7 @@ class SideBar extends HTMLElement {
 
         this.createStyles("app/components/sideBar/sideBar-style.css")
         this.createStyles("app/components/sideBar/sideBar-style-responsive.css")
-
+        this.defineTopSideBar()
 
         const openMenu = this.shadow.querySelector("#openMenu")
         const closeMenu = this.shadow.querySelector("#closeMenu")
@@ -59,7 +59,7 @@ class SideBar extends HTMLElement {
         <ul>
 
             <li>
-                <a href="#"> 
+                <a href="index.html"> 
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
                             <div class="wrapImageMenu" id="imageHome">
@@ -164,6 +164,10 @@ class SideBar extends HTMLElement {
         sideBar.classList.remove('active');
         overlay.classList.remove('active');
         openMenu.style.display = "block"
+    }
+
+    defineTopSideBar(){
+        this.shadow.querySelector("#openMenu").style.top = this.getAttribute("top-sidebar") + "%"
     }
 }
 

@@ -23,10 +23,7 @@ class Coin extends HTMLElement {
             divToUpdate.appendChild(component);
         });
           
-        
-      
-       
-
+    
     }
 
     createHTML() {
@@ -39,7 +36,6 @@ class Coin extends HTMLElement {
 
 
         `
-
         const componentRoot = document.createElement("div");
         componentRoot.setAttribute("class", "coin-container-component");
         componentRoot.innerHTML = template;
@@ -64,6 +60,7 @@ class Coin extends HTMLElement {
 
     async makeRequest() {
        const url = `https://economia.awesomeapi.com.br/json/last/${this.coinsToFetch}`
+       console.log(url)
         return fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -90,43 +87,8 @@ class Coin extends HTMLElement {
 
         objects.forEach(e => {
 
-            const wrapElement = document.createElement("div");
-            wrapElement.classList.add("wrapElement");
-
-
-            const nameAndPrice = document.createElement("div");
-            nameAndPrice.classList.add("NameAndPrice");
-
-
-            const name = document.createElement("h3");
-            name.textContent = String(e.name).replace("/Real Brasileiro", "");
-
-
-            const price = document.createElement("h4");
-            price.textContent = "Compra: " + Number(e.bid).toFixed(3);
-
-
-            const maxValue = document.createElement("h4");
-            maxValue.textContent = "Venda: " + Number(e.ask).toFixed(3)+1;
-
-            const wrapButtonSeeMore = document.createElement("div");
-            wrapButtonSeeMore.classList.add("wrapButtonSeeMore");
-
-
-            const buttonSeeMore = document.createElement("button");
-            buttonSeeMore.textContent = "Ver mais";
-
-
-            nameAndPrice.appendChild(name);
-            nameAndPrice.appendChild(price);
-            nameAndPrice.appendChild(maxValue);
-
-            wrapButtonSeeMore.appendChild(buttonSeeMore);
-
-            wrapElement.appendChild(nameAndPrice);
-            wrapElement.appendChild(wrapButtonSeeMore);
-
-            wrapAllElements.appendChild(wrapElement);
+            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3),`${String(e.code)}`+"-BRL"));
+       
         })
         return wrapAllElements
     }
@@ -155,6 +117,7 @@ class Coin extends HTMLElement {
 
     manipulationStringCoins(){
         let positionObjects = this.coinsToFetch.split(",")
+
         positionObjects = positionObjects.map((e, i) => {
 
             return e.replace("-", "")
