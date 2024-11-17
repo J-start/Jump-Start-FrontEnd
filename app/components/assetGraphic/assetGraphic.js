@@ -16,6 +16,9 @@ class AssetGraphic extends HTMLElement {
         <div class="containerGraphic">
             <canvas id="bidChart" width="400" height="200"></canvas> 
             </div>
+
+            <div id="variationFirst"></div>
+            <div id="variationSecond"></div>
         `;
 
         const componentRoot = document.createElement("div");
@@ -76,8 +79,8 @@ class AssetGraphic extends HTMLElement {
                 return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) };
             
             });
-            //valueVariation(data[0].timestamp, data[0].bid)
-            //valueVariation(data[data.length-1].timestamp, data[data.length-1].bid)
+            this.valueVariation(data[1].timestamp, data[0].bid,"variationFirst")
+            this.valueVariation(data[data.length-1].timestamp, data[data.length-1].bid,"variationSecond")
 
             datas = datas.reverse();
         } else {
@@ -207,8 +210,37 @@ class AssetGraphic extends HTMLElement {
         return [twoDaysBefore,todayFomatted];
     }
 
-    valueVariation(time,value){
-        this.shadow.querySelector("#valueVariation").innerHTML = `R$ ${value} - ${time}`
+    valueVariation(time,value,div){
+        const days = this.calcDelta(this.fomatDataTimestamp(time))
+
+        let variation = (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3) - 100
+        variation = variation.toFixed(1)
+        
+        if(days === 1){
+             this.shadow.querySelector(`#${div}`).innerHTML = `Variação de ${days} dia : ${variation}%`
+        }else{
+            this.shadow.querySelector(`#${div}`).innerHTML = `Variação de ${days} dias : ${variation}%`
+        }
+
+        if(variation > 0){
+            this.shadow.querySelector(`#${div}`).style.color = "#1465FF"
+        }else if(variation < 0){
+            this.shadow.querySelector(`#${div}`).style.color = "#FF4848"
+        }else{
+            this.shadow.querySelector(`#${div}`).style.display = "none"
+        }
+    }
+
+    calcDelta(date1) {
+
+        const [dia1, mes1, ano1] = date1.split("/").map(Number);
+        const dateObj1 = new Date(ano1, mes1 - 1, dia1);
+        const date2 = new Date(); 
+
+        const differenceMiliseconds = Math.abs(date2 - dateObj1);
+        const differenceDays = Math.ceil(differenceMiliseconds / (1000 * 60 * 60 * 24));
+
+        return differenceDays;
     }
 
 }

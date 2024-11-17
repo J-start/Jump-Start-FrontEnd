@@ -114,10 +114,10 @@ class AssetDetails extends HTMLElement {
         if(localStorage.getItem("assetType") === "SHARE"){
             value = data.CloseShare
         }else if(localStorage.getItem("assetType") === "CRYPTO"){
-            value = parseFloat(data[0].last).toFixed(2)
+            value = parseFloat(data[0].last).toFixed(3)
         }else{
              let coin =String(localStorage.getItem("assetCode")).replace("-", "")
-            value = parseFloat(data[coin].bid).toFixed(2)
+            value = parseFloat(data[coin].bid).toFixed(3)
         }
 
         return value
