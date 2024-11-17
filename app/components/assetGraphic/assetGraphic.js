@@ -70,10 +70,15 @@ class AssetGraphic extends HTMLElement {
             datas = data.map(item => {
                 return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) };
             });
+
         } else if (assetType === "COIN") {
             datas = data.map(item => {
                 return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) };
+            
             });
+            //valueVariation(data[0].timestamp, data[0].bid)
+            //valueVariation(data[data.length-1].timestamp, data[data.length-1].bid)
+
             datas = datas.reverse();
         } else {
             const step = Math.floor(data.length / 30);
@@ -160,7 +165,6 @@ class AssetGraphic extends HTMLElement {
         });
     }
 
-
     fomatDataTimestamp(timestamp) {
         const date = new Date(timestamp * 1000);
         return date.toLocaleDateString("pt-BR");
@@ -201,6 +205,10 @@ class AssetGraphic extends HTMLElement {
         
 
         return [twoDaysBefore,todayFomatted];
+    }
+
+    valueVariation(time,value){
+        this.shadow.querySelector("#valueVariation").innerHTML = `R$ ${value} - ${time}`
     }
 
 }

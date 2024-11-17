@@ -89,8 +89,10 @@ class AssetDetails extends HTMLElement {
         this.buildResponse()
         this.shadow.querySelector("#valueAsset").innerHTML = "R$ "+value
 
+
       
-    }
+    
+}
 
     buildUrl(){
         let url = ""

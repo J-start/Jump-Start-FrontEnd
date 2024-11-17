@@ -87,7 +87,7 @@ class Coin extends HTMLElement {
 
         objects.forEach(e => {
 
-            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3),`${String(e.code)}`+"-BRL"));
+            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3),`${String(e.code)}`+"-BRL",parseFloat(e.bid).toFixed(2)));
        
         })
         return wrapAllElements
