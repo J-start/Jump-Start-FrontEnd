@@ -13,6 +13,13 @@
     background-color: #0C5291;
     margin: auto;
 }
+.lineGraphic{
+    width: 90%;
+    height: 1px;
+    background-color: white;
+    margin: auto;
+    margin-top: 0px;
+}
 .containerBalance{
     display: flex;
     align-items: center;
@@ -30,6 +37,7 @@
     margin-top: 20px;
     margin-left: 20px;
     flex-direction: column;
+    margin-top: 0px;
 }
 .containerAssetValue > p{
     font-size: 20px;

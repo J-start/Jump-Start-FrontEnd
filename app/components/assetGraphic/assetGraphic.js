@@ -8,7 +8,7 @@ class AssetGraphic extends HTMLElement {
         this.createStyles("app/components/assetGraphic/assetGraphic-style.css");
         this.createStyles("app/components/assetGraphic/assetGraphic-style-responsive.css");
 
-       
+
     }
 
     createHTML() {
@@ -41,20 +41,20 @@ class AssetGraphic extends HTMLElement {
     async makeRequest(urlparam) {
         try {
             const response = await fetch(urlparam);
-    
+
             if (!response.ok) {
                 throw new Error("Erro na requisição: " + response.statusText);
             }
-    
+
             return await response.json();
         } catch (error) {
             console.error("Erro na requisição:", error);
-            return []; 
+            return [];
         }
     }
 
     connectedCallback() {
-        this.makeGraphic(); 
+        this.makeGraphic();
     }
 
     filterDatas(data) {
@@ -62,10 +62,10 @@ class AssetGraphic extends HTMLElement {
             console.error("Os dados fornecidos são inválidos ou vazios.");
             return [];
         }
-    
+
         let datas = [];
         const assetType = localStorage.getItem("assetType");
-    
+
         if (assetType === "SHARE") {
             datas = data.map(item => {
                 return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) };
@@ -74,39 +74,40 @@ class AssetGraphic extends HTMLElement {
             datas = data.map(item => {
                 return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) };
             });
+            datas = datas.reverse();
         } else {
             const step = Math.floor(data.length / 30);
             let atualPosition = 0;
             let dataAux = [];
-    
+
             for (let i = 0; i < 30; i++) {
                 dataAux.push(data[atualPosition]);
                 atualPosition += step;
             }
-    
+
             datas = dataAux.map(item => {
                 return { "date": this.fomatDataTimestamp(item.date), "value": parseFloat(item.price).toFixed(3) };
             });
         }
-    
-        return datas.reverse();
+
+        return datas
     }
-    
+
     async makeGraphic() {
         const response = await this.makeRequest(this.buildUrl());
-    
+
         if (!response || response.length === 0) {
             console.error("Nenhum dado retornado ou falha na requisição.");
             return;
         }
-    
+
         const data = this.filterDatas(response);
-    
+
         if (data.length === 0) {
             console.error("Nenhum dado válido para exibir no gráfico.");
             return;
         }
-    
+
         this.initChart(data);
     }
 
@@ -115,7 +116,7 @@ class AssetGraphic extends HTMLElement {
         const labels = data.map(item => item.date);
         const bids = data.map(item => item.value);
 
-        const canvas = this.shadow.getElementById('bidChart'); 
+        const canvas = this.shadow.getElementById('bidChart');
         const ctx = canvas.getContext('2d');
 
         new Chart(ctx, {
@@ -133,22 +134,22 @@ class AssetGraphic extends HTMLElement {
                 }]
             },
             options: {
-                responsive: true, 
-                maintainAspectRatio: false, 
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false 
+                        display: false
                     }
                 },
                 scales: {
                     x: {
                         ticks: {
-                            color: 'white' 
+                            color: 'white'
                         }
                     },
                     y: {
                         ticks: {
-                            color: 'white' 
+                            color: 'white'
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
@@ -160,24 +161,46 @@ class AssetGraphic extends HTMLElement {
     }
 
 
-    fomatDataTimestamp(timestamp){
+    fomatDataTimestamp(timestamp) {
         const date = new Date(timestamp * 1000);
         return date.toLocaleDateString("pt-BR");
     }
 
-    buildUrl(){
+    buildUrl() {
         let url = ""
         let asset = localStorage.getItem("assetCode")
-    
-        if(localStorage.getItem("assetType") === "SHARE"){
+
+        if (localStorage.getItem("assetType") === "SHARE") {
             url = `http://localhost:8080/datas/share/?shareName=${asset}`
-        }else if(localStorage.getItem("assetType") === "COIN"){
-             url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
-        }else{
-            url = `https://api.mercadobitcoin.net/api/v4/${asset}/trades?limit=1000&from=1729032425&to=1731710825000`
+        } else if (localStorage.getItem("assetType") === "COIN") {
+            url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
+        } else {
+            const dates = this.getDateFormatted()
+            url = `https://api.mercadobitcoin.net/api/v4/${asset}/trades?limit=1000&from=${dates[0]}&to=${dates[1]}`
         }
 
         return url
+    }
+
+    getDateFormatted() {
+        const date = new Date();
+
+        let year = date.getFullYear();
+        let month = String(date.getMonth() + 1).padStart(2, '0');
+        let day = String(date.getDate()).padStart(2, '0');
+
+        const todayFomatted = `${year}-${month}-${day}`;
+
+         date.setDate(date.getDate() - 2);
+
+         year = date.getFullYear();
+         month = String(date.getMonth() + 1).padStart(2, '0'); 
+         day = String(date.getDate()).padStart(2, '0');
+
+        const twoDaysBefore = `${year}-${month}-${day}`;
+        
+
+        return [twoDaysBefore,todayFomatted];
     }
 
 }

@@ -25,10 +25,12 @@ class AssetDetails extends HTMLElement {
                 <p>Cotação atual:</p>
                 <h2 id="valueAsset"></h2>
             </div>
-
+        <div class="lineGraphic"></div>
             <div class="containerGraphicPage">
                 <graphic-component></graphic-component>
             </div>
+
+        <div class="lineGraphic"></div>
 
             <div class="containerButtons">
                 <button id="buttonSell">Vender</button>
