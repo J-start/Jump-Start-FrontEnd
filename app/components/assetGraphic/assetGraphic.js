@@ -73,21 +73,21 @@ class AssetGraphic extends HTMLElement {
             datas = data.map(item => {
                 return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) };
             });
-            console.log(data)
-            this.valueVariation(data.length, data[0].CloseShare,"variationSecond")
-            this.valueVariation(1, data[data.length-2].CloseShare,"variationFirst")
+
+            this.valueVariation(data.length, data[0].CloseShare, "variationSecond")
+            this.valueVariation(1, data[data.length - 2].CloseShare, "variationFirst")
 
         } else if (assetType === "COIN") {
             datas = data.map(item => {
                 return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) };
-            
+
             });
 
             let days = this.calcDelta(this.fomatDataTimestamp(data[1].timestamp))
-            this.valueVariation(days, data[0].bid,"variationFirst")
+            this.valueVariation(days, data[0].bid, "variationFirst")
 
-            days = this.calcDelta(this.fomatDataTimestamp(data[data.length-1].timestamp))
-            this.valueVariation(days, data[data.length-1].bid,"variationSecond")
+            days = this.calcDelta(this.fomatDataTimestamp(data[data.length - 1].timestamp))
+            this.valueVariation(days, data[data.length - 1].bid, "variationSecond")
 
             datas = datas.reverse();
         } else {
@@ -104,6 +104,10 @@ class AssetGraphic extends HTMLElement {
             datas = dataAux.map(item => {
                 return { "date": this.fomatDataTimestamp(item.date), "value": parseFloat(item.price).toFixed(3) };
             });
+            let days = this.calcDelta(this.fomatDataTimestamp(data[1].date))
+            if (days > 0) {
+                this.valueVariation(Math.ceil(days), data[0].price, "variationSecond")
+            }
         }
 
         return datas
@@ -206,53 +210,53 @@ class AssetGraphic extends HTMLElement {
 
         const todayFomatted = `${year}-${month}-${day}`;
 
-         date.setDate(date.getDate() - 2);
+        date.setDate(date.getDate() - 2);
 
-         year = date.getFullYear();
-         month = String(date.getMonth() + 1).padStart(2, '0'); 
-         day = String(date.getDate()).padStart(2, '0');
+        year = date.getFullYear();
+        month = String(date.getMonth() + 1).padStart(2, '0');
+        day = String(date.getDate()).padStart(2, '0');
 
         const twoDaysBefore = `${year}-${month}-${day}`;
-        
 
-        return [twoDaysBefore,todayFomatted];
+
+        return [twoDaysBefore, todayFomatted];
     }
 
-    valueVariation(days,value,div){
+    valueVariation(days, value, div) {
 
         let variation = (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3) - 100
         variation = variation.toFixed(1)
-        
-        if(days === 1){
-             this.shadow.querySelector(`#${div}`).innerHTML = `Variação de ${days} dia : ${variation}%`
-        }else{
+
+        if (days === 1) {
+            this.shadow.querySelector(`#${div}`).innerHTML = `Variação de ${days} dia : ${variation}%`
+        } else {
             this.shadow.querySelector(`#${div}`).innerHTML = `Variação de ${days} dias : ${variation}%`
         }
 
-        if(variation > 0){
+        if (variation > 0) {
             this.shadow.querySelector(`#${div}`).style.color = "#1465FF"
-        }else if(variation < 0){
+        } else if (variation < 0) {
             this.shadow.querySelector(`#${div}`).style.color = "#FF4848"
-        }else{
+        } else {
             this.shadow.querySelector(`#${div}`).style.display = "none"
         }
     }
 
-
     calcDelta(date1) {
-       
+
         const [dia1, mes1, ano1] = date1.split("/").map(Number);
-        const dateObj1 = new Date(ano1, mes1 - 1, dia1); 
+        const dateObj1 = new Date(ano1, mes1 - 1, dia1);
         const date2 = new Date();
-        date2.setHours(0, 0, 0, 0); 
+        date2.setHours(0, 0, 0, 0);
         const differenceMiliseconds = Math.abs(date2 - dateObj1);
 
         const differenceDays = Math.ceil(differenceMiliseconds / (1000 * 60 * 60 * 24));
 
-    
+
         return differenceDays;
     }
-    
+
+
 
 }
 
