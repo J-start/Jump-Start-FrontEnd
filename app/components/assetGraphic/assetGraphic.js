@@ -105,6 +105,7 @@ class AssetGraphic extends HTMLElement {
                 return { "date": this.fomatDataTimestamp(item.date), "value": parseFloat(item.price).toFixed(3) };
             });
             let days = this.calcDelta(this.fomatDataTimestamp(data[1].date))
+            console.log(days)
             if (days > 0) {
                 this.valueVariation(Math.ceil(days), data[0].price, "variationSecond")
             }
