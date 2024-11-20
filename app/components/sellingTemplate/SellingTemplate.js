@@ -1,4 +1,4 @@
-class HeaderHome extends HTMLElement {
+class SellingTemplate extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -14,8 +14,19 @@ class HeaderHome extends HTMLElement {
     createHTML() {
 
         const template =
-            `
-    
+                `
+        <div class="sellingBlock">
+        <div class="titlePage">
+            <h1>Selecione o quanto quer vender</h1>
+        </div>
+
+        <div class="form-sendingValue">
+            <form action="" method="GET">
+                <textarea id="valueInput" name="dados" rows="4" cols="50"></textarea><br><br>
+                <button type="submit">Avançar</button>
+            </form>
+        </div>
+    </div>
 
         `
 
