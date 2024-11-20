@@ -9,6 +9,7 @@ class AssetDetails extends HTMLElement {
         this.createStyles("app/components/assetDetails/assetDetails-style.css")
         this.createStyles("app/components/assetDetails/assetDetails-style-responsive.css")
         this.showResponse()
+        document.title = localStorage.getItem("assetName")
     }
 
     createHTML() {
