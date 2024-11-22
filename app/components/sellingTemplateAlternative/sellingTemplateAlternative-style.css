@@ -1,0 +1,68 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #3a3a3a; /* Fundo cinza escuro */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Garante que a altura ocupe toda a tela */
+}
+
+.sellingBlockAlt {
+    text-align: center;
+    background-color: #3a3a3a; /* Texto branco */
+    padding: 50px 50px 50px 50px;
+}
+
+.PageReturn h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.PageReturn p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.buttonFormat {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espaço entre os botões */
+}
+
+button {
+    background-color: #007bff; /* Azul do botão */
+    color: #ffffff; /* Texto branco */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 120px; /* Garante largura mínima consistente */
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
+
+.Voltar button {
+    background-color: #0d6efd; /* Azul claro para o botão "Voltar" */
+}
+
+.Voltar button:hover {
+    background-color: #0a58ca; /* Tom mais escuro no hover */
+}
+
+.Comprar\ ativos button {
+    background-color: #007bff; /* Azul intenso para "Comprar ativos" */
+}
+
+.Comprar\ ativos button:hover {
+    background-color: #0056b3; /* Azul mais escuro no hover */
+}

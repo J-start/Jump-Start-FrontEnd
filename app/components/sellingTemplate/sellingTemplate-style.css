@@ -1,10 +1,61 @@
-.sellingBlock {
-    background-color: #444549;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #3a3a3a; /* Fundo escuro */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    display: block;
+     /* Ocupa a altura inteira da tela */
+}
+
+.sellingBlock {
+    padding:  50px 50px 50px 50px;
+    text-align: center;
+    background-color: #3a3a3a; /* Cor do texto branco */
 }
 
 .titlePage h1 {
-    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bold;
     color: white;
+}
+
+.form-sendingValue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+textarea#valueInput {
+    width: 80%; /* Largura do campo de texto */
+    max-width: 500px; /* Largura máxima */
+    height: 30px; /* Altura do campo */
+    background-color: white; /* Fundo cinza claro */
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    resize: none; /* Remove o redimensionamento */
+}
+
+textarea#valueInput:focus {
+    outline: none; /* Remove a borda padrão ao focar */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Efeito sutil ao focar */
+}
+
+button {
+    background-color: #007bff; /* Azul do botão */
+    color: #ffffff; /* Texto branco */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
 }
