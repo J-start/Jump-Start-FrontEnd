@@ -14,7 +14,35 @@ class SellingTemplateProcedure extends HTMLElement {
     createHTML() {
 
         const template =
+        
                 `
+                <div class="principalBlock">
+                
+                    <h1>Confirme as informações</h1>
+
+<div class="detailsTab">
+    <table>
+        <tbody>
+            <tr>
+                <th scope="row">Ativo escolhido</th>
+                <td>BITCOIN</td>
+            </tr>
+            <tr>
+                <th scope="row">Valor da venda</th>
+                <td>R$ xxx,yy</td>
+            </tr>
+            <tr>
+                <th scope="row">data</th>
+                <td>dd/mm/aaaa</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="buttonFormat">
+    <button>Avançar</button>
+</div>
+                </div>
        
 
         `

@@ -9,7 +9,7 @@ html, body {
     height: 100vh; /* Garante que a altura ocupe toda a tela */
 }
 
-.sellingBlockAlt {
+.principalBlock {
     text-align: center;
     background-color: #3a3a3a;
     padding: 50px;
@@ -22,28 +22,43 @@ html, body {
     box-sizing: border-box; /* Inclui o padding no cálculo de tamanho */
 }
 
-
-.PageReturn h1 {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: white;
-}
-
-.PageReturn p {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    color: white;
-}
-
 .buttonFormat {
     display: flex;
     justify-content: center;
     gap: 20px; /* Espaço entre os botões */
 }
 
+h1 {
+    color: white;
+}
+
+.detailsTab table {
+    width: auto; /* Ajusta a largura conforme o conteúdo */
+    border-collapse: collapse; /* Remove espaços entre bordas das células */
+}
+
+.detailsTab th, .detailsTab td {
+    color: white; /* Torna o texto branco */
+    padding: 10px 90px; /* Espaço interno para aumentar o espaço entre as colunas */
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+.detailsTab th {
+    font-weight: bold; /* Deixa o texto dos cabeçalhos em negrito */
+}
+
+.detailsTab td {
+    font-size: 16px; /* Tamanho do texto das células */
+}
+
+.detailsTab tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil para linhas pares */
+}
+
+
+
 button {
+    margin-top: 50px;
     background-color: #007bff; /* Azul do botão */
     color: #ffffff; /* Texto branco */
     border: none;
@@ -59,39 +74,12 @@ button:hover {
     background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
 }
 
-.Voltar button {
+.Avançar button {
     background-color: #0d6efd; /* Azul claro para o botão "Voltar" */
 }
 
-.Voltar button:hover {
+.Avançar button:hover {
     background-color: #0a58ca; /* Tom mais escuro no hover */
 }
 
-.Comprar\ ativos button {
-    background-color: #007bff; /* Azul intenso para "Comprar ativos" */
-}
 
-.Comprar\ ativos button:hover {
-    background-color: #0056b3; /* Azul mais escuro no hover */
-}
-
-
-@media screen and (min-width: 100px) and (max-width: 388px) {
-
-    .buttonFormat {
-        display: block;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .Voltar button {
-        padding: 10px;
-        margin-bottom: 20px;
-    }
-
-    .Comprar\ ativos button {
-        padding: 10px;
-    }
-    
-
-}

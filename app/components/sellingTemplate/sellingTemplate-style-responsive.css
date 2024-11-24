@@ -1,0 +1,16 @@
+@media screen and (min-width: 100px) and (max-width: 523px) {
+
+    .sellingBlock {
+        padding: 50px;
+        text-align: center;
+        background-color: #1C2029;   /* Cor do fundo */
+        width: 100%; /* Garante que ocupa a largura total */
+        height: 100%; /* Garante que ocupa a altura total do contêiner pai */
+        display: flex; /* Ativa o modelo Flexbox */
+        flex-direction: column; /* Organiza os elementos verticalmente */
+        justify-content: center; /* Centraliza verticalmente */
+        align-items: center; /* Centraliza horizontalmente */
+        box-sizing: border-box; /* Inclui padding no cálculo do tamanho */
+    }
+
+}
