@@ -76,3 +76,22 @@ button:hover {
 }
 
 
+@media screen and (min-width: 100px) and (max-width: 388px) {
+
+    .buttonFormat {
+        display: block;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .Voltar button {
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .Comprar\ ativos button {
+        padding: 10px;
+    }
+    
+
+}
