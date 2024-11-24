@@ -1,20 +1,9 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    background-color: #3a3a3a; /* Fundo cinza escuro */
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Garante que a altura ocupe toda a tela */
-}
-
 .principalBlock {
     text-align: center;
-    background-color: #3a3a3a;
+    background-color: #1C2029;
     padding: 50px;
     width: 100%; /* Garante que ocupe toda a largura */
-    height: 100%; /* Ocupa toda a altura do contêiner */
+    height: 100vh; /* Ocupa toda a altura do contêiner */
     display: flex; /* Habilita o flexbox */
     flex-direction: column; /* Coloca o conteúdo em uma coluna */
     justify-content: center; /* Centraliza verticalmente */
@@ -26,6 +15,38 @@ html, body {
     display: flex;
     justify-content: center;
     gap: 20px; /* Espaço entre os botões */
+}
+
+button {
+    background-color: #007bff; /* Azul do botão */
+    color: #ffffff; /* Texto branco */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 120px; /* Garante largura mínima consistente */
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
+
+.back button {
+    background-color: #0d6efd; /* Azul claro para o botão "Voltar" */
+}
+
+.back button:hover {
+    background-color: #0a58ca; /* Tom mais escuro no hover */
+}
+
+.buttonSell button {
+    background-color: #007bff; /* Azul intenso para "Comprar ativos" */
+}
+
+.buttonSell button:hover {
+    background-color: #0056b3; /* Azul mais escuro no hover */
 }
 
 h1 {
@@ -54,8 +75,6 @@ h1 {
 .detailsTab tr:nth-child(even) {
     background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil para linhas pares */
 }
-
-
 
 button {
     margin-top: 50px;

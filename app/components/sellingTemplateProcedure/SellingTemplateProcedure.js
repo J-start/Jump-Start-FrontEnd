@@ -40,8 +40,14 @@ class SellingTemplateProcedure extends HTMLElement {
 </div>
 
 <div class="buttonFormat">
-    <button>Avançar</button>
-</div>
+        <div class="back">
+            <button>Voltar</button>
+        </div>
+
+        <div class="buttonSell">
+            <button>Vender</button>
+        </div>
+    </div>
                 </div>
        
 

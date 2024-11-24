@@ -1,17 +1,6 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    background-color: #3a3a3a; /* Fundo cinza escuro */
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Garante que a altura ocupe toda a tela */
-}
-
 .sellingBlockAlt {
     text-align: center;
-    background-color: #3a3a3a;
+    background-color: #1C2029;
     padding: 50px;
     width: 100%; /* Garante que ocupe toda a largura */
     height: 100%; /* Ocupa toda a altura do contêiner */
@@ -22,6 +11,9 @@ html, body {
     box-sizing: border-box; /* Inclui o padding no cálculo de tamanho */
 }
 
+.sellingalt-component {
+    height: 100vh;
+}
 
 .PageReturn h1 {
     font-size: 30px;
