@@ -1,0 +1,31 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #3a3a3a; /* Fundo cinza escuro */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Garante que a altura ocupe toda a tela */
+}
+
+.principalBlock {
+    text-align: center;
+    background-color: #3a3a3a;
+    padding: 50px;
+    width: 100%; /* Garante que ocupe toda a largura */
+    height: 100%; /* Ocupa toda a altura do contêiner */
+    display: flex; /* Habilita o flexbox */
+    flex-direction: column; /* Coloca o conteúdo em uma coluna */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    box-sizing: border-box; /* Inclui o padding no cálculo de tamanho */
+}
+
+
+h1 {
+    color: white;
+}
+
+
+
