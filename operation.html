@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="app/assets/images/logo.PNG" type="image/x-icon">
+    <title>Operação</title>
+
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: "Roboto", sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!--Este documento serve apenas para teste de layout fora da configuração do index.html padronizado-->
+    <!--<selling-component></selling-component>
+    <sellingalt-component></sellingalt-component>-->
+    <!--<sellingconc-component></sellingconc-component>-->
+    <menu-component top-sidebar="3"></menu-component> 
+    <selling-component></selling-component>
+
+    <script src="app/components/sellingTemplateConclusion/SellingTemplateConclusion.js"></script>
+    <script src="app/components/sellingTemplateProcedure/SellingTemplateProcedure.js"></script>
+    <script src="app/components/sellingTemplateAlternative/SellingTemplateAlternative.js"></script>
+    <script src="app/components/sellingTemplate/SellingTemplate.js"></script>
+    <script src="app/components/sideBar/sideBar.js"></script>
+    <script src="app/components/sellingTemplateError/SellingTemplateError.js"></script>
+    
+    <script>
+        const typeOperation = localStorage.getItem("typeOperation")
+        if(typeOperation == "BUY"){
+            document.title = "Página de compra"
+        }else{
+            document.title = "Página de venda"
+        }
+
+    </script>
+    
+    
+</body>
+</html>
