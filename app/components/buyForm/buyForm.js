@@ -1,4 +1,4 @@
-class CDB extends HTMLElement {
+class BuyForm extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -6,26 +6,25 @@ class CDB extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/cdb/cdb-style.css")
-        //this.createStyles("app/components/cdb/cdb-style-responsive.css")
-
+        this.createStyles("app/components/buyForm/buyForm-style.css")
+        this.createStyles("app/components/buyForm/buyForm-style-responsive.css")
     }
 
     createHTML() {
 
         const template =
             `
-    <div id="containerHeadHome">
-        <div id="headHomeContents">
-            <h1>Olá, Fulano</h1>
-        </div>
-    </div>
-    <div class="lineHeader"></div>
-
+            <div id="containerTitle">
+                <h1>Selecione o quanto quer<br> comprar</h1>
+            </div>
+            <div id="containerForm">
+                <input type="number" placeholder="" id="quantityInput" />
+                <button id="advanceButton">Avançar</button>
+            </div>
         `
 
         const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "cdb-component");
+        componentRoot.setAttribute("class", "buyForm-component");
         componentRoot.innerHTML = template;
         return componentRoot
 
@@ -39,12 +38,14 @@ class CDB extends HTMLElement {
         })
 
     }
+  
     createLink(linkStyle) {
         const link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
         link.setAttribute("href", linkStyle);
         return link
     }
+
 }
 
-customElements.define("cdb-component", CDB);
+customElements.define("buyform-component", BuyForm);
