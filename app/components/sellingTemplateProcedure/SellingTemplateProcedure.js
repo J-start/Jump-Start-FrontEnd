@@ -35,15 +35,25 @@ class SellingTemplateProcedure extends HTMLElement {
             <tr>
                 <th scope="row">Ativo escolhido</th>
                 <td id="assetName" ></td>
+                <div class="line"></div>
             </tr>
+
+            
+
             <tr>
                 <th scope="row">Valor da venda</th>
                 <td id="assetValue" ></td>
             </tr>
+
+            
+
             <tr>
-                <th scope="row">data</th>
+                <th scope="row">Data</th>
                 <td id="assetDate" ></td>
             </tr>
+
+            
+
         </tbody>
     </table>
 </div>

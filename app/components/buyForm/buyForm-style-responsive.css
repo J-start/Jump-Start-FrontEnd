@@ -1,14 +1,4 @@
-/* Responsividade: telas menores que 768px */
-@media (max-width: 768px) {
 
-    #quantityInput {
-        width: 200%; 
-        margin-top: 90%; /* Ajusta a margem superior */
-        margin-bottom: 90%; /* Ajusta a margem inferior */
-    }
-
-    
-}
 
 /* Responsividade: telas menores que 480px */
 @media (max-width: 480px) {
@@ -18,11 +8,18 @@
     }
 
     #quantityInput {
-        width: 120%; /* Ocupa toda a largura disponível */
+        width: 85%; /* Ocupa toda a largura disponível */
         height: 45px; /* Altura ajustada */
 
-        margin-top: 100%; /* Ajusta a margem superior */
-        margin-bottom: 100%; /* Ajusta a margem inferior */
+       
     }
 
 }
+
+@media (min-width: 280px) and (max-width: 1023px) {
+    .buyForm-component {
+        margin-left: 0px;
+    }
+}
+
+

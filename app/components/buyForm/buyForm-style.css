@@ -5,6 +5,9 @@
     justify-content: center;    
     color: white;
     font-family: Arial, sans-serif;
+    background-color: #1C2029;
+    height: 100vh;
+    margin-left: 280px;
 }
 
 
@@ -21,15 +24,16 @@
 }
 
 #quantityInput {
-    width: 500px;
+    width: 400px;
     height: 60px;
     border: none;
     border-radius: 10px;
-    margin-bottom: 30%;
-    margin-top: 30%;
+    margin-bottom: 10%;
+    margin-top: 10%;
     padding: 0 10px;
     background-color: #ccc;
     font-size: 16px;
+    color: black;
 }
 
 #advanceButton {

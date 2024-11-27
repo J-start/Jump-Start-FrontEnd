@@ -8,30 +8,45 @@ class BuyConfirmation extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/buyConfirmation/buyConfirmation-style.css")
         this.createStyles("app/components/buyConfirmation/buyConfirmation-style-responsive.css")
+
+        this.insertValuesAsset()
+
+        this.shadow.querySelector("#backButton").addEventListener("click", () => {
+            window.location.href = "operation.html"
+        })
+        this.shadow.querySelector("#advanceButton").addEventListener("click", () => {
+            this.makeRequest()
+        })
+
     }
 
     createHTML() {
 
         const template =
             `
+            <div id="containerAll">
             <div id="containerTitle">
                 <h1>Confirme as informações</h1>
             </div>
             <div id="containerForm">
                 <div class="infoRow">
                     <p class="infoLabel">Ativo escolhido</p>
-                    <p class="infoValue">BITCOIN</p>
+                    <p class="infoValue" id="assetName"></p>
                 </div>
                 <div class="infoRow">
                     <p class="infoLabel">Valor da compra</p>
-                    <p class="infoValue">$ 400,00</p>
+                    <p class="infoValue" id="assetValue"></p>
                 </div>
                 <div class="infoRow">
                     <p class="infoLabel">Data</p>
-                    <p class="infoValue">28/09/2024</p>
+                    <p class="infoValue" id="assetDate"></p>
                 </div>
             </div>
-            <button id="advanceButton" >Avançar</button>
+            <button id="backButton" >Voltar</button>
+            <button id="advanceButton" >Comprar</button>
+</div>
+            <div class="containerOtherScreens"></div>
+            
         `
 
         const componentRoot = document.createElement("div");
@@ -49,12 +64,66 @@ class BuyConfirmation extends HTMLElement {
         })
 
     }
-  
+    makeRequest() {
+        const a = JSON.stringify({
+            AssetName: String(localStorage.getItem("assetName")),
+            AssetCode: String(localStorage.getItem("assetCode")),
+            AssetType: String(localStorage.getItem("assetType")),
+            AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
+            OperationType: String(localStorage.getItem("typeOperation")),
+            CodeInvestor: "1233"
+        })
+        console.log(a)
+        const url = "http://localhost:8080/buy/"
+        fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+
+            body: a
+        }).then(response => {
+            if (!response.ok) {
+                console.error("Erro na requisição");
+            }
+            return response.json();
+        }
+        ).then(data => {
+            console.log(data)
+            if (data['code'] != 200) {
+                console.log(data['message'])
+                this.insertPageError(data['message'])
+            } else {
+                this.insertPageSuccess()
+            }
+        }).catch(error => {
+            console.error('Erro na requisição:', error
+            );
+        });
+
+    }
+
+    insertPageSuccess() {
+        this.shadow.querySelector("#containerAll").remove()
+        const success = document.createElement("sellingconc-component");
+        this.shadow.querySelector(".containerOtherScreens").appendChild(success)
+    }
+
+    insertPageError(messageError) {
+        this.shadow.querySelector("#containerAll").remove()
+        this.shadow.querySelector(".containerOtherScreens").innerHTML = `<sellingerror-component messageError="${messageError}"></sellingerror-component>`
+
+    }
     createLink(linkStyle) {
         const link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
         link.setAttribute("href", linkStyle);
         return link
+    }
+    insertValuesAsset() {
+        this.shadow.querySelector("#assetName").innerHTML = localStorage.getItem("assetName")
+        this.shadow.querySelector("#assetValue").innerHTML = "R$ " + Number(Number(localStorage.getItem("assetValue")).toFixed(4) * Number(localStorage.getItem("assetQuantity")).toFixed(4)).toFixed(4)
+        this.shadow.querySelector("#assetDate").innerHTML = new Date().toLocaleDateString()
     }
 
 }

@@ -8,18 +8,33 @@ class BuyForm extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/buyForm/buyForm-style.css")
         this.createStyles("app/components/buyForm/buyForm-style-responsive.css")
-    }
+
+        this.shadow.querySelector("#advanceButton").addEventListener("click", () => {
+            const quantity = this.shadow.querySelector("#quantityInput").value
+            if (quantity > 0) {
+                localStorage.setItem("assetQuantity", quantity)
+                this.shadow.querySelector(".buyForm-component").remove()
+                this.createFormConfirm()
+            } else {
+                alert("Digite um valor válido")
+            }
+
+        })
+        
+}
 
     createHTML() {
 
         const template =
             `
+            <div id="containerAll">
             <div id="containerTitle">
                 <h1>Selecione o quanto quer<br> comprar</h1>
             </div>
             <div id="containerForm">
                 <input type="number" placeholder="" id="quantityInput" />
                 <button id="advanceButton">Avançar</button>
+            </div>
             </div>
         `
 
@@ -28,6 +43,11 @@ class BuyForm extends HTMLElement {
         componentRoot.innerHTML = template;
         return componentRoot
 
+    }
+
+    createFormConfirm(){
+        const form = document.createElement("buyconfirmation-component")
+        this.shadow.appendChild(form)
     }
 
     createStyles(...linksUser) {

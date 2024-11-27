@@ -9,14 +9,19 @@ class SellingTemplateConclusion extends HTMLElement {
         this.createStyles("app/components/sellingTemplateConclusion/sellingTemplateConclusion-style.css")
         this.createStyles("app/components/sellingTemplateConclusion/sellingTemplateConclusion-style-responsive.css")
 
-    }
+        if(localStorage.getItem("typeOperation") == "BUY"){
+            this.shadow.querySelector("#title").innerText = "Compra realizada com sucesso!"
+        }else{
+            this.shadow.querySelector("#title").innerText = "Venda realizada com sucesso!"
+        }
+}
 
     createHTML() {
 
         const template =
         
                 `<div class="principalBlock">
-    <h1>Venda bem sucedida!</h1>
+    <h1 id="title"></h1>
 
     <div class="img">
         <img src="app/assets/images/confirmation_icon.png" alt="confirmation_icon">
