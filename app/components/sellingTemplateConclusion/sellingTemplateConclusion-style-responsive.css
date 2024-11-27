@@ -1,0 +1,19 @@
+@media screen and (min-width: 100px) and (max-width: 523px) {
+
+
+    .principalBlock {
+        text-align: center;
+        background-color: #1C2029;
+        padding: 50px;
+        width: 100%; /* Garante que ocupe toda a largura */
+        height: 100vh; /* Ocupa toda a altura do contêiner */
+        display: flex; /* Habilita o flexbox */
+        flex-direction: column; /* Coloca o conteúdo em uma coluna */
+        justify-content: center; /* Centraliza verticalmente */
+        align-items: center; /* Centraliza horizontalmente */
+        box-sizing: border-box; /* Inclui o padding no cálculo de tamanho */
+    }
+    
+    
+
+}
