@@ -8,7 +8,15 @@ class AssetDetails extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/assetDetails/assetDetails-style.css")
         this.createStyles("app/components/assetDetails/assetDetails-style-responsive.css")
-        this.showResponse()
+        if(localStorage.getItem("assetType")){
+            this.showResponse()
+        }else{
+            window.location.href = "index.html"
+        }
+        
+        document.title = localStorage.getItem("assetName")
+
+        this.verifyLocalStorage()
     }
 
     createHTML() {
@@ -25,6 +33,19 @@ class AssetDetails extends HTMLElement {
                 <p>Cotação atual:</p>
                 <h2 id="valueAsset"></h2>
             </div>
+        <div class="lineGraphic"></div>
+            <div class="containerGraphicPage">
+                <graphic-component></graphic-component>
+            </div>
+
+        <div class="lineGraphic"></div>
+
+            <div class="containerButtons">
+                <button id="buttonSell">Vender</button>
+                <button id="buttonBuy">Comprar</button>
+            </div>
+
+           
 
             
         `
@@ -57,7 +78,7 @@ class AssetDetails extends HTMLElement {
         return fetch(urlparam)
             .then(response => {
                 if (!response.ok) {
-                    alert("Erro na requisição");
+                    console.error("Erro na requisição");
                 }
                 return response.json();
             })
@@ -76,8 +97,10 @@ class AssetDetails extends HTMLElement {
         this.buildResponse()
         this.shadow.querySelector("#valueAsset").innerHTML = "R$ "+value
 
+
       
-    }
+    
+}
 
     buildUrl(){
         let url = ""
@@ -99,10 +122,10 @@ class AssetDetails extends HTMLElement {
         if(localStorage.getItem("assetType") === "SHARE"){
             value = data.CloseShare
         }else if(localStorage.getItem("assetType") === "CRYPTO"){
-            value = parseFloat(data[0].last).toFixed(2)
+            value = parseFloat(data[0].last).toFixed(3)
         }else{
              let coin =String(localStorage.getItem("assetCode")).replace("-", "")
-            value = parseFloat(data[coin].bid).toFixed(2)
+            value = parseFloat(data[coin].bid).toFixed(3)
         }
 
         return value
@@ -168,6 +191,13 @@ class AssetDetails extends HTMLElement {
 
     }
 
+    verifyLocalStorage() {
+        setInterval(() => {
+            if ((!localStorage.getItem("assetType")) || (!localStorage.getItem("assetName")) || (!localStorage.getItem("assetCode"))) {
+                window.location.href = "index.html";
+            }
+        }, 1000); 
+    }
 }
 
 customElements.define("assetdetails-component", AssetDetails);

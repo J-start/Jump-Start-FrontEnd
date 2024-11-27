@@ -13,6 +13,13 @@
     background-color: #0C5291;
     margin: auto;
 }
+.lineGraphic{
+    width: 90%;
+    height: 1px;
+    background-color: white;
+    margin: auto;
+    margin-top: 0px;
+}
 .containerBalance{
     display: flex;
     align-items: center;
@@ -30,9 +37,50 @@
     margin-top: 20px;
     margin-left: 20px;
     flex-direction: column;
+    margin-top: 0px;
 }
 .containerAssetValue > p{
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 0px;
+}
+
+.containerGraphicPage{
+    width: 100%;
+    margin-top: 15px;
+}
+.containerButtons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 10px; 
+}
+
+#buttonBuy, #buttonSell {
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 15px 30px;
+    width: 17%;
+    height: auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+#buttonBuy:hover, #buttonSell:hover {
+    background-color: #1C2029; 
+    color: white; 
+}
+
+#buttonSell{
+background-color: #C6FE1F;
+color: black;
+}
+
+#buttonBuy{
+background-color: #1465FF;
 }

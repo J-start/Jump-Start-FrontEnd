@@ -6,9 +6,9 @@ class AssetGraphic extends HTMLElement {
 
         this.shadow.appendChild(this.createHTML());
         this.createStyles("app/components/assetGraphic/assetGraphic-style.css");
-        //this.createStyles("app/components/header/headerHome-style-responsive.css");
+        this.createStyles("app/components/assetGraphic/assetGraphic-style-responsive.css");
 
-        this.makeTest()
+
     }
 
     createHTML() {
@@ -16,6 +16,9 @@ class AssetGraphic extends HTMLElement {
         <div class="containerGraphic">
             <canvas id="bidChart" width="400" height="200"></canvas> 
             </div>
+
+            <div id="variationFirst"></div>
+            <div id="variationSecond"></div>
         `;
 
         const componentRoot = document.createElement("div");
@@ -38,63 +41,103 @@ class AssetGraphic extends HTMLElement {
         return link;
     }
 
-    async makeRequest(urlparam){
-        return fetch(urlparam)
-        .then(response => {
+    async makeRequest(urlparam) {
+        try {
+            const response = await fetch(urlparam);
+
             if (!response.ok) {
-                alert("Erro na requisição");
+                throw new Error("Erro na requisição: " + response.statusText);
             }
-            return response.json();
-        })
-        .catch(error => {
-            console.error('Erro na requisição:', error);
-        });
+
+            return await response.json();
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+            return [];
+        }
     }
 
-    filterDatas(data){
-        let datas = []
-        let assetType = localStorage.getItem("assetType")
-        if(assetType === "SHARE"){
-            datas = data.map(item => {
-                return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) }
-            })
-        }else if(assetType === "COIN"){
-            datas = data.map(item => {
-                return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) }
-            })
+    connectedCallback() {
+        this.makeGraphic();
+    }
+
+    filterDatas(data) {
+        if (!Array.isArray(data) || data.length === 0) {
+            console.error("Os dados fornecidos são inválidos ou vazios.");
+            return [];
         }
 
-        return datas.reverse()
+        let datas = [];
+        const assetType = localStorage.getItem("assetType");
+
+        if (assetType === "SHARE") {
+            datas = data.map(item => {
+                return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) };
+            });
+
+            this.valueVariation(data.length, data[0].CloseShare, "variationSecond")
+            this.valueVariation(1, data[data.length - 2].CloseShare, "variationFirst")
+
+        } else if (assetType === "COIN") {
+            datas = data.map(item => {
+                return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) };
+
+            });
+
+            let days = this.calcDelta(this.fomatDataTimestamp(data[1].timestamp))
+            this.valueVariation(days, data[0].bid, "variationFirst")
+
+            days = this.calcDelta(this.fomatDataTimestamp(data[data.length - 1].timestamp))
+            this.valueVariation(days, data[data.length - 1].bid, "variationSecond")
+
+            datas = datas.reverse();
+        } else {
+
+            const step = Math.floor(data.length / 30);
+            let atualPosition = 0;
+            let dataAux = [];
+
+            for (let i = 0; i < 30; i++) {
+                dataAux.push(data[atualPosition]);
+                atualPosition += step;
+            }
+
+            datas = dataAux.map(item => {
+                return { "date": this.fomatDataTimestamp(item.date), "value": parseFloat(item.price).toFixed(3) };
+            });
+            let days = this.calcDelta(this.fomatDataTimestamp(data[1].date))
+            console.log(days)
+            if (days > 0) {
+                this.valueVariation(Math.ceil(days), data[0].price, "variationSecond")
+            }
+        }
+
+        return datas
     }
 
-    async makeTest(){
-        const response = await this.makeRequest(this.buildUrl())
-        const data = this.filterDatas(response)
-        console.log(data)
+    async makeGraphic() {
+        const response = await this.makeRequest(this.buildUrl());
+
+        if (!response || response.length === 0) {
+            console.error("Nenhum dado retornado ou falha na requisição.");
+            return;
+        }
+
+        const data = this.filterDatas(response);
+
+        if (data.length === 0) {
+            console.error("Nenhum dado válido para exibir no gráfico.");
+            return;
+        }
+
+        this.initChart(data);
     }
-    connectedCallback() {
-        this.initChart(); 
-    }
 
-    initChart() {
-        const data = [
-            { "timestamp": "1731704380", "bid": "5.7947" },
-            { "timestamp": "1731619797", "bid": "5.789" },
-            { "timestamp": "1731533401", "bid": "5.8061" },
-            { "timestamp": "1731447000", "bid": "5.749" },
-            { "timestamp": "1731358780", "bid": "5.7559" },
-            { "timestamp": "1731110398", "bid": "5.7376" },
-        ];
+    initChart(data) {
 
-        const formatTimestamp = (timestamp) => {
-            const date = new Date(timestamp * 1000);
-            return date.toLocaleDateString("pt-BR");
-        };
+        const labels = data.map(item => item.date);
+        const bids = data.map(item => item.value);
 
-        const labels = data.map(item => formatTimestamp(item.timestamp));
-        const bids = data.map(item => parseFloat(item.bid));
-
-        const canvas = this.shadow.getElementById('bidChart'); 
+        const canvas = this.shadow.getElementById('bidChart');
         const ctx = canvas.getContext('2d');
 
         new Chart(ctx, {
@@ -102,7 +145,7 @@ class AssetGraphic extends HTMLElement {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: '', 
+                    label: '',
                     data: bids,
                     borderColor: '#1465FF',
                     backgroundColor: '#C6FE1F',
@@ -113,20 +156,21 @@ class AssetGraphic extends HTMLElement {
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false 
+                        display: false
                     }
                 },
                 scales: {
                     x: {
                         ticks: {
-                            color: 'white' 
+                            color: 'white'
                         }
                     },
                     y: {
                         ticks: {
-                            color: 'white' 
+                            color: 'white'
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
@@ -137,26 +181,83 @@ class AssetGraphic extends HTMLElement {
         });
     }
 
-
-    fomatDataTimestamp(timestamp){
+    fomatDataTimestamp(timestamp) {
         const date = new Date(timestamp * 1000);
         return date.toLocaleDateString("pt-BR");
     }
 
-    buildUrl(){
+    buildUrl() {
         let url = ""
         let asset = localStorage.getItem("assetCode")
-    
-        if(localStorage.getItem("assetType") === "SHARE"){
+
+        if (localStorage.getItem("assetType") === "SHARE") {
             url = `http://localhost:8080/datas/share/?shareName=${asset}`
-        }else if(localStorage.getItem("assetType") === "COIN"){
-             url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
-        }else{
-            url = `https://api.mercadobitcoin.net/api/v4/BTC-BRL/trades?limit=1000&from=1729032425&to=1731710825000`
+        } else if (localStorage.getItem("assetType") === "COIN") {
+            url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
+        } else {
+            const dates = this.getDateFormatted()
+            url = `https://api.mercadobitcoin.net/api/v4/${asset}/trades?limit=1000&from=${dates[0]}&to=${dates[1]}`
         }
 
         return url
     }
+
+    getDateFormatted() {
+        const date = new Date();
+
+        let year = date.getFullYear();
+        let month = String(date.getMonth() + 1).padStart(2, '0');
+        let day = String(date.getDate()).padStart(2, '0');
+
+        const todayFomatted = `${year}-${month}-${day}`;
+
+        date.setDate(date.getDate() - 2);
+
+        year = date.getFullYear();
+        month = String(date.getMonth() + 1).padStart(2, '0');
+        day = String(date.getDate()).padStart(2, '0');
+
+        const twoDaysBefore = `${year}-${month}-${day}`;
+
+
+        return [twoDaysBefore, todayFomatted];
+    }
+
+    valueVariation(days, value, div) {
+
+        let variation = (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3) - 100
+        variation = variation.toFixed(1)
+
+        if (days === 1) {
+            this.shadow.querySelector(`#${div}`).innerHTML = `Variação de ${days} dia : ${variation}%`
+        } else {
+            this.shadow.querySelector(`#${div}`).innerHTML = `Variação de ${days} dias : ${variation}%`
+        }
+
+        if (variation > 0) {
+            this.shadow.querySelector(`#${div}`).style.color = "#1465FF"
+        } else if (variation < 0) {
+            this.shadow.querySelector(`#${div}`).style.color = "#FF4848"
+        } else {
+            this.shadow.querySelector(`#${div}`).style.display = "none"
+        }
+    }
+
+    calcDelta(date1) {
+
+        const [dia1, mes1, ano1] = date1.split("/").map(Number);
+        const dateObj1 = new Date(ano1, mes1 - 1, dia1);
+        const date2 = new Date();
+        date2.setHours(0, 0, 0, 0);
+        const differenceMiliseconds = Math.abs(date2 - dateObj1);
+
+        const differenceDays = Math.ceil(differenceMiliseconds / (1000 * 60 * 60 * 24));
+
+
+        return differenceDays;
+    }
+
+
 
 }
 

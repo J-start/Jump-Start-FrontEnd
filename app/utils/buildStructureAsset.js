@@ -1,5 +1,5 @@
 
-function BuildAsset(typeAsset,nameAsset,valueField1,valueField2,codeCoin) {
+function BuildAsset(typeAsset,nameAsset,valueField1,valueField2,codeCoin,value) {
     const wrapElement = document.createElement("div");
     wrapElement.classList.add("wrapElement");
 
@@ -56,6 +56,7 @@ function BuildAsset(typeAsset,nameAsset,valueField1,valueField2,codeCoin) {
         }
         
         localStorage.setItem("dateOperation", `${new Date().toLocaleString()}`)
+        localStorage.setItem("assetValue", valueField2)
         window.location.href = "details.html"
     })
     
@@ -130,5 +131,4 @@ function buildMapShareNames(){
 
     return shareNames
 }
-
 

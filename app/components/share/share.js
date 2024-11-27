@@ -54,7 +54,7 @@ class Share extends HTMLElement {
 
         datas.forEach(element => {
 
-            wrapAllElements.appendChild(BuildAsset("SHARE", element.NameShare, element.OpenShare, element.CloseShare));
+            wrapAllElements.appendChild(BuildAsset("SHARE", element.NameShare, element.OpenShare, element.CloseShare,element.CloseShare));
 
         })
     }

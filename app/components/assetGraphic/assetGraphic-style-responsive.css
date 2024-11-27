@@ -1,0 +1,19 @@
+@media (max-width: 768px) {
+    .containerGraphic {
+        padding: 15px; 
+    }
+
+    canvas {
+        max-height: 300px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .containerGraphic {
+        flex-direction: column; 
+    }
+
+    canvas {
+        max-height: 250px; 
+    }
+}
