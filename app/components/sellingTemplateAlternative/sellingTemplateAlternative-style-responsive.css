@@ -30,3 +30,9 @@
     }
     
 }
+
+@media screen and (min-width: 280px) and (max-width: 1023px) {
+    .sellingalt-component{
+        margin-left: 0px;
+    }
+}

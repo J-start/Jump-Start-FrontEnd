@@ -6,8 +6,10 @@ class AssetDetails extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
+
         this.createStyles("app/components/assetDetails/assetDetails-style.css")
         this.createStyles("app/components/assetDetails/assetDetails-style-responsive.css")
+        
         if(localStorage.getItem("assetType")){
             this.showResponse()
         }else{
@@ -17,6 +19,16 @@ class AssetDetails extends HTMLElement {
         document.title = localStorage.getItem("assetName")
 
         this.verifyLocalStorage()
+
+        this.shadow.querySelector("#buttonSell").addEventListener("click", () => {
+            localStorage.setItem("typeOperation","SELL")
+            window.location.href = "operation.html"
+        })
+
+        this.shadow.querySelector("#buttonBuy").addEventListener("click", () => {
+            localStorage.setItem("typeOperation","BUY")
+            window.location.href = "operation.html"
+        })
     }
 
     createHTML() {

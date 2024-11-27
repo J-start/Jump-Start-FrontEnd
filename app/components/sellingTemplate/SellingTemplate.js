@@ -9,6 +9,19 @@ class SellingTemplate extends HTMLElement {
         this.createStyles("app/components/sellingTemplate/sellingTemplate-style.css")
         this.createStyles("app/components/sellingTemplate/sellingTemplate-style-responsive.css")
 
+        this.shadow.querySelector("#insertValueOperation").addEventListener("click", (event) => {
+            event.preventDefault();
+            const inputValue = this.shadow.querySelector("#valueInput").value;
+            
+            if(inputValue <= 0){
+                alert("Valor inválido")
+            }else{
+                localStorage.setItem("assetQuantity",inputValue)
+                this.shadow.querySelector(".sellingBlock").remove()
+                this.insertProcedureDOM()
+            }
+           
+        })
     }
 
     createHTML() {
@@ -21,12 +34,15 @@ class SellingTemplate extends HTMLElement {
         </div>
 
         <div class="form-sendingValue">
-            <form action="" method="GET">
-                <textarea id="valueInput" name="dados" rows="4" cols="50"></textarea><br><br>
-                <button type="submit">Avançar</button>
+            <form action="">
+              
+                 <input type="number" id="valueInput"> <br>
+                <button id="insertValueOperation">Avançar</button>
             </form>
         </div>
     </div>
+
+    <div class="containerOtherScreens"></div>
 
         `
 
@@ -35,6 +51,11 @@ class SellingTemplate extends HTMLElement {
         componentRoot.innerHTML = template;
         return componentRoot
 
+    }
+
+    insertProcedureDOM(){
+        const procedure = document.createElement("sellingpro-component");
+        this.shadow.querySelector(".containerOtherScreens").appendChild(procedure)
     }
 
     createStyles(...linksUser) {

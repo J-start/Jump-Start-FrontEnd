@@ -1,3 +1,9 @@
+.selling-component{
+    margin-left: 280px;
+}
+.containerOtherScreens{
+    width: 100%;
+}
 .sellingBlock {
     padding: 50px;
     text-align: center;
@@ -24,7 +30,7 @@
     align-items: center;
 }
 
-textarea#valueInput {
+#valueInput {
     width: 80%; /* Largura do campo de texto */
     max-width: 500px; /* Largura máxima */
     height: 30px; /* Altura do campo */
@@ -36,7 +42,7 @@ textarea#valueInput {
     resize: none; /* Remove o redimensionamento */
 }
 
-textarea#valueInput:focus {
+#valueInput:focus {
     outline: none; /* Remove a borda padrão ao focar */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Efeito sutil ao focar */
 }
