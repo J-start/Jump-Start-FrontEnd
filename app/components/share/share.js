@@ -33,7 +33,7 @@ class Share extends HTMLElement {
     }
 
     async makeRequest() {
-        const url = `http://localhost:8080/datas/shares`
+        const url = `${getUrl()}/datas/shares`
          return fetch(url)
              .then(response => {
                  if (!response.ok) {

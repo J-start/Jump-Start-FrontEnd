@@ -119,7 +119,7 @@ class AssetDetails extends HTMLElement {
         let asset = localStorage.getItem("assetCode")
     
         if(localStorage.getItem("assetType") === "SHARE"){
-            url = `http://localhost:8080/data/share/?shareName=${asset}`
+            url = `${getUrl()}/data/share/?shareName=${asset}`
         }else if(localStorage.getItem("assetType") === "COIN"){
              url = `https://economia.awesomeapi.com.br/json/last/${asset}`
         }else{

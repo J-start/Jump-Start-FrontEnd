@@ -84,6 +84,7 @@ class SellingTemplateProcedure extends HTMLElement {
     }
 
     makeRequest(){
+
         const a = JSON.stringify({
             AssetName: String(localStorage.getItem("assetName")),
             AssetCode: String(localStorage.getItem("assetCode")),
@@ -92,8 +93,7 @@ class SellingTemplateProcedure extends HTMLElement {
             OperationType:String(localStorage.getItem("typeOperation")),
             CodeInvestor : "1233"
         })
-        console.log(a)
-        const url = "http://localhost:8080/sell/"
+        const url = `${getUrl()}/sell/`
         fetch(url, {
             method: "POST",
             headers: {

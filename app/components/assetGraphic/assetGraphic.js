@@ -191,7 +191,7 @@ class AssetGraphic extends HTMLElement {
         let asset = localStorage.getItem("assetCode")
 
         if (localStorage.getItem("assetType") === "SHARE") {
-            url = `http://localhost:8080/datas/share/?shareName=${asset}`
+            url = `${getUrl()}/datas/share/?shareName=${asset}`
         } else if (localStorage.getItem("assetType") === "COIN") {
             url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
         } else {

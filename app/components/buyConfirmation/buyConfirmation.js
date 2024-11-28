@@ -73,8 +73,7 @@ class BuyConfirmation extends HTMLElement {
             OperationType: String(localStorage.getItem("typeOperation")),
             CodeInvestor: "1233"
         })
-        console.log(a)
-        const url = "http://localhost:8080/buy/"
+        const url = `${getUrl()}/buy/`
         fetch(url, {
             method: "POST",
             headers: {
