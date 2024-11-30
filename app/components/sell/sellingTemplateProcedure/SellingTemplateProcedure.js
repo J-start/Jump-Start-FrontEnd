@@ -10,7 +10,7 @@ class SellingTemplateProcedure extends HTMLElement {
         this.createStyles("app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style-responsive.css")
 
         this.insertValuesAsset()
-
+        
         this.shadow.querySelector(".back").addEventListener("click", () => {
             window.location.href = "operation.html"
         })
@@ -85,7 +85,7 @@ class SellingTemplateProcedure extends HTMLElement {
 
     makeRequest(){
 
-        const a = JSON.stringify({
+        const datasPost = JSON.stringify({
             AssetName: String(localStorage.getItem("assetName")),
             AssetCode: String(localStorage.getItem("assetCode")),
             AssetType: String(localStorage.getItem("assetType")),
@@ -100,7 +100,7 @@ class SellingTemplateProcedure extends HTMLElement {
                 'Content-Type': 'application/json',
             },
    
-            body: a
+            body: datasPost
         }).then(response => {
             if (!response.ok) {
                 console.error("Erro na requisição");
@@ -110,7 +110,6 @@ class SellingTemplateProcedure extends HTMLElement {
         ).then(data => {
             console.log(data)
             if(data['code'] != 200){
-                console.log(data['message'])
                 this.insertPageError(data['message'])
             }else{
                 this.insertPageSuccess()

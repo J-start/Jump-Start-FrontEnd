@@ -1,4 +1,4 @@
-const URL = "https://squid-app-3a538.ondigitalocean.app";
+const URL = "http://localhost:8080";
 
 function getUrl(){
 

@@ -60,8 +60,16 @@ class Cripto extends HTMLElement {
     }
 
      async buildComponent() {
-        const datas = await this.makeRequest();
 
+        let datas = []
+        const MILISECONDSUPDATE = 36000000
+        if(localStorage.getItem("cryptos") === null || (new Date() - new Date(localStorage.getItem("cryptosDate"))) > MILISECONDSUPDATE ){
+            datas = await this.makeRequest()
+            localStorage.setItem("cryptos", JSON.stringify(datas))
+            localStorage.setItem("cryptosDate", new Date())
+        }else{
+            datas = JSON.parse(localStorage.getItem("cryptos"))
+        }
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
     
         this.sortArray(datas)

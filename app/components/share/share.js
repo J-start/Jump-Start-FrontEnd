@@ -49,9 +49,16 @@ class Share extends HTMLElement {
     async buildComponent() {
 
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
-
-        const datas = await this.makeRequest()
-
+        let datas = []
+        const MILISECONDSUPDATE = 108000000
+        if(localStorage.getItem("shares") === null || (new Date() - new Date(localStorage.getItem("sharesDate"))) > MILISECONDSUPDATE){
+            datas = await this.makeRequest()
+            localStorage.setItem("shares", JSON.stringify(datas))
+            localStorage.setItem("sharesDate", new Date())
+        }else{
+            datas = JSON.parse(localStorage.getItem("shares"))
+        }
+        
         datas.forEach(element => {
 
             wrapAllElements.appendChild(BuildAsset("SHARE", element.NameShare, element.OpenShare, element.CloseShare,element.CloseShare));

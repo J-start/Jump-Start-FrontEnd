@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,19 +16,20 @@
         }
     </style>
 </head>
+
 <body>
 
-    <menu-component top-sidebar="3"></menu-component> 
+    <menu-component top-sidebar="3"></menu-component>
     <div id="containerPages"></div>
 
     <script>
         const typeOperation = localStorage.getItem("typeOperation")
-        if(typeOperation == "SELL"){
+        if (typeOperation == "SELL") {
             document.title = "Página de venda"
             const selling = document.createElement("selling-component")
             document.getElementById("containerPages").appendChild(selling)
-            
-        }else if(typeOperation == "BUY"){
+
+        } else if (typeOperation == "BUY") {
             document.title = "Página de compra"
             const buy = document.createElement("buyform-component")
             document.getElementById("containerPages").appendChild(buy)
@@ -43,9 +45,7 @@
     <script src="app/components/sell/sellingTemplateError/SellingTemplateError.js"></script>
     <script src="app/components/buy/buyForm/buyForm.js"></script>
     <script src="app/components/buy/buyConfirmation/buyConfirmation.js"></script>
-    
 
-    
-    
 </body>
+
 </html>
