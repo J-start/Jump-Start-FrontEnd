@@ -6,8 +6,8 @@ class SellingTemplate extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sellingTemplate/sellingTemplate-style.css")
-        this.createStyles("app/components/sellingTemplate/sellingTemplate-style-responsive.css")
+        this.createStyles("app/components/sell/sellingTemplate/sellingTemplate-style.css")
+        this.createStyles("app/components/sell/sellingTemplate/sellingTemplate-style-responsive.css")
 
         this.shadow.querySelector("#insertValueOperation").addEventListener("click", (event) => {
             event.preventDefault();

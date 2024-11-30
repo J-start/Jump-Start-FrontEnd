@@ -6,8 +6,8 @@ class SellingTemplateProcedure extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sellingTemplateProcedure/sellingTemplateProcedure-style.css")
-        this.createStyles("app/components/sellingTemplateProcedure/sellingTemplateProcedure-style-responsive.css")
+        this.createStyles("app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style.css")
+        this.createStyles("app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style-responsive.css")
 
         this.insertValuesAsset()
 

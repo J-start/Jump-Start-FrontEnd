@@ -6,8 +6,8 @@ class BuyConfirmation extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/buyConfirmation/buyConfirmation-style.css")
-        this.createStyles("app/components/buyConfirmation/buyConfirmation-style-responsive.css")
+        this.createStyles("app/components/buy/buyConfirmation/buyConfirmation-style.css")
+        this.createStyles("app/components/buy/buyConfirmation/buyConfirmation-style-responsive.css")
 
         this.insertValuesAsset()
 

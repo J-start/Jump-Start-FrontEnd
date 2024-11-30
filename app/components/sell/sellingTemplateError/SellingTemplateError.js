@@ -6,8 +6,8 @@ class SellingTemplateError extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sellingTemplateError/sellingTemplateError-style.css")
-        this.createStyles("app/components/sellingTemplateError/sellingTemplateError-style-responsive.css")
+        this.createStyles("app/components/sell/sellingTemplateError/sellingTemplateError-style.css")
+        this.createStyles("app/components/sell/sellingTemplateError/sellingTemplateError-style-responsive.css")
         this.getAttribute("messageError") ? this.shadow.querySelector("#messageError").textContent = this.getAttribute("messageError") : this.shadow.querySelector("#messageError").textContent = "Erro desconhecido"
     }
 

@@ -6,8 +6,8 @@ class BuyForm extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/buyForm/buyForm-style.css")
-        this.createStyles("app/components/buyForm/buyForm-style-responsive.css")
+        this.createStyles("app/components/buy/buyForm/buyForm-style.css")
+        this.createStyles("app/components/buy/buyForm/buyForm-style-responsive.css")
 
         this.shadow.querySelector("#advanceButton").addEventListener("click", () => {
             const quantity = this.shadow.querySelector("#quantityInput").value
