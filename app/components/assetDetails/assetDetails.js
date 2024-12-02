@@ -29,6 +29,9 @@ class AssetDetails extends HTMLElement {
             localStorage.setItem("typeOperation","BUY")
             window.location.href = "operation.html"
         })
+
+        document.cookie = "chaveCookie=valorCookie";
+        console.log(document.cookie)
     }
 
     createHTML() {

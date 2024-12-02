@@ -74,13 +74,22 @@ class Coin extends HTMLElement {
     }
 
     async buildComponent() {
-        const datas = await this.makeRequest()
-        
+       
         const positionObjects = this.manipulationStringCoins()
 
         const wrapAllElements = document.createElement("div");
         wrapAllElements.classList.add("WrapAllElements");
 
+        let datas = []
+        const MILISECONDSUPDATE = 36000000
+        if(localStorage.getItem("coins") === null || (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE){
+            datas = await this.makeRequest()
+            localStorage.setItem("coins", JSON.stringify(datas))
+            localStorage.setItem("coinsDate", new Date())
+        }else{
+            datas = JSON.parse(localStorage.getItem("coins"))
+        }
+        
         const objects = this.convertObjectToArray(datas, positionObjects)
 
         this.sortArray(objects)
