@@ -45,9 +45,22 @@ class Cripto extends HTMLElement {
         link.setAttribute("href", linkStyle);
         return link
     }
+     async fetchListCrypto() {
+         return fetch(`${getUrl()}/asset/request/?type=CRYPTO`)
+             .then(response => {
+                 if (!response.ok) {
+                     alert("Erro na requisição");
+                 }
+                 return response.json();
+             })
+             .catch(error => {
+                 console.error('Erro na requisição:', error);
+             });
+         }
 
     async makeRequest() {
-        return fetch('https://api.mercadobitcoin.net/api/v4/tickers?symbols=BTC-BRL,LTC-BRL,ETH-BRL,XRP-BRL,BCH-BRL,USDT-BRL,LINK-BRL,ADA-BRL,EOS-BRL,XLM-BRL,CHZ-BRL,AXS-BRL')
+        let listCrypto = await this.fetchListCrypto()
+        return fetch(`https://api.mercadobitcoin.net/api/v4/tickers?symbols=${listCrypto}`)
             .then(response => {
                 if (!response.ok) {
                     alert("Erro na requisição");
@@ -63,6 +76,7 @@ class Cripto extends HTMLElement {
 
         let datas = []
         const MILISECONDSUPDATE = 36000000
+        
         if(localStorage.getItem("cryptos") === null || (new Date() - new Date(localStorage.getItem("cryptosDate"))) > MILISECONDSUPDATE ){
             datas = await this.makeRequest()
             localStorage.setItem("cryptos", JSON.stringify(datas))
