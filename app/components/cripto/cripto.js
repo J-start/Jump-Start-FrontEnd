@@ -1,7 +1,7 @@
 class Cripto extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
-
+    toggle = false;
     constructor() {
         super()
 
@@ -10,6 +10,16 @@ class Cripto extends HTMLElement {
         this.createStyles("app/components/cripto/cripto-style-responsive.css")
 
         this.buildComponent()
+
+        this.shadow.querySelector("#value1").addEventListener("click", () => {
+            this.managerDisplay("Valor atual da criptomoeda", "Esse é o último valor que o sistema teve acesso sobre o ativo, ele é atualizado a cada 10 minutos.")
+        })
+        this.shadow.querySelector("#value2").addEventListener("click", () => {
+            this.managerDisplay("Valor máximo da criptmoeda", "Valor máximo que a criptomoeda alcançou, considerando a última atualização.")
+        })
+        this.shadow.querySelector("#close").addEventListener("click", () => {
+            this.managerDisplay("", "")
+        })
 
     }
 
@@ -60,6 +70,7 @@ class Cripto extends HTMLElement {
 
     async makeRequest() {
         let listCrypto = await this.fetchListCrypto()
+        console.log(listCrypto)
         return fetch(`https://api.mercadobitcoin.net/api/v4/tickers?symbols=${listCrypto}`)
             .then(response => {
                 if (!response.ok) {
@@ -87,10 +98,10 @@ class Cripto extends HTMLElement {
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
     
         this.sortArray(datas)
- 
+        console.log(datas)
         datas.forEach(element => {
         
-            wrapAllElements.appendChild(BuildAsset("CRYPTO", String(element.pair).replace("-BRL", ""), Number(element.last).toFixed(2), Number(element.last).toFixed(2)));
+            wrapAllElements.appendChild(BuildAsset2("CRYPTO", String(element.pair).replace("-BRL", ""), Number(element.last).toFixed(2), Number(element.last).toFixed(2)));
         
         });
     }
@@ -105,6 +116,13 @@ class Cripto extends HTMLElement {
             }
             return 0;
         });
+    }
+    managerDisplay(title, message) {
+        this.shadow.querySelector('#title').innerHTML = title;
+        this.shadow.querySelector('#message').innerHTML = message;
+        this.shadow.querySelector('.containerMessageAbout').style.display = this.toggle ? 'none' : 'block';
+        this.toggle = !this.toggle;
+
     }
 }
 

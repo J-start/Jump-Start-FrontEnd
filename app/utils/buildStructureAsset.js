@@ -70,6 +70,90 @@ function BuildAsset(typeAsset, nameAsset, valueField1, valueField2, codeCoin, va
 
 }
 
+function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin, value) {
+    const wrapElement = document.createElement("div");
+    wrapElement.classList.add("wrapElement");
+
+    const nameAndPrice = document.createElement("div");
+    nameAndPrice.classList.add("NameAndPrice");
+
+    const wrapImageAndTitle = document.createElement("div");
+    wrapImageAndTitle.classList.add("wrapImageAndTitle");
+
+    const image = document.createElement("img");
+    image.src = 'https://cdn.investing.com/crypto-logos/20x20/v2/bitcoin.png'; 
+    image.alt = nameAsset;
+
+    const name = document.createElement("h3");
+    const names = this.buildMapShareNames();
+    if (typeAsset === "SHARE") {
+        name.textContent = names.get(nameAsset);
+    } else {
+        name.textContent = nameAsset;
+    }
+
+    wrapImageAndTitle.appendChild(image);
+    wrapImageAndTitle.appendChild(name);
+
+    const value1 = document.createElement("h4");
+    value1.textContent = defineFiledValueOne(typeAsset) + valueField1;
+    value1.innerHTML += `<span class="info-icon">?</span>`;
+    value1.setAttribute("id", "value1");
+
+    const value2 = document.createElement("h4");
+    value2.textContent = defineFiledValuTwo(typeAsset) + valueField2;
+    value2.innerHTML += `<span class="info-icon">?</span>`;
+    value2.setAttribute("id", "value2");
+
+    nameAndPrice.appendChild(wrapImageAndTitle);
+    nameAndPrice.appendChild(value1);
+    nameAndPrice.appendChild(value2);
+
+    const wrapButtonSeeMore = document.createElement("div");
+    wrapButtonSeeMore.classList.add("wrapButtonSeeMore");
+
+    const buttonSeeMore = document.createElement("button");
+    buttonSeeMore.textContent = "Ver mais";
+    buttonSeeMore.addEventListener("click", () => {
+        localStorage.setItem("assetType", `${typeAsset}`);
+        localStorage.setItem("assetCode", typeAsset === "COIN" ? `${codeCoin}` : `${nameAsset}`);
+        localStorage.setItem("assetName", typeAsset === "SHARE" ? `${names.get(nameAsset)}` : `${nameAsset}`);
+        localStorage.setItem("dateOperation", `${new Date().toLocaleString()}`);
+        localStorage.setItem("assetValue", valueField2);
+        //window.location.href = "details.html";
+    });
+
+    const container = document.createElement('div');
+    container.classList.add('containerMessageAbout');
+    container.id = 'messageBox';  
+
+    const closeButton = document.createElement('h4');
+    closeButton.id = 'close';
+    closeButton.textContent = ' X ';
+
+    const title = document.createElement('h3');
+    title.id = 'title';  
+   
+    const message = document.createElement('h4');
+    message.id = 'message';  
+    
+
+    container.appendChild(closeButton);
+    container.appendChild(title);
+    container.appendChild(message);
+
+    wrapButtonSeeMore.appendChild(buttonSeeMore);
+
+    wrapElement.appendChild(nameAndPrice);
+    wrapElement.appendChild(wrapButtonSeeMore);
+    wrapElement.appendChild(container);
+
+    return wrapElement;
+}
+
+
+
+
 function messageFieldOne(typeAsset, nameAsset) {
     switch (typeAsset) {
         case "SHARE":
@@ -113,7 +197,6 @@ function defineFiledValuTwo(typeAsset) {
             return "Máximo. R$: "
     }
 }
-
 
 function buildMapShareNames() {
     const shareNames = new Map();
