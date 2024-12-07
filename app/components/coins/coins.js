@@ -1,7 +1,7 @@
 class Coin extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
-    coinsToFetch = "ARS-BRL,AUD-BRL,BOB-BRL,CAD-BRL,CHF-BRL,CLP-BRL,CNY-BRL,DKK-BRL,EUR-BRL,HKD-BRL,INR-BRL,JPY-BRL,MXN-BRL,NOK-BRL,PYG-BRL,RUB-BRL,SEK-BRL,TWD-BRL,USD-BRL,UYU-BRL"
+    coinsToFetch = ""
     constructor() {
         super()
 
@@ -11,19 +11,20 @@ class Coin extends HTMLElement {
 
         // setInterval(async () => {
         //     const divToUpdate = this.shadow.querySelector(".divToUpdateValues");
-    
-            
+
+
         //     divToUpdate.innerHTML = ""; 
-    
-            
+
+
         //    
         // }, 10000);
+
         const divToUpdate = this.shadow.querySelector(".divToUpdateValues");
         this.buildComponent().then(component => {
             divToUpdate.appendChild(component);
         });
-          
-    
+
+
     }
 
     createHTML() {
@@ -58,10 +59,8 @@ class Coin extends HTMLElement {
         return link
     }
 
-    async makeRequest() {
-       const url = `https://economia.awesomeapi.com.br/json/last/${this.coinsToFetch}`
-       console.log(url)
-        return fetch(url)
+    async fetchListCoins() {
+        return fetch(`${getUrl()}/asset/request/?type=COIN`)
             .then(response => {
                 if (!response.ok) {
                     alert("Erro na requisição");
@@ -73,31 +72,51 @@ class Coin extends HTMLElement {
             });
     }
 
+    async makeRequest() {
+        let listCoins = await this.fetchListCoins()
+        this.coinsToFetch = listCoins
+
+        const url = `https://economia.awesomeapi.com.br/json/last/${listCoins}`
+        return fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    alert("Erro na requisição");
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+
+    }
+
     async buildComponent() {
-       
-        const positionObjects = this.manipulationStringCoins()
+
 
         const wrapAllElements = document.createElement("div");
         wrapAllElements.classList.add("WrapAllElements");
 
         let datas = []
         const MILISECONDSUPDATE = 36000000
-        if(localStorage.getItem("coins") === null || (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE){
+        if (localStorage.getItem("coins") === null || (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
             datas = await this.makeRequest()
             localStorage.setItem("coins", JSON.stringify(datas))
             localStorage.setItem("coinsDate", new Date())
-        }else{
+        } else {
             datas = JSON.parse(localStorage.getItem("coins"))
         }
-        
-        const objects = this.convertObjectToArray(datas, positionObjects)
 
+        datas = await this.makeRequest()
+
+        const positionObjects = this.manipulationStringCoins()
+        const objects = this.convertObjectToArray(datas, positionObjects)
         this.sortArray(objects)
+
 
         objects.forEach(e => {
 
-            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3),`${String(e.code)}`+"-BRL",parseFloat(e.bid).toFixed(3)));
-       
+            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3), `${String(e.code)}` + "-BRL", parseFloat(e.bid).toFixed(3)));
+
         })
         return wrapAllElements
     }
@@ -124,9 +143,9 @@ class Coin extends HTMLElement {
         });
     }
 
-    manipulationStringCoins(){
-        let positionObjects = this.coinsToFetch.split(",")
+    manipulationStringCoins() {
 
+        let positionObjects = this.coinsToFetch.split(",")
         positionObjects = positionObjects.map((e, i) => {
 
             return e.replace("-", "")
