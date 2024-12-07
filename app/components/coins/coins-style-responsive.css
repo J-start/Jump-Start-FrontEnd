@@ -1,3 +1,7 @@
+
+/* ----------------------- ----------------------------- ------------------------- ----------- */
+
+
 @media screen and (min-width: 1024px) {
     .WrapAllElements {
         display: flex;
@@ -8,7 +12,8 @@
         flex-direction: column;
         margin-left: 280px;
     }
-    .wrapButtonSeeMore{
+
+    .wrapButtonSeeMore {
         width: 25%;
     }
 }
@@ -28,5 +33,21 @@
     .wrapButtonSeeMore {
         margin: auto;
         margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .containerMessageAbout {
+        width: 80%;
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .containerMessageAbout h3 {
+        font-size: 20px;
+    }
+
+    .containerMessageAbout h4 {
+        font-size: 14px;
     }
 }

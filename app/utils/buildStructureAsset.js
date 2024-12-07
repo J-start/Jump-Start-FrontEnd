@@ -70,7 +70,7 @@ function BuildAsset(typeAsset, nameAsset, valueField1, valueField2, codeCoin, va
 
 }
 
-function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin, value) {
+function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin,url_image) {
     const wrapElement = document.createElement("div");
     wrapElement.classList.add("wrapElement");
 
@@ -81,7 +81,7 @@ function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin, v
     wrapImageAndTitle.classList.add("wrapImageAndTitle");
 
     const image = document.createElement("img");
-    image.src = 'https://cdn.investing.com/crypto-logos/20x20/v2/bitcoin.png'; 
+    image.src = url_image; 
     image.alt = nameAsset;
 
     const name = document.createElement("h3");
@@ -98,12 +98,12 @@ function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin, v
     const value1 = document.createElement("h4");
     value1.textContent = defineFiledValueOne(typeAsset) + valueField1;
     value1.innerHTML += `<span class="info-icon">?</span>`;
-    value1.setAttribute("id", "value1");
+    value1.setAttribute("class", "value1");
 
     const value2 = document.createElement("h4");
     value2.textContent = defineFiledValuTwo(typeAsset) + valueField2;
     value2.innerHTML += `<span class="info-icon">?</span>`;
-    value2.setAttribute("id", "value2");
+    value2.setAttribute("class", "value2");
 
     nameAndPrice.appendChild(wrapImageAndTitle);
     nameAndPrice.appendChild(value1);

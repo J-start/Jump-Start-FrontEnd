@@ -22,6 +22,16 @@ class Coin extends HTMLElement {
         const divToUpdate = this.shadow.querySelector(".divToUpdateValues");
         this.buildComponent().then(component => {
             divToUpdate.appendChild(component);
+            this.shadow.querySelector(".value1").addEventListener("click", () => {
+                this.managerDisplay("Valor atual de câmbio para compra da moeda", "Dependendo do tipo de operação o valor pode variar, em algumas moedas essa variação é maior, em outras não")
+            })
+            this.shadow.querySelector(".value2").addEventListener("click", () => {
+                this.managerDisplay("Valor atual de câmbio para venda da moeda", "Dependendo do tipo de operação o valor pode variar, em algumas moedas essa variação é maior, em outras não")
+            })
+            this.shadow.querySelector("#close").addEventListener("click", () => {
+                this.managerDisplay("", "")
+            })
+    
         });
 
 
@@ -72,11 +82,26 @@ class Coin extends HTMLElement {
             });
     }
 
+    async makeRequestAPI(url){
+        return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                alert("Erro na requisição");
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+        });
+    }
+
     async makeRequest() {
         let listCoins = await this.fetchListCoins()
         this.coinsToFetch = listCoins
 
+
         const url = `https://economia.awesomeapi.com.br/json/last/${listCoins}`
+
         return fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -89,6 +114,11 @@ class Coin extends HTMLElement {
             });
 
     }
+
+    async fetchCrypto() {
+        return this.makeRequestAPI(`${getUrl()}/details/asset/?type=COIN`)
+    }
+
 
     async buildComponent() {
 
@@ -110,14 +140,16 @@ class Coin extends HTMLElement {
 
         const positionObjects = this.manipulationStringCoins()
         const objects = this.convertObjectToArray(datas, positionObjects)
+        let detailsCrypto = await this.fetchCrypto()
+        
         this.sortArray(objects)
+        this.sortArray(detailsCrypto)
 
 
-        objects.forEach(e => {
+        for(let i = 0; i< objects.length;i++){
+            wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3),"",detailsCrypto[i].urlImage));
+        }
 
-            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3), `${String(e.code)}` + "-BRL", parseFloat(e.bid).toFixed(3)));
-
-        })
         return wrapAllElements
     }
 
@@ -127,6 +159,7 @@ class Coin extends HTMLElement {
         for (let i = 0; i < Object.keys(datas).length; i++) {
             objects.push(datas[positionsObjects[i]])
         }
+
 
         return objects
     }
@@ -153,6 +186,14 @@ class Coin extends HTMLElement {
         })
 
         return positionObjects
+    }
+
+    managerDisplay(title, message) {
+        this.shadow.querySelector('#title').innerHTML = title;
+        this.shadow.querySelector('#message').innerHTML = message;
+        this.shadow.querySelector('.containerMessageAbout').style.display = this.toggle ? 'none' : 'block';
+        this.toggle = !this.toggle;
+
     }
 
 }
