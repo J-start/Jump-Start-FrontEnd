@@ -11,7 +11,32 @@ class Share extends HTMLElement {
         this.createStyles("app/components/share/share-style-responsive.css")
        
 
-        this.buildComponent()
+        this.buildComponent().then(() => {
+            
+        this.shadow.querySelectorAll(".value1").forEach((element) => {
+            element.addEventListener("click", () => {
+                this.managerDisplay(
+                    "Valor da ação na aberura do mercado",
+                    "Valor da ação no momento da abertura do mercado, considerando a última atualização."
+                );
+            });
+        });
+
+        this.shadow.querySelectorAll(".value2").forEach((element) => {
+            element.addEventListener("click", () => {
+                this.managerDisplay(
+                    "Valor da ação no último fechamento do mercado",
+                    "Valor da ação considerando o último fechamento do mercado, considerando a última atualização."
+                );
+            });
+        });
+
+        this.shadow.querySelectorAll("#close").forEach((element) => {
+            element.addEventListener("click", () => {
+                this.managerDisplay("", "");
+            });
+        });
+    })
 
     }
 
@@ -32,19 +57,27 @@ class Share extends HTMLElement {
 
     }
 
+    async makeRequestAPI(url){
+        return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                alert("Erro na requisição");
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+        });
+    }
+
     async makeRequest() {
         const url = `${getUrl()}/datas/shares`
-         return fetch(url)
-             .then(response => {
-                 if (!response.ok) {
-                     alert("Erro na requisição");
-                 }
-                 return response.json();
-             })
-             .catch(error => {
-                 console.error('Erro na requisição:', error);
-             });
+        return this.makeRequestAPI(url)
      }
+
+     async fetchCrypto() {
+        return this.makeRequestAPI(`${getUrl()}/details/asset/?type=SHARE`)
+    }
 
     async buildComponent() {
 
@@ -58,12 +91,15 @@ class Share extends HTMLElement {
         }else{
             datas = JSON.parse(localStorage.getItem("shares"))
         }
-        
-        datas.forEach(element => {
+        let detailsCrypto = await this.fetchCrypto()
+        this.sortArray(datas,"NameShare")
+        this.sortArray(detailsCrypto,"acronym")
 
-            wrapAllElements.appendChild(BuildAsset("SHARE", element.NameShare, element.OpenShare, element.CloseShare,element.CloseShare));
+        for(let i = 0; i < datas.length; i++){
+            wrapAllElements.appendChild(BuildAsset2("SHARE", datas[i].NameShare, datas[i].OpenShare, datas[i].CloseShare,datas[i].CloseShare,detailsCrypto[i].urlImage));
 
-        })
+        }
+   
     }
 
 
@@ -73,6 +109,25 @@ class Share extends HTMLElement {
             const link = this.createLink(e)
             this.shadow.appendChild(link)
         })
+
+    }
+
+    sortArray(array,comparation){
+        array.sort((a, b) => {
+            if (a[comparation] < b[comparation]) {
+                return -1;
+            }
+            if (a[comparation] > b[comparation]) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+    managerDisplay(title, message) {
+        this.shadow.querySelector('#title').innerHTML = title;
+        this.shadow.querySelector('#message').innerHTML = message;
+        this.shadow.querySelector('.containerMessageAbout').style.display = this.toggle ? 'none' : 'block';
+        this.toggle = !this.toggle;
 
     }
     createLink(linkStyle) {

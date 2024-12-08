@@ -26,8 +26,8 @@
 
     .NameAndPrice {
         color: white;
-        margin-left: 20px;
         width: 80%;
+        margin-left: 0px;
     }
 
     .wrapButtonSeeMore {
@@ -49,5 +49,15 @@
 
     .containerMessageAbout h4 {
         font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 280px) and (max-width: 380px) {
+
+    .wrapImageAndTitle {
+        flex-direction: column;
+    }
+    .wrapImageAndTitle img {
+        height: 47px;
     }
 }

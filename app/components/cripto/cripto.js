@@ -11,16 +11,29 @@ class Cripto extends HTMLElement {
 
         this.buildComponent().then(() => {
 
+        this.shadow.querySelectorAll(".value1").forEach((element) => {
+            element.addEventListener("click", () => {
+                this.managerDisplay(
+                    "Valor atual da criptomoeda",
+                    "Esse é o último valor que o sistema teve acesso sobre o ativo, ele é atualizado a cada 10 minutos."
+                );
+            });
+        });
 
-        this.shadow.querySelector(".value1").addEventListener("click", () => {
-            this.managerDisplay("Valor atual da criptomoeda", "Esse é o último valor que o sistema teve acesso sobre o ativo, ele é atualizado a cada 10 minutos.")
-        })
-        this.shadow.querySelector(".value2").addEventListener("click", () => {
-            this.managerDisplay("Valor máximo da criptmoeda", "Valor máximo que a criptomoeda alcançou, considerando a última atualização.")
-        })
-        this.shadow.querySelector("#close").addEventListener("click", () => {
-            this.managerDisplay("", "")
-        })
+        this.shadow.querySelectorAll(".value2").forEach((element) => {
+            element.addEventListener("click", () => {
+                this.managerDisplay(
+                    "Valor máximo da criptomoeda",
+                    "Valor máximo que a criptomoeda alcançou, considerando a última atualização."
+                );
+            });
+        });
+
+        this.shadow.querySelectorAll("#close").forEach((element) => {
+            element.addEventListener("click", () => {
+                this.managerDisplay("", "");
+            });
+        });
 
         })
 

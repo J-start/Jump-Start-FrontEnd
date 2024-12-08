@@ -87,7 +87,7 @@ function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin,ur
     const name = document.createElement("h3");
     const names = this.buildMapShareNames();
     if (typeAsset === "SHARE") {
-        name.textContent = names.get(nameAsset);
+        name.textContent = nameAsset
     } else {
         name.textContent = nameAsset;
     }
@@ -104,6 +104,7 @@ function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin,ur
     value2.textContent = defineFiledValuTwo(typeAsset) + valueField2;
     value2.innerHTML += `<span class="info-icon">?</span>`;
     value2.setAttribute("class", "value2");
+    
 
     nameAndPrice.appendChild(wrapImageAndTitle);
     nameAndPrice.appendChild(value1);
@@ -120,7 +121,7 @@ function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin,ur
         localStorage.setItem("assetName", typeAsset === "SHARE" ? `${names.get(nameAsset)}` : `${nameAsset}`);
         localStorage.setItem("dateOperation", `${new Date().toLocaleString()}`);
         localStorage.setItem("assetValue", valueField2);
-        //window.location.href = "details.html";
+        window.location.href = "details.html";
     });
 
     const container = document.createElement('div');
