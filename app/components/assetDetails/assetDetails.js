@@ -18,7 +18,7 @@ class AssetDetails extends HTMLElement {
         
         document.title = localStorage.getItem("assetName")
 
-        this.verifyLocalStorage()
+        //this.verifyLocalStorage()
 
         this.shadow.querySelector("#buttonSell").addEventListener("click", () => {
             localStorage.setItem("typeOperation","SELL")
@@ -30,8 +30,6 @@ class AssetDetails extends HTMLElement {
             window.location.href = "operation.html"
         })
 
-        document.cookie = "chaveCookie=valorCookie";
-        console.log(document.cookie)
     }
 
     createHTML() {
@@ -89,7 +87,7 @@ class AssetDetails extends HTMLElement {
     }
 
     async makeRequestApi(urlparam) {
-        
+        console.log(urlparam)
         return fetch(urlparam)
             .then(response => {
                 if (!response.ok) {
@@ -105,7 +103,6 @@ class AssetDetails extends HTMLElement {
 
 
     async showResponse() {
-
         const data = await this.makeRequestApi(this.buildUrl())
         const value = this.getValueAsset(data)
         
@@ -120,12 +117,13 @@ class AssetDetails extends HTMLElement {
     buildUrl(){
         let url = ""
         let asset = localStorage.getItem("assetCode")
-    
+        console.log(asset)  
         if(localStorage.getItem("assetType") === "SHARE"){
             url = `${getUrl()}/data/share/?shareName=${asset}`
         }else if(localStorage.getItem("assetType") === "COIN"){
              url = `https://economia.awesomeapi.com.br/json/last/${asset}`
         }else{
+            asset = asset + "-BRL"
             url = `https://api.mercadobitcoin.net/api/v4/tickers?symbols=${asset}`
         }
 
@@ -134,13 +132,14 @@ class AssetDetails extends HTMLElement {
 
     getValueAsset(data){
         let value = ""
+        console.log(data)
         if(localStorage.getItem("assetType") === "SHARE"){
             value = data.CloseShare
         }else if(localStorage.getItem("assetType") === "CRYPTO"){
             value = parseFloat(data[0].last).toFixed(3)
         }else{
-             let coin =String(localStorage.getItem("assetCode")).replace("-", "")
-            value = parseFloat(data[coin].bid).toFixed(3)
+             let coin =String(localStorage.getItem("assetCode")).replace("-", "")+"BRL"
+             value = parseFloat(data[coin].bid).toFixed(3)
         }
 
         return value

@@ -196,6 +196,7 @@ class AssetGraphic extends HTMLElement {
             url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
         } else {
             const dates = this.getDateFormatted()
+            asset = asset + "-BRL"
             url = `https://api.mercadobitcoin.net/api/v4/${asset}/trades?limit=1000&from=${dates[0]}&to=${dates[1]}`
         }
 
