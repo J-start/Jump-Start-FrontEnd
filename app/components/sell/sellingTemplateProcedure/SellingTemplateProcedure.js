@@ -87,7 +87,7 @@ class SellingTemplateProcedure extends HTMLElement {
 
         const datasPost = JSON.stringify({
             AssetName: String(localStorage.getItem("assetName")),
-            AssetCode: String(localStorage.getItem("assetCode")),
+            AssetCode: String(localStorage.getItem("assetCode"))+"-BRL",
             AssetType: String(localStorage.getItem("assetType")),
             AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
             OperationType:String(localStorage.getItem("typeOperation")),

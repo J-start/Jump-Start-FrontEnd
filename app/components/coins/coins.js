@@ -103,6 +103,7 @@ class Coin extends HTMLElement {
 
     async makeRequest() {
         let listCoins = await this.fetchListCoins()
+        console.log(listCoins)
         this.coinsToFetch = listCoins
 
 
@@ -139,8 +140,13 @@ class Coin extends HTMLElement {
         const objects = this.convertObjectToArray(datas, positionObjects)
         let detailsCrypto = await this.fetchCrypto()
 
+
+
         this.sortArray(objects,"code")
         this.sortArray(detailsCrypto,"acronym")
+
+        console.log(detailsCrypto)
+        console.log(objects)
 
 
         for (let i = 0; i < objects.length; i++) {
