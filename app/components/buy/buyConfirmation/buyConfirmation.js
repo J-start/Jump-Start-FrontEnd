@@ -46,7 +46,8 @@ class BuyConfirmation extends HTMLElement {
             <button id="advanceButton" >Comprar</button>
 </div>
             <div class="containerOtherScreens"></div>
-            <div class="containerSwitchScreens">
+            <h4 id="countDown"></h4>
+            <div class="containerSwitchScreensError">
                  <button id="backButton" >Voltar para a página inicial</button>
                  <button id="advanceButton" >Tentar novamente</button>
             </div>
@@ -75,8 +76,7 @@ class BuyConfirmation extends HTMLElement {
             AssetCode: String(localStorage.getItem("assetCode"))+"-BRL",
             AssetType: String(localStorage.getItem("assetType")),
             AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
-            OperationType: String(localStorage.getItem("typeOperation")),
-            CodeInvestor: "1233"
+            OperationType: String(localStorage.getItem("typeOperation"))
         })
         const url = `${getUrl()}/buy/`
         fetch(url, {
@@ -95,16 +95,18 @@ class BuyConfirmation extends HTMLElement {
         }
         ).then(data => {
             if (data['code'] != 200) {
-                console.log(data['message'])
                 this.insertPageError(data['message'])
+                if(data['message'] == "mercado fechado"){
+                    this.makeCountmarketClosed()
+                }else{
+                    this.makeCountDownError()
+                }
+                
             } else {
                 this.insertPageSuccess()
+                this.makeCountDownSuccess()
             }
 
-            setTimeout(() => {
-                this.shadow.querySelector(".containerTimeCountToReturnIndex").style.display = "flex"
-                this.clearLocalStorage()
-            }, 5000)
         }).catch(error => {
             console.error('Erro na requisição:', error
             );
@@ -143,6 +145,48 @@ class BuyConfirmation extends HTMLElement {
         localStorage.removeItem("assetValue")
         localStorage.removeItem("typeOperation")
         localStorage.removeItem("dateOperation")
+    }
+
+    makeCountDownSuccess() {
+        let count = 5
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            
+            count--
+            countDown.innerHTML = `Você será redirecionado para a página inicial em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                window.location.href = "index.html"
+            }
+        }, 1000)
+    }
+
+    makeCountDownError() {
+        let count = 5
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            
+            count--
+            countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                window.location.href = "index.html"
+            }
+        }, 1000)
+    }
+
+    makeCountmarketClosed() {
+        let count = 20
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            
+            count--
+            countDown.innerHTML = `Só é possível comprar ou vender ações em dias úteis e em horarios fixos. Você será redirecionado para a página inicial em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                window.location.href = "index.html"
+            }
+        }, 1000)
     }
 
 }
