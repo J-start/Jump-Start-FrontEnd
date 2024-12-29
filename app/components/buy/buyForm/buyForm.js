@@ -8,7 +8,7 @@ class BuyForm extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/buy/buyForm/buyForm-style.css")
         this.createStyles("app/components/buy/buyForm/buyForm-style-responsive.css")
-
+        this.showWhatIsBuying()
         this.shadow.querySelector("#advanceButton").addEventListener("click", () => {
             const quantity = this.shadow.querySelector("#quantityInput").value
             if (quantity > 0) {
@@ -27,7 +27,11 @@ class BuyForm extends HTMLElement {
 
         const template =
             `
+            <div class="containerShowWhatIsBuying">
+                <h3 id="assetName">Você está comprando </h3>
+            </div>
             <div id="containerAll">
+
             <div id="containerTitle">
                 <h1>Selecione o quanto quer<br> comprar</h1>
             </div>
@@ -65,6 +69,18 @@ class BuyForm extends HTMLElement {
         link.setAttribute("href", linkStyle);
         return link
     }
+    
+    showWhatIsBuying(){
+        if (localStorage.getItem("assetType") === "SHARE") {
+             const assetName = localStorage.getItem("assetCode")
+             this.shadow.querySelector("#assetName").innerHTML = `Você está comprando ${assetName}`
+        }else{
+           const assetName = localStorage.getItem("assetName")
+            this.shadow.querySelector("#assetName").innerHTML = `Você está comprando ${assetName}` 
+        }
+        
+    }
+        
 
 }
 

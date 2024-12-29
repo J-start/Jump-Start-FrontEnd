@@ -46,6 +46,10 @@ class BuyConfirmation extends HTMLElement {
             <button id="advanceButton" >Comprar</button>
 </div>
             <div class="containerOtherScreens"></div>
+            <div class="containerSwitchScreens">
+                 <button id="backButton" >Voltar para a página inicial</button>
+                 <button id="advanceButton" >Tentar novamente</button>
+            </div>
             
         `
 
@@ -65,6 +69,7 @@ class BuyConfirmation extends HTMLElement {
 
     }
     makeRequest() {
+        const TOKEN = "aaa"
         const a = JSON.stringify({
             AssetName: String(localStorage.getItem("assetName")),
             AssetCode: String(localStorage.getItem("assetCode"))+"-BRL",
@@ -78,6 +83,7 @@ class BuyConfirmation extends HTMLElement {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                "Authorization": `Bearer ${TOKEN}`
             },
 
             body: a
@@ -88,13 +94,17 @@ class BuyConfirmation extends HTMLElement {
             return response.json();
         }
         ).then(data => {
-            console.log(data)
             if (data['code'] != 200) {
                 console.log(data['message'])
                 this.insertPageError(data['message'])
             } else {
                 this.insertPageSuccess()
             }
+
+            setTimeout(() => {
+                this.shadow.querySelector(".containerTimeCountToReturnIndex").style.display = "flex"
+                this.clearLocalStorage()
+            }, 5000)
         }).catch(error => {
             console.error('Erro na requisição:', error
             );
@@ -123,6 +133,16 @@ class BuyConfirmation extends HTMLElement {
         this.shadow.querySelector("#assetName").innerHTML = localStorage.getItem("assetName")
         this.shadow.querySelector("#assetValue").innerHTML = "R$ " + Number(Number(localStorage.getItem("assetValue")).toFixed(4) * Number(localStorage.getItem("assetQuantity")).toFixed(4)).toFixed(4)
         this.shadow.querySelector("#assetDate").innerHTML = new Date().toLocaleDateString()
+    }
+
+    clearLocalStorage() {
+        localStorage.removeItem("assetCode")
+        localStorage.removeItem("assetName")
+        localStorage.removeItem("assetQuantity")
+        localStorage.removeItem("assetType")
+        localStorage.removeItem("assetValue")
+        localStorage.removeItem("typeOperation")
+        localStorage.removeItem("dateOperation")
     }
 
 }

@@ -19,7 +19,7 @@
 }
 
 .titlePage h1 {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     font-size: 30px;
     font-weight: bold;
     color: white;
@@ -29,7 +29,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 70%;
+    width: 90%;
 }
 
 form{
@@ -72,4 +72,16 @@ button {
 
 button:hover {
     background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
+
+.containerShowWhatIsSelling{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 103%;
+    align-items: flex-start;
+    margin-left: 20px;
+    position: relative;
+    top: -80px;
+    color: white;
 }

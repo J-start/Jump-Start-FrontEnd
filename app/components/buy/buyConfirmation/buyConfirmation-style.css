@@ -61,3 +61,13 @@
 #advanceButton:hover,#backButton:hover {
     background-color: #0056b3;
 }
+.containerTimeCountToReturnIndex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    color: #0056b3;
+}
+.containerTimeCountToReturnIndex{
+    display: none;
+}
