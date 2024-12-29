@@ -18,6 +18,11 @@
     .wrapButtonSeeMore{
         margin-bottom: 15px;
     }
+    .NameAndPrice {
+        color: white;
+        margin-left: 20px;
+        min-width: 350px;
+    }
 
     .wrapButtonSeeMore {
         width: 25%;
