@@ -4,13 +4,19 @@
 
 @media screen and (min-width: 1024px) {
     .WrapAllElements {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); 
+        grid-gap: 20px; 
+        justify-items: center;
         align-items: center;
         margin-top: 20px;
-        flex-direction: column;
         margin-left: 280px;
+    }
+    .wrapElement{
+        flex-direction: column;
+    }
+    .wrapButtonSeeMore{
+        margin-bottom: 15px;
     }
 
     .wrapButtonSeeMore {
