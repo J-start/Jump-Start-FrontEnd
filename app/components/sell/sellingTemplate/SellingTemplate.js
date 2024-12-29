@@ -16,6 +16,13 @@ class SellingTemplate extends HTMLElement {
             if (inputValue <= 0) {
                 alert("Valor inválido")
             } else {
+                if(localStorage.getItem("assetType") === "SHARE"){
+                    if (inputValue % 1 !== 0){
+                        alert("Para ações, digite um valor inteiro")
+                        this.shadow.querySelector("#valueInput").value = ""
+                        return
+                    }
+                }
                 localStorage.setItem("assetQuantity", inputValue)
                 this.shadow.querySelector(".sellingBlock").remove()
                 this.insertProcedureDOM()

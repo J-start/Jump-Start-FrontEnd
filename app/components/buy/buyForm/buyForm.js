@@ -12,6 +12,13 @@ class BuyForm extends HTMLElement {
         this.shadow.querySelector("#advanceButton").addEventListener("click", () => {
             const quantity = this.shadow.querySelector("#quantityInput").value
             if (quantity > 0) {
+                if(localStorage.getItem("assetType") === "SHARE"){
+                    if (quantity % 1 !== 0){
+                        alert("Para ações, digite um valor inteiro")
+                        this.shadow.querySelector("#quantityInput").value = ""
+                        return
+                    }
+                }
                 localStorage.setItem("assetQuantity", quantity)
                 this.shadow.querySelector(".buyForm-component").remove()
                 this.createFormConfirm()
