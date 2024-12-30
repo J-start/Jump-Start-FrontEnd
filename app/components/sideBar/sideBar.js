@@ -10,7 +10,7 @@ class SideBar extends HTMLElement {
         this.createStyles("app/components/sideBar/sideBar-style.css")
         this.createStyles("app/components/sideBar/sideBar-style-responsive.css")
         this.defineTopSideBar()
-
+        this.activateButton()
         const openMenu = this.shadow.querySelector("#openMenu")
         const closeMenu = this.shadow.querySelector("#closeMenu")
         const sidebar = this.shadow.querySelector("#sidebar")
@@ -156,6 +156,18 @@ class SideBar extends HTMLElement {
 
     defineTopSideBar(){
         this.shadow.querySelector("#openMenu").style.top = this.getAttribute("top-sidebar") + "%"
+    }
+    activateButton(){
+        let button = this.getAttribute("highlight")
+        if(!button){
+            return
+        }
+
+        this.shadow.querySelector("#imageHome").style.backgroundColor = "none"
+        this.shadow.querySelector("#imageWallet").style.backgroundColor = "none"
+        this.shadow.querySelector("#imageProfile").style.backgroundColor = "none"
+
+        this.shadow.querySelector(`#image${button}`).style.backgroundColor = "#1465FF"
     }
 }
 
