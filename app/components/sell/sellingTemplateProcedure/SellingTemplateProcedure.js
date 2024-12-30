@@ -24,6 +24,7 @@ class SellingTemplateProcedure extends HTMLElement {
         const template =
 
             `
+ 
             <div id="containerAll">
                 <div class="principalBlock">
                 
@@ -70,8 +71,13 @@ class SellingTemplateProcedure extends HTMLElement {
     </div>
 
     </div>
-
+    <div class="containerCountDown">
+        <h4 id="countDown"></h4>
+    </div>
+    
     <div class="containerOtherScreens"></div>
+
+   
        
 
         `
@@ -84,20 +90,24 @@ class SellingTemplateProcedure extends HTMLElement {
     }
 
     makeRequest(){
-
+        const TOKEN = "aaaa"
+        let code = ""
+        if (localStorage.getItem("assetType") != "SHARE"){
+            code = "-BRL"
+        }
         const datasPost = JSON.stringify({
             AssetName: String(localStorage.getItem("assetName")),
-            AssetCode: String(localStorage.getItem("assetCode")),
+            AssetCode: String(localStorage.getItem("assetCode"))+code,
             AssetType: String(localStorage.getItem("assetType")),
             AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
-            OperationType:String(localStorage.getItem("typeOperation")),
-            CodeInvestor : "1233"
+            OperationType:String(localStorage.getItem("typeOperation"))
         })
         const url = `${getUrl()}/sell/`
         fetch(url, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                 "Authorization": `Bearer ${TOKEN}`
             },
    
             body: datasPost
@@ -108,12 +118,19 @@ class SellingTemplateProcedure extends HTMLElement {
             return response.json();
         }
         ).then(data => {
-            console.log(data)
-            if(data['code'] != 200){
+            if (data['code'] != 200) {
                 this.insertPageError(data['message'])
-            }else{
+                if(data['message'] == "mercado fechado"){
+                    this.makeCountmarketClosed()
+                }else{
+                    this.makeCountDownError()
+                }
+            } else {
                 this.insertPageSuccess()
+                this.makeCountDownSuccess()
             }
+
+
         }).catch(error => {
             console.error('Erro na requisição:', error
         );
@@ -154,6 +171,57 @@ class SellingTemplateProcedure extends HTMLElement {
         return link
     }
 
+    makeCountDownSuccess() {
+        let count = 5
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            count--
+            countDown.innerHTML = `Você será redirecionado para a página inicial em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                this.clearLocalStorage()
+                this.clearLocalStorage()
+                window.location.href = "index.html"
+            }
+        }, 1000)
+    }
+
+    makeCountDownError() {
+        let count = 5
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            count--
+            countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                window.location.href = "index.html"
+            }
+        }, 1000)
+    }
+
+    makeCountmarketClosed() {
+        let count = 15
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            count--
+            countDown.innerHTML = `Só é possível comprar ou vender ações em dias úteis e em horarios fixos. Você será redirecionado para a página inicial em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                this.clearLocalStorage()
+                window.location.href = "index.html"
+            }
+        }, 1000)
+    }
+
+    clearLocalStorage() {
+        localStorage.removeItem("assetCode")
+        localStorage.removeItem("assetName")
+        localStorage.removeItem("assetQuantity")
+        localStorage.removeItem("assetType")
+        localStorage.removeItem("assetValue")
+        localStorage.removeItem("typeOperation")
+        localStorage.removeItem("dateOperation")
+    }
 
 }
 

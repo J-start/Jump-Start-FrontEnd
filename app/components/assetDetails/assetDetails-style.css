@@ -84,3 +84,15 @@ color: black;
 #buttonBuy{
 background-color: #1465FF;
 }
+#buttonBuy:disabled,#buttonSell:disabled{
+    cursor: not-allowed;
+}
+.showMessageMarketClosed{
+    color: #FF4848;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    display: none;
+}

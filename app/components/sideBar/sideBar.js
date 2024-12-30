@@ -84,18 +84,6 @@ class SideBar extends HTMLElement {
                 </a>
             </li>
 
-           <li>
-                <a href="#"> 
-                    <div class="wrapItensMenu">
-                        <div class="containerItensMenu">
-                        <div class="wrapImageMenu" id="imageNotifications">
-                            <img src="app/assets/images/notifications_icon.png" alt="Notificações icone">  
-                        </div>
-                            <p>Notificações</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
 
             <li>
                 <a href="#"> 

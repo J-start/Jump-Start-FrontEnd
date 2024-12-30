@@ -46,6 +46,11 @@ class BuyConfirmation extends HTMLElement {
             <button id="advanceButton" >Comprar</button>
 </div>
             <div class="containerOtherScreens"></div>
+            <h4 id="countDown"></h4>
+            <div class="containerSwitchScreensError">
+                 <button id="backButton" >Voltar para a página inicial</button>
+                 <button id="advanceButton" >Tentar novamente</button>
+            </div>
             
         `
 
@@ -65,19 +70,24 @@ class BuyConfirmation extends HTMLElement {
 
     }
     makeRequest() {
+        const TOKEN = "aaa"
+        let code = ""
+        if (localStorage.getItem("assetType") != "SHARE"){
+            code = "-BRL"
+        }
         const a = JSON.stringify({
             AssetName: String(localStorage.getItem("assetName")),
-            AssetCode: String(localStorage.getItem("assetCode")),
+            AssetCode: String(localStorage.getItem("assetCode"))+code,
             AssetType: String(localStorage.getItem("assetType")),
             AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
-            OperationType: String(localStorage.getItem("typeOperation")),
-            CodeInvestor: "1233"
+            OperationType: String(localStorage.getItem("typeOperation"))
         })
         const url = `${getUrl()}/buy/`
         fetch(url, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                "Authorization": `Bearer ${TOKEN}`
             },
 
             body: a
@@ -88,13 +98,19 @@ class BuyConfirmation extends HTMLElement {
             return response.json();
         }
         ).then(data => {
-            console.log(data)
             if (data['code'] != 200) {
-                console.log(data['message'])
                 this.insertPageError(data['message'])
+                if(data['message'] == "mercado fechado"){
+                    this.makeCountmarketClosed()
+                }else{
+                    this.makeCountDownError()
+                }
+                
             } else {
                 this.insertPageSuccess()
+                this.makeCountDownSuccess()
             }
+
         }).catch(error => {
             console.error('Erro na requisição:', error
             );
@@ -123,6 +139,58 @@ class BuyConfirmation extends HTMLElement {
         this.shadow.querySelector("#assetName").innerHTML = localStorage.getItem("assetName")
         this.shadow.querySelector("#assetValue").innerHTML = "R$ " + Number(Number(localStorage.getItem("assetValue")).toFixed(4) * Number(localStorage.getItem("assetQuantity")).toFixed(4)).toFixed(4)
         this.shadow.querySelector("#assetDate").innerHTML = new Date().toLocaleDateString()
+    }
+
+    clearLocalStorage() {
+        localStorage.removeItem("assetCode")
+        localStorage.removeItem("assetName")
+        localStorage.removeItem("assetQuantity")
+        localStorage.removeItem("assetType")
+        localStorage.removeItem("assetValue")
+        localStorage.removeItem("typeOperation")
+        localStorage.removeItem("dateOperation")
+    }
+
+    makeCountDownSuccess() {
+        let count = 5
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            
+            count--
+            countDown.innerHTML = `Você será redirecionado para a página inicial em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                window.location.href = "index.html"
+            }
+        }, 1000)
+    }
+
+    makeCountDownError() {
+        let count = 5
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            
+            count--
+            countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                window.location.href = "index.html"
+            }
+        }, 1000)
+    }
+
+    makeCountmarketClosed() {
+        let count = 20
+        const countDown = this.shadow.querySelector("#countDown")
+        const interval = setInterval(() => {
+            
+            count--
+            countDown.innerHTML = `Só é possível comprar ou vender ações em dias úteis e em horarios fixos. Você será redirecionado para a página inicial em ${count} segundos`
+            if (count === 0) {
+                clearInterval(interval)
+                window.location.href = "index.html"
+            }
+        }, 1000)
     }
 
 }

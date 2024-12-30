@@ -5,7 +5,7 @@
     text-align: center;
     background-color: #1C2029;
     margin-left: 280px;
-    height: 100vh;
+    height: 99vh;
 }
 
 
@@ -60,4 +60,13 @@
 
 #advanceButton:hover,#backButton:hover {
     background-color: #0056b3;
+}
+#countDown{
+    color: white;
+    position: relative;
+    top: -94%;
+
+}
+.containerSwitchScreensError{
+    display: none;
 }

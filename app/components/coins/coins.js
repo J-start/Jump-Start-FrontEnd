@@ -22,6 +22,31 @@ class Coin extends HTMLElement {
         const divToUpdate = this.shadow.querySelector(".divToUpdateValues");
         this.buildComponent().then(component => {
             divToUpdate.appendChild(component);
+
+            this.shadow.querySelectorAll(".value1").forEach((element) => {
+                element.addEventListener("click", () => {
+                    this.managerDisplay(
+                        "Valor atual de câmbio para compra da moeda",
+                        "Dependendo do tipo de operação o valor pode variar, em algumas moedas essa variação é maior, em outras não"
+                    );
+                });
+            });
+
+            this.shadow.querySelectorAll(".value2").forEach((element) => {
+                element.addEventListener("click", () => {
+                    this.managerDisplay(
+                        "Valor atual de câmbio para venda da moeda",
+                        "Dependendo do tipo de operação o valor pode variar, em algumas moedas essa variação é maior, em outras não"
+                    );
+                });
+            });
+
+            this.shadow.querySelectorAll("#close").forEach((element) => {
+                element.addEventListener("click", () => {
+                    this.managerDisplay("", "");
+                });
+            });
+
         });
 
 
@@ -60,7 +85,11 @@ class Coin extends HTMLElement {
     }
 
     async fetchListCoins() {
-        return fetch(`${getUrl()}/asset/request/?type=COIN`)
+        return this.makeRequestAPI(`${getUrl()}/asset/request/?type=COIN`)
+    }
+
+    async makeRequestAPI(url) {
+        return fetch(url)
             .then(response => {
                 if (!response.ok) {
                     alert("Erro na requisição");
@@ -74,21 +103,20 @@ class Coin extends HTMLElement {
 
     async makeRequest() {
         let listCoins = await this.fetchListCoins()
+        console.log(listCoins)
         this.coinsToFetch = listCoins
 
+
         const url = `https://economia.awesomeapi.com.br/json/last/${listCoins}`
-        return fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    alert("Erro na requisição");
-                }
-                return response.json();
-            })
-            .catch(error => {
-                console.error('Erro na requisição:', error);
-            });
+
+        return this.makeRequestAPI(url)
 
     }
+
+    async fetchCrypto() {
+        return this.makeRequestAPI(`${getUrl()}/details/asset/?type=COIN`)
+    }
+
 
     async buildComponent() {
 
@@ -110,14 +138,21 @@ class Coin extends HTMLElement {
 
         const positionObjects = this.manipulationStringCoins()
         const objects = this.convertObjectToArray(datas, positionObjects)
-        this.sortArray(objects)
+        let detailsCrypto = await this.fetchCrypto()
 
 
-        objects.forEach(e => {
 
-            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3), `${String(e.code)}` + "-BRL", parseFloat(e.bid).toFixed(3)));
+        this.sortArray(objects,"code")
+        this.sortArray(detailsCrypto,"acronym")
 
-        })
+        console.log(detailsCrypto)
+        console.log(objects)
+
+
+        for (let i = 0; i < objects.length; i++) {
+            wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3), objects[i].code, detailsCrypto[i].urlImage));
+        }
+
         return wrapAllElements
     }
 
@@ -128,15 +163,16 @@ class Coin extends HTMLElement {
             objects.push(datas[positionsObjects[i]])
         }
 
+
         return objects
     }
 
-    sortArray(datas) {
+    sortArray(datas,comparation) {
         datas.sort((a, b) => {
-            if (a.name < b.name) {
+            if (String(a.name).toLocaleUpperCase() < String(b.name).toLocaleUpperCase()) {
                 return -1;
             }
-            if (a.name > b.name) {
+            if (String(a.name).toLocaleUpperCase() > String(b.name).toLocaleUpperCase()) {
                 return 1;
             }
             return 0;
@@ -153,6 +189,14 @@ class Coin extends HTMLElement {
         })
 
         return positionObjects
+    }
+
+    managerDisplay(title, message) {
+        this.shadow.querySelector('#title').innerHTML = title;
+        this.shadow.querySelector('#message').innerHTML = message;
+        this.shadow.querySelector('.containerMessageAbout').style.display = this.toggle ? 'none' : 'block';
+        this.toggle = !this.toggle;
+
     }
 
 }

@@ -105,7 +105,6 @@ class AssetGraphic extends HTMLElement {
                 return { "date": this.fomatDataTimestamp(item.date), "value": parseFloat(item.price).toFixed(3) };
             });
             let days = this.calcDelta(this.fomatDataTimestamp(data[1].date))
-            console.log(days)
             if (days > 0) {
                 this.valueVariation(Math.ceil(days), data[0].price, "variationSecond")
             }
@@ -196,6 +195,7 @@ class AssetGraphic extends HTMLElement {
             url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
         } else {
             const dates = this.getDateFormatted()
+            asset = asset + "-BRL"
             url = `https://api.mercadobitcoin.net/api/v4/${asset}/trades?limit=1000&from=${dates[0]}&to=${dates[1]}`
         }
 
