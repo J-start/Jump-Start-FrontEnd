@@ -19,7 +19,7 @@ class AssetDetails extends HTMLElement {
         document.title = localStorage.getItem("assetName")
 
         this.verifyLocalStorage()
-
+        this.managerTradableShare()
         this.shadow.querySelector("#buttonSell").addEventListener("click", () => {
             localStorage.setItem("typeOperation", "SELL")
             window.location.href = "operation.html"
@@ -45,6 +45,9 @@ class AssetDetails extends HTMLElement {
             <div class="containerAssetValue">
                 <p>Cotação atual:</p>
                 <h2 id="valueAsset"></h2>
+            </div>
+            <div class="showMessageMarketClosed">
+                <h3>Mercado fechado. A compra e venda de ações é realizada em dias úteis, começando às 10:00h e finalizando às 18:00h</h3>
             </div>
         <div class="lineGraphic"></div>
             <div class="containerGraphicPage">
@@ -208,6 +211,23 @@ class AssetDetails extends HTMLElement {
                 window.location.href = "index.html";
             }
         }, 1000);
+    }
+
+    managerTradableShare(){
+        if(localStorage.getItem("assetType") == "SHARE"){
+            if(!isTadable()){
+                this.showMarketClosed()
+            }
+        }
+    }
+
+    showMarketClosed(){
+        const buyButton = this.shadow.querySelector('#buttonBuy');
+        const sellButton = this.shadow.querySelector('#buttonSell');
+        this.shadow.querySelector(".showMessageMarketClosed").style.display = "flex"
+        this.shadow.querySelector(".containerAssetValue").style.display = "none"
+        buyButton.disabled = true;
+        sellButton.disabled = true;
     }
 }
 

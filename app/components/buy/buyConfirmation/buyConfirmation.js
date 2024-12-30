@@ -71,9 +71,13 @@ class BuyConfirmation extends HTMLElement {
     }
     makeRequest() {
         const TOKEN = "aaa"
+        let code = ""
+        if (localStorage.getItem("assetType") != "SHARE"){
+            code = "-BRL"
+        }
         const a = JSON.stringify({
             AssetName: String(localStorage.getItem("assetName")),
-            AssetCode: String(localStorage.getItem("assetCode"))+"-BRL",
+            AssetCode: String(localStorage.getItem("assetCode"))+code,
             AssetType: String(localStorage.getItem("assetType")),
             AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
             OperationType: String(localStorage.getItem("typeOperation"))

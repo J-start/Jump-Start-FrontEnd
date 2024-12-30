@@ -9,6 +9,7 @@ class BuyForm extends HTMLElement {
         this.createStyles("app/components/buy/buyForm/buyForm-style.css")
         this.createStyles("app/components/buy/buyForm/buyForm-style-responsive.css")
         this.showWhatIsBuying()
+        this.managerTradableShare()
         this.shadow.querySelector("#advanceButton").addEventListener("click", () => {
             const quantity = this.shadow.querySelector("#quantityInput").value
             if (quantity > 0) {
@@ -86,6 +87,13 @@ class BuyForm extends HTMLElement {
             this.shadow.querySelector("#assetName").innerHTML = `Você está comprando ${assetName}` 
         }
         
+    }
+    managerTradableShare(){
+        if(localStorage.getItem("assetType") == "SHARE"){
+            if(!isTadable()){
+               window.location.href = "index.html"
+            }
+        }
     }
         
 

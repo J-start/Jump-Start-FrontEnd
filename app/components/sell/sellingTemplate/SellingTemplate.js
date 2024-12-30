@@ -9,6 +9,7 @@ class SellingTemplate extends HTMLElement {
         this.createStyles("app/components/sell/sellingTemplate/sellingTemplate-style.css")
         this.createStyles("app/components/sell/sellingTemplate/sellingTemplate-style-responsive.css")
         this.showWhatIsSelling()
+        this.managerTradableShare()
         this.shadow.querySelector("#insertValueOperation").addEventListener("click", (event) => {
             event.preventDefault();
             const inputValue = this.shadow.querySelector("#valueInput").value;
@@ -92,6 +93,14 @@ class SellingTemplate extends HTMLElement {
             this.shadow.querySelector("#assetName").innerHTML = `Você está vendendo ${assetName}` 
         }
         
+    }
+
+    managerTradableShare(){
+        if(localStorage.getItem("assetType") == "SHARE"){
+            if(!isTadable()){
+                 window.location.href = "index.html"
+            }
+        }
     }
 }
 
