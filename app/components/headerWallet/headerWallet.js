@@ -6,8 +6,8 @@ class HeaderWallet extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/header/headerHome-style.css")
-        this.createStyles("app/components/header/headerHome-style-responsive.css")
+        this.createStyles("app/components/headerWallet/headerWallet-style.css")
+        this.createStyles("app/components/headerWallet/headerWallet-style-responsive.css")
 
     }
 
@@ -15,8 +15,21 @@ class HeaderWallet extends HTMLElement {
 
         const template =
             `
-    <div class="containerAllelementsHeader">
-        <div></div>
+    <div class="wrapAll">
+    <div class="containerAllElementsHeader">
+        <div class="containerTitleBalance">
+            <h2>Seu saldo</h2>
+        </div>
+        <div class="line"></div>
+        <div class="containerBalance">
+            <h2>R$ 100,00</h2>
+            <a href="#">Ver detalhes</a>
+        </div>
+        <div class="containerButtons">
+         <button id="buttonWithDraw">Sacar</button>
+         <button id="buttonDeposit">Depositar</button>
+        </div>
+    </div>
     </div>
 
         `
