@@ -10,7 +10,7 @@ function isTadable(){
         if(currentDateBrasil.getHours() < 11 || currentDateBrasil.getHours() > 18) {
             return false
         }else if(currentDateBrasil.getHours() == 18 && currentDateBrasil.getMinutes() > 0){
-            return
+            return false
         }
     }
 
