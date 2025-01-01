@@ -9,12 +9,10 @@ class HeaderWallet extends HTMLElement {
         this.createStyles("app/components/headerWallet/headerWallet-style.css");
         this.createStyles("app/components/headerWallet/headerWallet-style-responsive.css");
         this.makeRequest();
-        this.updateBalance();
 
         document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "visible") {
-                this.makeRequest(); 
-                this.updateBalance(); 
+                this.makeRequest();  
             }
         });
         this.shadow.querySelector("#seeGraphic").addEventListener("click", () => {
@@ -77,9 +75,6 @@ class HeaderWallet extends HTMLElement {
     }
 
     makeRequest() {
-        if (localStorage.getItem("walletAssets") !== null) {
-            return;
-        }
         const TOKEN = "aaa";
         const url = `${getUrl()}/wallet/datas/`;
         fetch(url, {
@@ -95,8 +90,9 @@ class HeaderWallet extends HTMLElement {
             return response.json();
         }).then(data => {
             localStorage.setItem("walletAssets", JSON.stringify(data['Assets']));
-            localStorage.setItem("balance", JSON.stringify(data['InvestorBalance']));
-            this.updateBalance();
+            //localStorage.setItem("balance", JSON.stringify());
+            console.log(data['InvestorBalance']);
+            this.updateBalance(data['InvestorBalance']);
         }).catch(error => {
             console.error('Erro na requisição:', error);
         });
@@ -121,8 +117,10 @@ class HeaderWallet extends HTMLElement {
         }
     }
 
-    updateBalance() {
-        const balance = JSON.parse(localStorage.getItem("balance"));
+    updateBalance(balance) {
+        console.log(balance);
+        if (balance >=0)
+        //const balance = JSON.parse(localStorage.getItem("balance"));
         this.shadow.querySelector("#balance").innerHTML = "R$ " + Number(balance).toFixed(2);
     }
 
