@@ -14,3 +14,12 @@ html{
     scrollbar-color:  #1465FF #FFFFFF;
     scrollbar-width: thin;
 }
+
+body > :not(withdraw-component) {
+    padding-top: 13vh;
+}
+
+.main-container {
+    padding-top: 13vh;
+}
+

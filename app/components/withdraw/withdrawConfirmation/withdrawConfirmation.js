@@ -1,4 +1,4 @@
-class SellingTemplateProcedure extends HTMLElement {
+class WithdrawConfirmation extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -6,8 +6,8 @@ class SellingTemplateProcedure extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style.css")
-        this.createStyles("app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style-responsive.css")
+        this.createStyles("app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style.css")
+        this.createStyles("app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style-responsive.css")
 
         this.insertValuesAsset()
         
@@ -83,7 +83,7 @@ class SellingTemplateProcedure extends HTMLElement {
         `
 
         const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "sellingpro-component");
+        componentRoot.setAttribute("class", "withdrawConfirmation-component");
         componentRoot.innerHTML = template;
         return componentRoot
 
@@ -225,4 +225,4 @@ class SellingTemplateProcedure extends HTMLElement {
 
 }
 
-customElements.define("sellingpro-component", SellingTemplateProcedure);
+customElements.define("withdrawConfirmation-component", WithdrawConfirmation);
