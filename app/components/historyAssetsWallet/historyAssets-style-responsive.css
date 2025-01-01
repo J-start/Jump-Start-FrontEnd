@@ -25,3 +25,8 @@
         color: #333;
     }
 }
+@media (min-width: 280px) and (max-width: 380px) {
+    .containerHistory {
+        width: 70%;
+    }
+}

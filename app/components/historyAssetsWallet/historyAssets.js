@@ -5,6 +5,9 @@ class HistoryAssets extends HTMLElement {
     constructor() {
         super()
 
+        this.offset = 0; 
+        this.isFetching = false; 
+
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/historyAssetsWallet/historyAssets-style.css")
         this.createStyles("app/components/historyAssetsWallet/historyAssets-style-responsive.css")
@@ -12,6 +15,7 @@ class HistoryAssets extends HTMLElement {
         this.shadow.querySelector("#close").addEventListener("click", () => {
             this.remove()
         })
+        this.addInfiniteScrollListener();
     }
 
     createHTML() {
@@ -48,7 +52,7 @@ class HistoryAssets extends HTMLElement {
     }
     async makeRequest() {
         const TOKEN = "aaa";
-        let body = { "offset": 0 };
+        let body = { "offset": this.offset };
         const url = `${getUrl()}/history/assets/`;
     
         try {
@@ -112,8 +116,12 @@ class HistoryAssets extends HTMLElement {
     }
 
     async createHistory(){
+        if (this.isFetching) return; 
+        this.isFetching = true;
+
         let datas = await this.makeRequest();
         if(datas == null){
+            this.isFetching = false;
             return;
         }
         console.log(datas)
@@ -127,8 +135,10 @@ class HistoryAssets extends HTMLElement {
 
             return data
         })
-        console.log(datas)
+       
         datas.forEach(data => this.createElment(data));
+        this.offset ++ 
+        this.isFetching = false;
     }
 
     conversationType(type){
@@ -157,8 +167,13 @@ class HistoryAssets extends HTMLElement {
         return date.replaceAll("-", "/")
     }
 
-    close(){
-
+    addInfiniteScrollListener() {
+        const wrapHistory = this.shadow.querySelector(".wrapHistory");
+        wrapHistory.addEventListener("scroll", async () => {
+            if (wrapHistory.scrollTop + wrapHistory.clientHeight >= wrapHistory.scrollHeight - 10) {
+                await this.createHistory();
+            }
+        });
     }
 
 }
