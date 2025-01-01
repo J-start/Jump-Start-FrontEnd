@@ -23,6 +23,9 @@ class HeaderWallet extends HTMLElement {
         this.shadow.querySelector("#buttonAssetOperation").addEventListener("click", () => {
             this.addHistoryAssetsComponent()
         })
+        this.shadow.querySelector("#buttonWalletOperation").addEventListener("click", () => {
+            this.addHistoryOperationComponent()
+        })
     }
 
     createHTML() {
@@ -50,9 +53,7 @@ class HeaderWallet extends HTMLElement {
                 </div>
             
             </div>
-                <div class="containerHistory">
-                    
-                </div>
+   
         `;
 
         const componentRoot = document.createElement("div");
@@ -126,9 +127,25 @@ class HeaderWallet extends HTMLElement {
     }
 
     addHistoryAssetsComponent() {
-        //this.removeExistingHistoric()
+        this.removeExistingHistoric()
+
+        const containerHistoric = document.createElement("div");
+        containerHistoric.className = "containerHistory"; 
         const historyComponent = document.createElement("historyassets-component");
-        this.shadow.querySelector(".containerHistory").appendChild(historyComponent);
+        containerHistoric.appendChild(historyComponent);
+
+        this.shadow.querySelector(".home-component").appendChild(containerHistoric);
+    }
+
+    addHistoryOperationComponent() {
+        this.removeExistingHistoric()
+        
+        const containerHistoric = document.createElement("div");
+        containerHistoric.className = "containerHistory"; 
+        const historyComponent = document.createElement("historyoperation-component");
+        containerHistoric.appendChild(historyComponent);
+
+        this.shadow.querySelector(".home-component").appendChild(containerHistoric);
     }
     removeExistingHistoric() {
         const existingGraphic = this.shadow.querySelector(".containerHistory");
