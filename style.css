@@ -15,11 +15,4 @@ html{
     scrollbar-width: thin;
 }
 
-body > :not(withdraw-component) {
-    padding-top: 13vh;
-}
-
-.main-container {
-    padding-top: 13vh;
-}
 
