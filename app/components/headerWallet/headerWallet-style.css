@@ -129,3 +129,12 @@ a{
     height: 100%;
     width: 100%;
 }
+.containerHistory{
+    background-color: #1C2029;
+    margin-left: 280px;
+}
+
+.home-component{
+    height: 100vh;
+    background-color: #1C2029;
+}

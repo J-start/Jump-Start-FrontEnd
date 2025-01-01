@@ -12,6 +12,7 @@
         align-items: flex-start;
         justify-content: center;
         margin-top: -20px;
+        height: 300px;
     }
 
     .containerAllElementsHeader {

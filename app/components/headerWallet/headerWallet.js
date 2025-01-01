@@ -20,6 +20,9 @@ class HeaderWallet extends HTMLElement {
         this.shadow.querySelector("#seeGraphic").addEventListener("click", () => {
             this.insertGraphic()
         })
+        this.shadow.querySelector("#buttonAssetOperation").addEventListener("click", () => {
+            this.addHistoryAssetsComponent()
+        })
     }
 
     createHTML() {
@@ -47,6 +50,9 @@ class HeaderWallet extends HTMLElement {
                 </div>
             
             </div>
+                <div class="containerHistory">
+                    
+                </div>
         `;
 
         const componentRoot = document.createElement("div");
@@ -117,6 +123,18 @@ class HeaderWallet extends HTMLElement {
     updateBalance() {
         const balance = JSON.parse(localStorage.getItem("balance"));
         this.shadow.querySelector("#balance").innerHTML = "R$ " + Number(balance).toFixed(2);
+    }
+
+    addHistoryAssetsComponent() {
+        //this.removeExistingHistoric()
+        const historyComponent = document.createElement("historyassets-component");
+        this.shadow.querySelector(".containerHistory").appendChild(historyComponent);
+    }
+    removeExistingHistoric() {
+        const existingGraphic = this.shadow.querySelector(".containerHistory");
+        if (existingGraphic) {
+            existingGraphic.remove();
+        }
     }
 }
 

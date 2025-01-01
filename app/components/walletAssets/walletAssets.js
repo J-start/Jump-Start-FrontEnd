@@ -59,8 +59,9 @@ class WalletAssets extends HTMLElement {
     
         const resolvedData = await Promise.all(
             assetArray.map(async asset => {
-                const value = await this.getValueAsset(asset.AssetName, asset.AssetType);
-                return asset.AssetQuantity * value; 
+                const valueAsset = await this.getValueAsset(asset.AssetName, asset.AssetType);
+                let finalValue = valueAsset * asset.AssetQuantity ;
+                return Number(finalValue).toFixed(2); 
             })
         );
     
