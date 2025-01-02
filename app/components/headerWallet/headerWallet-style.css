@@ -1,0 +1,71 @@
+.wrapAll{
+    height: 100vh;
+    background-color: #1C2029;
+}
+
+.containerAllElementsHeader{
+    background-color: #444549;
+    margin-top: -20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 0 0 15px 15px;
+}
+.line{
+    background-color: #F1F1F1;
+    height: 1px;
+    width: 90%;
+}
+
+.containerTitleBalance{
+    padding-top: 25px;
+    color: white;
+}
+
+.containerBalance{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 90%;
+}
+
+a{
+    color: white;
+}
+.containerButtons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px; 
+    color: black;
+    width: 90%;
+}
+#buttonWithDraw, #buttonDeposit {
+    border: none;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: 600;
+    padding: 15px 30px;
+    width: 60%;
+    height: auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+#buttonWithDraw{
+    background-color: white;
+}
+#buttonDeposit{
+    background-color: #C6FE1F;
+}
+#buttonWithDraw:hover, #buttonDeposit:hover{
+    background-color: #1465FF;
+}
+
+.wrapAll{
+    width: 100%;
+}
