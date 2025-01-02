@@ -2,6 +2,7 @@ class News extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
     offset = 0
+    isFetching = false
     constructor() {
         super()
 
@@ -9,6 +10,7 @@ class News extends HTMLElement {
         this.createStyles("app/components/news/news-style.css")
         this.createStyles("app/components/news/news-style-responsive.css")
         this.makeRequest()
+        this.addInfiniteScrollListener();
     }
 
     createHTML() {
@@ -43,7 +45,10 @@ class News extends HTMLElement {
     }
 
     makeRequest() {
-
+        if(this.isFetching){
+            return
+        }
+        this.isFetching = true
         const url = `${getUrl()}/news/?offset=${this.offset}`;
         fetch(url, {
             method: "GET",
@@ -61,6 +66,8 @@ class News extends HTMLElement {
         }).catch(error => {
             console.error('Erro na requisição:', error);
         });
+        this.offset ++
+        this.isFetching = false
     }
 
     convertObject(data){
@@ -94,6 +101,15 @@ class News extends HTMLElement {
         newsDiv.appendChild(h3);
 
         this.shadow.querySelector(".containerAllNews").appendChild(newsDiv);
+    }
+
+    addInfiniteScrollListener() {
+        const wrapHistory = this.shadow.querySelector(".containerAllNews");
+        wrapHistory.addEventListener("scroll", async () => {
+            if (wrapHistory.scrollTop + wrapHistory.clientHeight >= wrapHistory.scrollHeight - 10) {
+                 this.makeRequest()
+            }
+        });
     }
 
 }
