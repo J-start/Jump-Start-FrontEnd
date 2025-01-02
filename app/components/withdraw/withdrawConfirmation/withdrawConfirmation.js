@@ -1,29 +1,29 @@
 class WithdrawConfirmation extends HTMLElement {
+  shadow = this.attachShadow({ mode: "open" });
 
-    shadow = this.attachShadow({ mode: "open" });
+  constructor() {
+    super();
 
-    constructor() {
-        super()
+    this.shadow.appendChild(this.createHTML());
+    this.createStyles(
+      "app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style.css"
+    );
+    this.createStyles(
+      "app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style-responsive.css"
+    );
 
-        this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style.css")
-        this.createStyles("app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style-responsive.css")
+    this.insertValuesAsset();
 
-        this.insertValuesAsset()
-        
-        this.shadow.querySelector(".back").addEventListener("click", () => {
-            window.location.href = "operation.html"
-        })
-        this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
-            this.makeRequest()
-        })
-    }
+    this.shadow.querySelector(".back").addEventListener("click", () => {
+      window.location.href = "operation.html";
+    });
+    this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
+      this.makeRequest();
+    });
+  }
 
-    createHTML() {
-
-        const template =
-
-            `
+  createHTML() {
+    const template = `
  
             <div id="containerAll">
                 <div class="principalBlock">
@@ -65,7 +65,7 @@ class WithdrawConfirmation extends HTMLElement {
         </div>
 
         <div class="buttonSell">
-            <button id="sellAsset">Vender</button>
+            <button id="sellAsset">Sacar</button>
         </div>
     </div>
     </div>
@@ -80,149 +80,151 @@ class WithdrawConfirmation extends HTMLElement {
    
        
 
-        `
+        `;
 
-        const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "withdrawConfirmation-component");
-        componentRoot.innerHTML = template;
-        return componentRoot
+    const componentRoot = document.createElement("div");
+    componentRoot.setAttribute("class", "withdrawconfirmation-component");
+    componentRoot.innerHTML = template;
+    return componentRoot;
+  }
 
+  makeRequest() {
+    const TOKEN = "aaaa";
+    let code = "";
+    if (localStorage.getItem("assetType") != "SHARE") {
+      code = "-BRL";
     }
-
-    makeRequest(){
-        const TOKEN = "aaaa"
-        let code = ""
-        if (localStorage.getItem("assetType") != "SHARE"){
-            code = "-BRL"
-        }
-        const datasPost = JSON.stringify({
-            AssetName: String(localStorage.getItem("assetName")),
-            AssetCode: String(localStorage.getItem("assetCode"))+code,
-            AssetType: String(localStorage.getItem("assetType")),
-            AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
-            OperationType:String(localStorage.getItem("typeOperation"))
-        })
-        const url = `${getUrl()}/sell/`
-        fetch(url, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                 "Authorization": `Bearer ${TOKEN}`
-            },
-   
-            body: datasPost
-        }).then(response => {
-            if (!response.ok) {
-                console.error("Erro na requisição");
-            }
-            return response.json();
-        }
-        ).then(data => {
-            if (data['code'] != 200) {
-                this.insertPageError(data['message'])
-                if(data['message'] == "mercado fechado"){
-                    this.makeCountmarketClosed()
-                }else{
-                    this.makeCountDownError()
-                }
-            } else {
-                this.insertPageSuccess()
-                this.makeCountDownSuccess()
-            }
-
-
-        }).catch(error => {
-            console.error('Erro na requisição:', error
-        );
+    const datasPost = JSON.stringify({
+      AssetName: String(localStorage.getItem("assetName")),
+      AssetCode: String(localStorage.getItem("assetCode")) + code,
+      AssetType: String(localStorage.getItem("assetType")),
+      AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
+      OperationType: String(localStorage.getItem("typeOperation")),
     });
+    const url = `${getUrl()}/sell/`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
+      },
 
-    }
+      body: datasPost,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.error("Erro na requisição");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data["code"] != 200) {
+          this.insertPageError(data["message"]);
+          if (data["message"] == "mercado fechado") {
+            this.makeCountmarketClosed();
+          } else {
+            this.makeCountDownError();
+          }
+        } else {
+          this.insertPageSuccess();
+          this.makeCountDownSuccess();
+        }
+      })
+      .catch((error) => {
+        console.error("Erro na requisição:", error);
+      });
+  }
 
-    insertPageSuccess() {
-        this.shadow.querySelector("#containerAll").remove()
-        const success = document.createElement("sellingconc-component");
-        this.shadow.querySelector(".containerOtherScreens").appendChild(success)
-    }
+  insertPageSuccess() {
+    this.shadow.querySelector("#containerAll").remove();
+    const success = document.createElement("sellingconc-component");
+    this.shadow.querySelector(".containerOtherScreens").appendChild(success);
+  }
 
-    insertPageError(messageError){
-        this.shadow.querySelector("#containerAll").remove()
-        this.shadow.querySelector(".containerOtherScreens").innerHTML = `<sellingerror-component messageError="${messageError}"></sellingerror-component>`
+  insertPageError(messageError) {
+    this.shadow.querySelector("#containerAll").remove();
+    this.shadow.querySelector(
+      ".containerOtherScreens"
+    ).innerHTML = `<sellingerror-component messageError="${messageError}"></sellingerror-component>`;
+  }
 
-    }
+  insertValuesAsset() {
+    this.shadow.querySelector("#assetName").innerHTML =
+      localStorage.getItem("assetName");
+    this.shadow.querySelector("#assetValue").innerHTML =
+      "R$ " +
+      Number(
+        Number(localStorage.getItem("assetValue")).toFixed(4) *
+          Number(localStorage.getItem("assetQuantity")).toFixed(4)
+      ).toFixed(4);
+    this.shadow.querySelector("#assetDate").innerHTML =
+      new Date().toLocaleDateString();
+  }
 
-    insertValuesAsset() {
-        this.shadow.querySelector("#assetName").innerHTML = localStorage.getItem("assetName")
-        this.shadow.querySelector("#assetValue").innerHTML = "R$ " + Number(Number(localStorage.getItem("assetValue")).toFixed(4) * Number(localStorage.getItem("assetQuantity")).toFixed(4)).toFixed(4)
-        this.shadow.querySelector("#assetDate").innerHTML = new Date().toLocaleDateString()
-    }
+  createStyles(...linksUser) {
+    linksUser.forEach((e) => {
+      const link = this.createLink(e);
+      this.shadow.appendChild(link);
+    });
+  }
+  createLink(linkStyle) {
+    const link = document.createElement("link");
+    link.setAttribute("rel", "stylesheet");
+    link.setAttribute("href", linkStyle);
+    return link;
+  }
 
-    createStyles(...linksUser) {
+  makeCountDownSuccess() {
+    let count = 5;
+    const countDown = this.shadow.querySelector("#countDown");
+    const interval = setInterval(() => {
+      count--;
+      countDown.innerHTML = `Você será redirecionado para a página inicial em ${count} segundos`;
+      if (count === 0) {
+        clearInterval(interval);
+        this.clearLocalStorage();
+        this.clearLocalStorage();
+        window.location.href = "index.html";
+      }
+    }, 1000);
+  }
 
-        linksUser.forEach(e => {
-            const link = this.createLink(e)
-            this.shadow.appendChild(link)
-        })
+  makeCountDownError() {
+    let count = 5;
+    const countDown = this.shadow.querySelector("#countDown");
+    const interval = setInterval(() => {
+      count--;
+      countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`;
+      if (count === 0) {
+        clearInterval(interval);
+        window.location.href = "index.html";
+      }
+    }, 1000);
+  }
 
-    }
-    createLink(linkStyle) {
-        const link = document.createElement("link");
-        link.setAttribute("rel", "stylesheet");
-        link.setAttribute("href", linkStyle);
-        return link
-    }
+  makeCountmarketClosed() {
+    let count = 15;
+    const countDown = this.shadow.querySelector("#countDown");
+    const interval = setInterval(() => {
+      count--;
+      countDown.innerHTML = `Só é possível comprar ou vender ações em dias úteis e em horarios fixos. Você será redirecionado para a página inicial em ${count} segundos`;
+      if (count === 0) {
+        clearInterval(interval);
+        this.clearLocalStorage();
+        window.location.href = "index.html";
+      }
+    }, 1000);
+  }
 
-    makeCountDownSuccess() {
-        let count = 5
-        const countDown = this.shadow.querySelector("#countDown")
-        const interval = setInterval(() => {
-            count--
-            countDown.innerHTML = `Você será redirecionado para a página inicial em ${count} segundos`
-            if (count === 0) {
-                clearInterval(interval)
-                this.clearLocalStorage()
-                this.clearLocalStorage()
-                window.location.href = "index.html"
-            }
-        }, 1000)
-    }
-
-    makeCountDownError() {
-        let count = 5
-        const countDown = this.shadow.querySelector("#countDown")
-        const interval = setInterval(() => {
-            count--
-            countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`
-            if (count === 0) {
-                clearInterval(interval)
-                window.location.href = "index.html"
-            }
-        }, 1000)
-    }
-
-    makeCountmarketClosed() {
-        let count = 15
-        const countDown = this.shadow.querySelector("#countDown")
-        const interval = setInterval(() => {
-            count--
-            countDown.innerHTML = `Só é possível comprar ou vender ações em dias úteis e em horarios fixos. Você será redirecionado para a página inicial em ${count} segundos`
-            if (count === 0) {
-                clearInterval(interval)
-                this.clearLocalStorage()
-                window.location.href = "index.html"
-            }
-        }, 1000)
-    }
-
-    clearLocalStorage() {
-        localStorage.removeItem("assetCode")
-        localStorage.removeItem("assetName")
-        localStorage.removeItem("assetQuantity")
-        localStorage.removeItem("assetType")
-        localStorage.removeItem("assetValue")
-        localStorage.removeItem("typeOperation")
-        localStorage.removeItem("dateOperation")
-    }
-
+  clearLocalStorage() {
+    localStorage.removeItem("assetCode");
+    localStorage.removeItem("assetName");
+    localStorage.removeItem("assetQuantity");
+    localStorage.removeItem("assetType");
+    localStorage.removeItem("assetValue");
+    localStorage.removeItem("typeOperation");
+    localStorage.removeItem("dateOperation");
+  }
 }
 
-customElements.define("withdrawConfirmation-component", WithdrawConfirmation);
+customElements.define("withdrawconfirmation-component", WithdrawConfirmation);
