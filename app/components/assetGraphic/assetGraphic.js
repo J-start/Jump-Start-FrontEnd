@@ -85,7 +85,7 @@ class AssetGraphic extends HTMLElement {
 
             let days = this.calcDelta(this.fomatDataTimestamp(data[1].timestamp))
             this.valueVariation(days, data[0].bid, "variationFirst")
-
+            console.log( data)
             days = this.calcDelta(this.fomatDataTimestamp(data[data.length - 1].timestamp))
             this.valueVariation(days, data[data.length - 1].bid, "variationSecond")
 
@@ -224,7 +224,8 @@ class AssetGraphic extends HTMLElement {
     }
 
     valueVariation(days, value, div) {
-
+        console.log(value)
+        console.log(days)
         let variation = (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3) - 100
         variation = variation.toFixed(1)
 
