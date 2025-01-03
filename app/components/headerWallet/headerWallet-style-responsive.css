@@ -1,23 +1,57 @@
+
 @media screen and (min-width: 600px) and (max-width: 1024px) {
-    .containerButtons{
+    .containerButtons {
         width: 60%;
     }
 }
 
 @media screen and (min-width: 1024px) {
-    .containerAllElementsHeader{
-        margin-left: 290px;
-        width: 50%;
-        border-radius:0px;
-      
+    .wrapAll {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin-top: -20px;
+        height: 300px;
     }
-    .containerButtons{
+
+    .containerAllElementsHeader {
+        width: 90%;
+        display: flex;
+        align-items: flex-start;
+        margin-left: 280px;
+    }
+
+    .containerAllElementsBalance {
         width: 60%;
+        border-radius: 0px;
+        margin: 0;
+        background-color: #444549;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-left: 30px;
     }
+
+    .containerAllElementsHistory {
+        width: 35%;
+        height: auto;
+        background-color: #444549;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-left: 15px;
+        height: 254px;
+    }
+
     .containerTitleBalance {
-        padding-top: 25px;
+        padding-top: 0;
+        margin-bottom: 10px;
         color: white;
-        margin-right: auto;
-        padding-left: 20px;
+        text-align: left;
+    }
+
+    .containerButtons {
+        width: 100%;
     }
 }
+
+

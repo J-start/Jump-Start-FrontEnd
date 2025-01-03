@@ -5,21 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="app/utils/urlBackEnd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Carteira</title>
     <style>
         body {
             padding-top: 20px;
         }
+
     </style>
 </head>
 
 <body>
 
-    <menu-component top-sidebar="3" highlight="Wallet"></menu-component>
-    <headerwallet-component></headerwallet-component>
+
+    <menu-component top-sidebar="3" highlight="Wallet"></menu-component> 
+     <headerwallet-component></headerwallet-component> 
+    <!-- <historyassets-component></historyassets-component> -->
     <script src="app/components/header/headerHome.js"></script>
     <script src="app/components/sideBar/sideBar.js"></script>
     <script src="app/components/headerWallet/headerWallet.js"></script>
+    <script src="app/components/walletAssets/walletAssets.js"></script>
+    <script src="app/components/historyAssetsWallet/historyAssets.js"></script>
+    <script src="app/components/historicWalletOperations/historicOperations.js"></script>
 </body>
 
 </html>
