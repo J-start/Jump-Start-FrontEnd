@@ -18,7 +18,6 @@ function isTadable(){
 }
 
 function isHolliday(date){
-    console.log(date)
    let formatedDate = date.toLocaleDateString("pt-BR");
  
    let hollidays = ["01/01/2025",
