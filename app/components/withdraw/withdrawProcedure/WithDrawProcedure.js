@@ -11,6 +11,21 @@ class WithDrawProcedure extends HTMLElement {
     this.createStyles(
       "app/components/withdraw/withdrawProcedure/withdraw-style-responsive.css"
     );
+
+    this.shadow
+      .querySelector("#insertValueOperation")
+      .addEventListener("click", (event) => {
+        event.preventDefault();
+        const inputValue = this.shadow.querySelector("#valueInput").value;
+
+        if (inputValue <= 0) {
+          alert("Valor inválido");
+        } else {
+          localStorage.setItem("withdrawValue", inputValue);
+          this.shadow.querySelector(".sellingBlockAlt").remove();
+          this.insertProcedureDOM();
+        }
+      });
   }
 
   createHTML() {
@@ -24,14 +39,15 @@ class WithDrawProcedure extends HTMLElement {
             <form action="">
               
                  <input type="number" id="valueInput"> <br>
-            </form>
-        </div>
-
-    <div class="buttonFormat">
+                 <div class="buttonFormat">
         <div class="Sacar">
             <button>Sacar</button>
         </div>
     </div>
+            </form>
+        </div>
+
+    
 </div>
 
         `;

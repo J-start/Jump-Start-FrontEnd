@@ -13,7 +13,7 @@ class WithdrawConfirmation extends HTMLElement {
     );
 
     this.insertWithdrawData();
-    localStorage.setItem("withdraw", "Saque");
+    localStorage.setItem("Operação", "Saque");
 
     this.shadow.querySelector(".back").addEventListener("click", () => {
       window.location.href = "operationWallet.html";
