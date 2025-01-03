@@ -12,14 +12,16 @@ class WithdrawConfirmation extends HTMLElement {
       "app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style-responsive.css"
     );
 
-    this.insertValuesAsset();
+    this.insertWithdrawData();
+    localStorage.setItem("withDraw", "Saque");
 
     this.shadow.querySelector(".back").addEventListener("click", () => {
-      window.location.href = "operation.html";
+      window.location.href = "operationWallet.html";
     });
     this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
       this.makeRequest();
     });
+    
   }
 
   createHTML() {
@@ -34,15 +36,15 @@ class WithdrawConfirmation extends HTMLElement {
     <table>
         <tbody>
             <tr>
-                <th scope="row">Ativo escolhido</th>
-                <td id="assetName" ></td>
+                <th scope="row">Operação</th>
+                <td id="assetName">Saque</td>
                 <div class="line"></div>
             </tr>
 
             
 
             <tr>
-                <th scope="row">Valor da venda</th>
+                <th scope="row">Valor da operação</th>
                 <td id="assetValue" ></td>
             </tr>
 
@@ -57,6 +59,8 @@ class WithdrawConfirmation extends HTMLElement {
 
         </tbody>
     </table>
+  
+    
 </div>
 
 <div class="buttonFormat">
@@ -76,10 +80,6 @@ class WithdrawConfirmation extends HTMLElement {
     </div>
     
     <div class="containerOtherScreens"></div>
-
-   
-       
-
         `;
 
     const componentRoot = document.createElement("div");
@@ -91,17 +91,12 @@ class WithdrawConfirmation extends HTMLElement {
   makeRequest() {
     const TOKEN = "aaaa";
     let code = "";
-    if (localStorage.getItem("assetType") != "SHARE") {
-      code = "-BRL";
-    }
+
     const datasPost = JSON.stringify({
-      AssetName: String(localStorage.getItem("assetName")),
-      AssetCode: String(localStorage.getItem("assetCode")) + code,
-      AssetType: String(localStorage.getItem("assetType")),
-      AssetAmount: parseFloat(localStorage.getItem("assetQuantity")),
-      OperationType: String(localStorage.getItem("typeOperation")),
+      TokenInvestor: String(localStorage.getItem("TokenInvestor")),
+      WithdrawValue: parseFloat(localStorage.getItem("value")),
     });
-    const url = `${getUrl()}/sell/`;
+    const url = `${getUrl()}/withdraw/`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -120,11 +115,7 @@ class WithdrawConfirmation extends HTMLElement {
       .then((data) => {
         if (data["code"] != 200) {
           this.insertPageError(data["message"]);
-          if (data["message"] == "mercado fechado") {
-            this.makeCountmarketClosed();
-          } else {
-            this.makeCountDownError();
-          }
+          this.makeCountDownError();
         } else {
           this.insertPageSuccess();
           this.makeCountDownSuccess();
@@ -137,7 +128,7 @@ class WithdrawConfirmation extends HTMLElement {
 
   insertPageSuccess() {
     this.shadow.querySelector("#containerAll").remove();
-    const success = document.createElement("sellingconc-component");
+    const success = document.createElement("withdrawconclusion-component");
     this.shadow.querySelector(".containerOtherScreens").appendChild(success);
   }
 
@@ -145,20 +136,15 @@ class WithdrawConfirmation extends HTMLElement {
     this.shadow.querySelector("#containerAll").remove();
     this.shadow.querySelector(
       ".containerOtherScreens"
-    ).innerHTML = `<sellingerror-component messageError="${messageError}"></sellingerror-component>`;
+    ).innerHTML = `<withdrawerror-component messageError="${messageError}"></withdrawerror-component>`;
   }
 
-  insertValuesAsset() {
-    this.shadow.querySelector("#assetName").innerHTML =
-      localStorage.getItem("assetName");
+  insertWithdrawData() {
     this.shadow.querySelector("#assetValue").innerHTML =
-      "R$ " +
-      Number(
-        Number(localStorage.getItem("assetValue")).toFixed(4) *
-          Number(localStorage.getItem("assetQuantity")).toFixed(4)
-      ).toFixed(4);
+      "R$ " + Number(Number(localStorage.getItem("value")).toFixed(4));
     this.shadow.querySelector("#assetDate").innerHTML =
       new Date().toLocaleDateString();
+
   }
 
   createStyles(...linksUser) {
@@ -202,28 +188,9 @@ class WithdrawConfirmation extends HTMLElement {
     }, 1000);
   }
 
-  makeCountmarketClosed() {
-    let count = 15;
-    const countDown = this.shadow.querySelector("#countDown");
-    const interval = setInterval(() => {
-      count--;
-      countDown.innerHTML = `Só é possível comprar ou vender ações em dias úteis e em horarios fixos. Você será redirecionado para a página inicial em ${count} segundos`;
-      if (count === 0) {
-        clearInterval(interval);
-        this.clearLocalStorage();
-        window.location.href = "index.html";
-      }
-    }, 1000);
-  }
-
   clearLocalStorage() {
-    localStorage.removeItem("assetCode");
-    localStorage.removeItem("assetName");
-    localStorage.removeItem("assetQuantity");
-    localStorage.removeItem("assetType");
-    localStorage.removeItem("assetValue");
-    localStorage.removeItem("typeOperation");
-    localStorage.removeItem("dateOperation");
+    localStorage.removeItem("TokenInvestor");
+    localStorage.removeItem("value");
   }
 }
 

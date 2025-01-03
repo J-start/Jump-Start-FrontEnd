@@ -1,6 +1,6 @@
 
 .containerAll {
-    padding-top: -13vh;
+    margin-top: -13vh;
 }
 .principalBlock {
     text-align: center;
@@ -13,7 +13,7 @@
     justify-content: center; /* Centraliza verticalmente */
     align-items: center; /* Centraliza horizontalmente */
     box-sizing: border-box; /* Inclui o padding no cálculo de tamanho */
-    padding-top: -13vh;
+    margin-top: -13vh;
 }
 
 .buttonFormat {
