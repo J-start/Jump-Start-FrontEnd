@@ -199,7 +199,19 @@ class AssetDetails extends HTMLElement {
         const containerBalanceValue = document.createElement('div');
         containerBalanceValue.classList.add('containerBalanceValue');
         const balanceValue = document.createElement('h3');
-        balanceValue.textContent = 'R$ 1.000,00';
+        if(localStorage.getItem("balance")){
+            const balance = localStorage.getItem("balance");
+            const formattedCurrency = Number(balance).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              });
+            balanceValue.textContent = formattedCurrency;
+        }else{
+            containerBalanceValue.style.display = "none"
+            title.style.display = "none"
+        }
         containerBalanceValue.appendChild(balanceValue);
 
 
