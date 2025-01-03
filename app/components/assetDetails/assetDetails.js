@@ -106,10 +106,16 @@ class AssetDetails extends HTMLElement {
 
     async showResponse() {
         const data = await this.makeRequestApi(this.buildUrl())
-        const value = this.getValueAsset(data)
+        const value = Number(this.getValueAsset(data))
+        const formattedCurrency = value.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 3,
+            maximumFractionDigits: 4
+          });
 
         this.buildResponse()
-        this.shadow.querySelector("#valueAsset").innerHTML = "R$ " + value
+        this.shadow.querySelector("#valueAsset").innerHTML = formattedCurrency
 
 
 

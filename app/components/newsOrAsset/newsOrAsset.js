@@ -1,6 +1,6 @@
 class NewsOrAsset extends HTMLElement {
     shadow = this.attachShadow({ mode: "open" });
-    isOPtionsAssetOpen = false;
+    isOptionsAssetOpen = false;
     constructor() {
         super();
 
@@ -63,7 +63,7 @@ class NewsOrAsset extends HTMLElement {
     handleAcoesClick() {
         this.clearContainer()
         this.shadow.querySelector(".ContainerSwitchOption").innerHTML = '<share-component></share-component>';
-        this.isOPtionsAssetOpen = true;
+        this.isOptionsAssetOpen = true;
         this.managerColorsButtons("acoes");
         
     }
@@ -71,7 +71,7 @@ class NewsOrAsset extends HTMLElement {
     handleMoedasClick() {
         this.clearContainer()
         this.shadow.querySelector(".ContainerSwitchOption").innerHTML = '<coin-component></coin-component>';
-        this.isOPtionsAssetOpen = true;
+        this.isOptionsAssetOpen = true;
         this.managerColorsButtons("moedas");
         
     }
@@ -79,17 +79,18 @@ class NewsOrAsset extends HTMLElement {
     handleCriptoClick() {
         this.clearContainer()
         this.shadow.querySelector(".ContainerSwitchOption").innerHTML = '<cripto-component></cripto-component>';
-        this.isOPtionsAssetOpen = true;
+        this.isOptionsAssetOpen = true;
         this.managerColorsButtons("criptomoedas");
      
     }
 
     handleResourcesClick() {
-        if(this.isOPtionsAssetOpen){
+        if(this.isOptionsAssetOpen){
             this.shadow.querySelector(".containerChildrenElements").style.display = "none";
-            this.isOPtionsAssetOpen = false;
+            this.isOptionsAssetOpen = false;
         }else{
-            this.isOPtionsAssetOpen = true;
+            this.isOptionsAssetOpen = true;
+            this.shadow.querySelector(".ContainerSwitchOption").innerHTML = "";
             this.shadow.querySelector(".containerChildrenElements").style.display = "block";
         }
       
@@ -98,11 +99,14 @@ class NewsOrAsset extends HTMLElement {
     }
 
     handleNewsClick() {
-        this.shadow.querySelector(".containerChildrenElements").style.display = "none";
+        
         this.managerBackGroundColors("news");
         this.clearContainer()
+        
         this.resetStateButtons()
-        this.isOPtionsAssetOpen = false;
+        this.shadow.querySelector(".ContainerSwitchOption").innerHTML = '<news-component></news-component>';
+        this.shadow.querySelector(".containerChildrenElements").style.display = "none";
+        this.isOptionsAssetOpen = false;
     }
 
 

@@ -137,7 +137,14 @@ class BuyConfirmation extends HTMLElement {
     }
     insertValuesAsset() {
         this.shadow.querySelector("#assetName").innerHTML = localStorage.getItem("assetName")
-        this.shadow.querySelector("#assetValue").innerHTML = "R$ " + Number(Number(localStorage.getItem("assetValue")).toFixed(4) * Number(localStorage.getItem("assetQuantity")).toFixed(4)).toFixed(4)
+        const value = Number(Number(localStorage.getItem("assetValue")).toFixed(4) * Number(localStorage.getItem("assetQuantity")).toFixed(4)).toFixed(4)
+        const formattedvalue = Number(value).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 3,
+            maximumFractionDigits: 4  
+          });
+        this.shadow.querySelector("#assetValue").innerHTML = formattedvalue
         this.shadow.querySelector("#assetDate").innerHTML = new Date().toLocaleDateString()
     }
 

@@ -52,7 +52,7 @@ button:hover{
 .ContainerSwitchOption{
     width: 100%;
     margin-top: -19px;
-    background-color: #1C2029;
+    
 }
 
 #resources-bnt{
@@ -78,3 +78,4 @@ button:hover{
 #news-bnt:hover,#resources-bnt:hover{
     background-color: #1C2029;
 }
+

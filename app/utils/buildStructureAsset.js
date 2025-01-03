@@ -25,12 +25,24 @@ function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin,ur
     wrapImageAndTitle.appendChild(name);
 
     const value1 = document.createElement("h4");
-    value1.textContent = defineFiledValueOne(typeAsset) + valueField1;
+    const formattedvalueField1 = Number(valueField1).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 4  
+      });
+    value1.textContent = defineFiledValueOne(typeAsset) + formattedvalueField1;
     value1.innerHTML += `<span class="info-icon">?</span>`;
     value1.setAttribute("class", "value1");
 
     const value2 = document.createElement("h4");
-    value2.textContent = defineFiledValuTwo(typeAsset) + valueField2;
+    const formattedvalueField2 = Number(valueField2).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 4  
+      });
+    value2.textContent = defineFiledValuTwo(typeAsset) + formattedvalueField2;
     value2.innerHTML += `<span class="info-icon">?</span>`;
     value2.setAttribute("class", "value2");
     
@@ -109,22 +121,22 @@ function messageFieldTwo(typeAsset, nameAsset) {
 function defineFiledValueOne(typeAsset) {
     switch (typeAsset) {
         case "SHARE":
-            return "Abertura. R$: "
+            return "Abertura. "
         case "COIN":
-            return "Compra. R$ "
+            return "Compra. "
         case "CRYPTO":
-            return "R$: "
+            return ""
     }
 }
 
 function defineFiledValuTwo(typeAsset) {
     switch (typeAsset) {
         case "SHARE":
-            return "Fechamento. R$: "
+            return "Fechamento. "
         case "COIN":
-            return "Venda. R$ "
+            return "Venda. "
         case "CRYPTO":
-            return "Máximo. R$: "
+            return "Máximo. "
     }
 }
 
