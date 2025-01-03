@@ -13,15 +13,15 @@ class WithdrawConfirmation extends HTMLElement {
     );
 
     this.insertWithdrawData();
-    localStorage.setItem("withDraw", "Saque");
+    localStorage.setItem("withdraw", "Saque");
 
     this.shadow.querySelector(".back").addEventListener("click", () => {
       window.location.href = "operationWallet.html";
     });
     this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
       this.makeRequest();
+      this.makeWalletRequest();
     });
-    
   }
 
   createHTML() {
@@ -54,9 +54,6 @@ class WithdrawConfirmation extends HTMLElement {
                 <th scope="row">Data</th>
                 <td id="assetDate" ></td>
             </tr>
-
-            
-
         </tbody>
     </table>
   
@@ -126,6 +123,41 @@ class WithdrawConfirmation extends HTMLElement {
       });
   }
 
+  makeWalletRequest() {
+    const TOKEN = "aaaa";
+    const url = `${getUrl()}/wallet/datas/`;
+
+    const dataInvestorWallet = JSON.stringify({
+      TokenInvestor: String(localStorage.getItem("TokenInvestor")),
+    });
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: dataInvestorWallet,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro na requisição para a API de carteira.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const balance = data.InvestorBalance;
+        if (balance < localStorage.getItem("value")) {
+          throw new Error("Saldo insuficiente para realizar a operação.");
+        }
+
+        localStorage.setItem("InvestorBalance", balance);
+      })
+      .catch((error) => {
+        console.error("Erro ao obter dados da carteira:", error);
+      });
+  }
+
   insertPageSuccess() {
     this.shadow.querySelector("#containerAll").remove();
     const success = document.createElement("withdrawconclusion-component");
@@ -144,7 +176,6 @@ class WithdrawConfirmation extends HTMLElement {
       "R$ " + Number(Number(localStorage.getItem("value")).toFixed(4));
     this.shadow.querySelector("#assetDate").innerHTML =
       new Date().toLocaleDateString();
-
   }
 
   createStyles(...linksUser) {

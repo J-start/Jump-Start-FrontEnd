@@ -1,4 +1,4 @@
-class SellingTemplateError extends HTMLElement {
+class WithdrawConclusion extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -6,28 +6,32 @@ class SellingTemplateError extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sell/sellingTemplateError/sellingTemplateError-style.css")
-        this.createStyles("app/components/sell/sellingTemplateError/sellingTemplateError-style-responsive.css")
-        this.getAttribute("messageError") ? this.shadow.querySelector("#messageError").textContent = this.getAttribute("messageError") : this.shadow.querySelector("#messageError").textContent = "Erro desconhecido"
-    }
+        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style.css")
+        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style-responsive.css")
+
+        /*if(localStorage.getItem("typeOperation") == "BUY"){
+            this.shadow.querySelector("#title").innerText = "Compra realizada com sucesso!"
+        }else{
+            this.shadow.querySelector("#title").innerText = "Venda realizada com sucesso!"
+        }*/
+}
 
     createHTML() {
 
         const template =
         
                 `<div class="principalBlock">
-    <h1>Ocorreu um erro!</h1>
-    <h2 id="messageError"></h2>
+    <h1 id="title"></h1>
 
     <div class="img">
-        <img width="195px" height:"195px" src="app/assets/images/error_icon.png" alt="confirmation_icon">
+        <img src="app/assets/images/confirmation_icon.png" alt="confirmation_icon">
     </div>
 </div>
      
         `
 
         const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "sellingconc-component");
+        componentRoot.setAttribute("class", "withdrawconclusion-component");
         componentRoot.innerHTML = template;
         return componentRoot
 
@@ -49,4 +53,4 @@ class SellingTemplateError extends HTMLElement {
     }
 }
 
-customElements.define("sellingerror-component", SellingTemplateError);
+customElements.define("withdrawconclusion-component", WithdrawConclusion);
