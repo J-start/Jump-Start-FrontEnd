@@ -61,6 +61,9 @@ class News extends HTMLElement {
             }
             return response.json();
         }).then(data => {
+            if (data === null) {
+                return
+            }
             this.convertObject(data)
 
         }).catch(error => {
