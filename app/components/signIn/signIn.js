@@ -1,31 +1,28 @@
-class SignUp extends HTMLElement {
+class SignIn extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
-    timeoutId 
+    timeoutId = 0
     constructor() {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/signUp/signUp-style.css")
-        this.createStyles("app/components/signUp/signUp-style-responsive.css")
+        this.createStyles("app/components/signIn/signIn-style.css")
+        this.createStyles("app/components/signIn/signIn-style-responsive.css")
 
-        this.shadow.querySelector("#signup-form").addEventListener("submit", (event) => {
+        this.shadow.querySelector("#signIn-form").addEventListener("submit", (event) => {
             event.preventDefault()
             const object =this.buildObjectToSend()
             if(object === null){
                 return
             }
 
-            this.signUp(object)
+            this.signIn(object)
         })
 
         this.shadow.querySelector("#passwordImage").addEventListener("click", () => {
             this.showPassword("password")
         })
 
-        this.shadow.querySelector("#confirmPasswordImage").addEventListener("click", () => {
-            this.showPassword("confirm-password")
-        })
     }
 
     createHTML() {
@@ -33,14 +30,11 @@ class SignUp extends HTMLElement {
         const template =
             `
             <div class="containerTitle">
-                <h2>Vamos criar sua conta</h2>
+                <h2>Login</h2>
             </div>
             <div id="messageError"></div>
             <div class="containerForm">
-                <form id="signup-form">
-                    <label for="name">Nome</label>
-                    <input placeholder="Digite seu nome" maxlength="30" minlength="3"  type="text" id="name" name="name" required>
-                    <br>
+                <form id="signIn-form">
                     <label for="email">Email</label>
                     <input placeholder="Digite seu email" type="email" id="email" name="email" required>
                     <br>
@@ -50,17 +44,10 @@ class SignUp extends HTMLElement {
                     <img src="app/assets/images/see_password.png" width="25px" height:"25px" alt="eye" id="passwordImage" class="eye">
                     </div>
                     <br>
-                    
-                    <label for="confirm-password">Confirme a Senha</label>
-                    <div class="passwordContainer">
-                    <input placeholder="Confirme sua senha" maxlength="20" minlength="8" type="password" id="confirm-password" name="confirm-password" required>
-                    <img src="app/assets/images/see_password.png" width="25px" height:"25px" alt="eye" id="confirmPasswordImage" class="eye">
-                    </div>
-                    <br>
-                    <a href="#">Já tenho uma conta</a>
+                    <a href="#">Não tenho uma conta</a>
                     <br>
                     <div class="containerButton">
-                     <button type="submit">Cadastrar</button>
+                     <button type="submit">Login</button>
                     </div>
                    
                 </form>
@@ -92,11 +79,11 @@ class SignUp extends HTMLElement {
         return link
     }
 
-    signUp(datas) {
+    signIn(datas) {
         if(datas === null){
             return
         }
-        const url = `${getUrl()}/investor/create/`;
+        const url = `${getUrl()}/investor/login/`;
         fetch(url, {
             method: "POST",
             headers: {
@@ -106,25 +93,23 @@ class SignUp extends HTMLElement {
         }).then(response => {
             return response.json();
         }).then(data => {
-            if(data.code != 200){
+            console.log(data)
+            if(!data.token){
                 this.showMessageError(data.message)
                 return
             }
-
-            this.shadow.querySelector("#messageError").innerHTML = ""
+            localStorage.setItem("token",data.token)
+            this.shadow.querySelector("#messageError").innerHTML = ``
         
         }).catch(error => {
-            alert("Erro ao cadastrar, tente novamente")
+            console.log(error)
+            alert("Erro ao realizar login, tente novamente")
         });
     }
 
-    verifyFields(name, email, password, confirmPassword){
+    verifyFields(email, password){
 
-        if(name === "" || email === "" || password === "" || confirmPassword === ""){
-            return false
-        }
-        if(name.length < 3 || name.length > 30){
-            alert("O nome deve ter no mínimo 3 e no máximo 30 caracteres")
+        if(email === "" || password === ""){
             return false
         }
         if(password.length < 8 || password.length > 20){
@@ -135,25 +120,18 @@ class SignUp extends HTMLElement {
             alert("Email inválido")
             return false
         }
-        if(password !== confirmPassword){
-            alert("As senha são diferentes")
-            return false
-        }
 
         return true
     }
 
     buildObjectToSend(){
-        const name = this.shadow.querySelector("#name").value
         const email = this.shadow.querySelector("#email").value
         const password = this.shadow.querySelector("#password").value
-        const confirmPassword = this.shadow.querySelector("#confirm-password").value
 
-        if(!this.verifyFields(name, email, password,confirmPassword)){
+        if(!this.verifyFields(email, password)){
             return null
         }
         return {
-            "name":name,
             "email":email,
             "password":password
         }
@@ -185,4 +163,4 @@ class SignUp extends HTMLElement {
 
 }
 
-customElements.define("signup-component", SignUp);
+customElements.define("signin-component", SignIn);
