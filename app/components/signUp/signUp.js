@@ -57,7 +57,7 @@ class SignUp extends HTMLElement {
                     <img src="app/assets/images/see_password.png" width="25px" height:"25px" alt="eye" id="confirmPasswordImage" class="eye">
                     </div>
                     <br>
-                    <a href="#">Já tenho uma conta</a>
+                    <a href="signIn.html">Já tenho uma conta</a>
                     <br>
                     <div class="containerButton">
                      <button type="submit">Cadastrar</button>
@@ -112,6 +112,7 @@ class SignUp extends HTMLElement {
             }
 
             this.shadow.querySelector("#messageError").innerHTML = ""
+            window.location.href = "index.html"
         
         }).catch(error => {
             alert("Erro ao cadastrar, tente novamente")

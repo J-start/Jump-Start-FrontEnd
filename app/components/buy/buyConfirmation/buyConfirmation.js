@@ -70,7 +70,10 @@ class BuyConfirmation extends HTMLElement {
 
     }
     makeRequest() {
-        const TOKEN = "aaa"
+        if(localStorage.getItem("token") === null){
+            window.location.href = "signIn.html"
+        }
+        const TOKEN = localStorage.getItem("token")
         let code = ""
         if (localStorage.getItem("assetType") != "SHARE"){
             code = "-BRL"

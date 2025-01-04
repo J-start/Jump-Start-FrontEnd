@@ -44,7 +44,7 @@ class SignIn extends HTMLElement {
                     <img src="app/assets/images/see_password.png" width="25px" height:"25px" alt="eye" id="passwordImage" class="eye">
                     </div>
                     <br>
-                    <a href="#">Não tenho uma conta</a>
+                    <a href="signUp.html">Não tenho uma conta</a>
                     <br>
                     <div class="containerButton">
                      <button type="submit">Login</button>
@@ -100,6 +100,7 @@ class SignIn extends HTMLElement {
             }
             localStorage.setItem("token",data.token)
             this.shadow.querySelector("#messageError").innerHTML = ``
+            window.location.href = "index.html"
         
         }).catch(error => {
             console.log(error)

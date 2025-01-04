@@ -46,8 +46,11 @@ class HeaderHome extends HTMLElement {
         return link
     }
     makeRequest() {
+        if(localStorage.getItem("token") === null){
+            window.location.href = "signIn.html"
+        }
         const url = `${getUrl()}/investor/name/`;
-        const TOKEN = "aaa"
+        const TOKEN = localStorage.getItem("token")
         fetch(url, {
             method: "GET",
             headers: {
