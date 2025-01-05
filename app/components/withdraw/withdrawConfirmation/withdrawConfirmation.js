@@ -20,7 +20,6 @@ class WithdrawConfirmation extends HTMLElement {
     });
     this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
       this.makeRequest();
-      this.makeWalletRequest();
     });
   }
 
@@ -86,12 +85,15 @@ class WithdrawConfirmation extends HTMLElement {
   }
 
   makeRequest() {
-    const TOKEN = "aaaa";
+    if(localStorage.getItem("token") === null){
+      window.location.href = "signIn.html"
+      return
+    }
+    const TOKEN = localStorage.getItem("token");
     let code = "";
 
     const datasPost = JSON.stringify({
-      TokenInvestor: String(localStorage.getItem("TokenInvestor")),
-      WithdrawValue: parseFloat(localStorage.getItem("withdrawValue")),
+      value: parseFloat(localStorage.getItem("withdrawValue")),
     });
     const url = `${getUrl()}/withdraw/`;
     fetch(url, {
@@ -104,6 +106,7 @@ class WithdrawConfirmation extends HTMLElement {
       body: datasPost,
     })
       .then((response) => {
+        console.log(response);
         if (!response.ok) {
           console.error("Erro na requisição");
         }
@@ -123,45 +126,7 @@ class WithdrawConfirmation extends HTMLElement {
       });
   }
 
-  makeWalletRequest() {
-    const TOKEN = "aaaa";
-    const url = `${getUrl()}/wallet/datas/`;
-  
-    const dataInvestorWallet = JSON.stringify({
-      TokenInvestor: String(localStorage.getItem("TokenInvestor")),
-    });
-  
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
-      },
-      body: dataInvestorWallet,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro na requisição para a API de carteira.");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const balance = data.InvestorBalance;
-        const withdrawValue = Number(localStorage.getItem("withdrawValue"));
-  
-        if (balance < withdrawValue) {
-          this.insertPageError("Saldo insuficiente para realizar a operação.");
-          this.makeCountDownError();
-          return; 
-        }
-  
-        localStorage.setItem("InvestorBalance", balance);
-      })
-      .catch((error) => {
-        console.error("Erro ao obter dados da carteira:", error);
-        this.insertPageError("Erro ao obter dados da carteira. Tente novamente mais tarde.");
-      });
-  }
+
   
   insertPageSuccess() {
     this.shadow.querySelector("#containerAll").remove();

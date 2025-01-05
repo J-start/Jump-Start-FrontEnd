@@ -54,7 +54,10 @@ class HistoryOperation extends HTMLElement {
   }
 
   async makeRequest() {
-    const TOKEN = "aaa";
+    if(localStorage.getItem("token") === null){
+      return
+    }
+    const TOKEN = localStorage.getItem("token");
     let body = { offset: this.offset };
     const url = `${getUrl()}/history/operations/`;
 

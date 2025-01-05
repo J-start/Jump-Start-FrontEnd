@@ -10,6 +10,7 @@ class HeaderWallet extends HTMLElement {
       "app/components/headerWallet/headerWallet-style-responsive.css"
     );
     this.makeRequest();
+    this.fetchBalanceInvestor()
 
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "visible") {
@@ -92,7 +93,10 @@ class HeaderWallet extends HTMLElement {
   }
 
   makeRequest() {
-    const TOKEN = "aaa";
+    if(localStorage.getItem("token") === null){
+      return
+    }
+    const TOKEN = localStorage.getItem("token");
     const url = `${getUrl()}/wallet/datas/`;
     fetch(url, {
       method: "POST",
@@ -115,6 +119,38 @@ class HeaderWallet extends HTMLElement {
       })
       .catch((error) => {
         console.error("Erro na requisição:", error);
+      });
+  }
+
+  fetchBalanceInvestor() {
+    if(localStorage.getItem("token") === null){
+      return
+    }
+    const TOKEN = localStorage.getItem("token");
+    const url = `${getUrl()}/investor/name/`;
+  
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
+      },
+
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro na requisição para a API de carteira.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const balance = data.balance;
+
+        localStorage.setItem("balance", balance);
+      })
+      .catch((error) => {
+        console.error("Erro ao obter dados da carteira:", error);
+        this.insertPageError("Erro ao obter dados da carteira. Tente novamente mais tarde.");
       });
   }
 

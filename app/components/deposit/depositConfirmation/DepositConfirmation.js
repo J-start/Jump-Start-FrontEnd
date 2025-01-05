@@ -20,7 +20,6 @@ class DepositConfirmation extends HTMLElement {
     });
     this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
       this.makeRequest();
-      this.makeWalletRequest();
     });
   }
 
@@ -86,12 +85,17 @@ class DepositConfirmation extends HTMLElement {
   }
 
   makeRequest() {
-    const TOKEN = "aaaa";
+    if(localStorage.getItem("token") === null){
+      window.location.href = "signIn.html"
+      return
+    }
+    const TOKEN = localStorage.getItem("token");
     let code = "";
 
     const datasPost = JSON.stringify({
-      Value: parseFloat(localStorage.getItem("Value")),
+      value: parseFloat(localStorage.getItem("depositValue")),
     });
+    console.log("datasPost ",datasPost);
     const url = `${getUrl()}/deposit/`;
     fetch(url, {
       method: "POST",
@@ -109,6 +113,7 @@ class DepositConfirmation extends HTMLElement {
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         if (data["code"] != 200) {
           this.insertPageError(data["message"]);
           this.makeCountDownError();
@@ -122,38 +127,6 @@ class DepositConfirmation extends HTMLElement {
       });
   }
 
-  makeHistoricRequest(offset = 0) {
-    const TOKEN = "aaaa";
-    const url = `${getUrl()}/history/operations/`;
-
-    const requestBody = JSON.stringify({
-      offset: offset,
-    });
-
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
-      },
-      body: requestBody,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro ao buscar o histórico de operações.");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        this.displayHistoricData(data);
-      })
-      .catch((error) => {
-        console.error("Erro na requisição do histórico:", error);
-        this.insertPageError(
-          "Erro ao obter o histórico de operações. Tente novamente mais tarde."
-        );
-      });
-  }
 
   insertPageSuccess() {
     this.shadow.querySelector("#containerAll").remove();
