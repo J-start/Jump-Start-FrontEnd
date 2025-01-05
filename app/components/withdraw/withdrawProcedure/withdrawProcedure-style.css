@@ -1,0 +1,102 @@
+.withdraw-component {
+  background-color: #1c2029;
+}
+
+.sellingBlockAlt {
+  margin-top: -13vh;
+  text-align: center;
+  background-color: #1c2029;
+  padding: 50px;
+  width: 100%; 
+  height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
+  box-sizing: border-box;
+  margin-top: -13vh;
+}
+
+.PageReturn h1 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.PageReturn p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.buttonFormat {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 120px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.Sacar button {
+  background-color: #0d6efd;
+}
+
+.Sacar button:hover {
+  background-color: #0a58ca;
+}
+
+.form-sendingValue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: -10%;
+  justify-content: center;
+}
+
+#valueInput {
+  width: 80%;
+  max-width: 500px;
+  height: 30px;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+  background-color: #ccc;
+  color: black;
+  margin-top: 10%;
+}
+
+#valueInput:focus {
+  outline: none; /* Remove a borda padrão ao focar */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Efeito sutil ao focar */
+}
+
+.withdraw-component{
+  margin-left: 280px;
+}
