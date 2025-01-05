@@ -91,7 +91,7 @@ class WithdrawConfirmation extends HTMLElement {
 
     const datasPost = JSON.stringify({
       TokenInvestor: String(localStorage.getItem("TokenInvestor")),
-      WithdrawValue: parseFloat(localStorage.getItem("value")),
+      WithdrawValue: parseFloat(localStorage.getItem("withdrawValue")),
     });
     const url = `${getUrl()}/withdraw/`;
     fetch(url, {
@@ -126,11 +126,11 @@ class WithdrawConfirmation extends HTMLElement {
   makeWalletRequest() {
     const TOKEN = "aaaa";
     const url = `${getUrl()}/wallet/datas/`;
-
+  
     const dataInvestorWallet = JSON.stringify({
       TokenInvestor: String(localStorage.getItem("TokenInvestor")),
     });
-
+  
     fetch(url, {
       method: "POST",
       headers: {
@@ -147,17 +147,22 @@ class WithdrawConfirmation extends HTMLElement {
       })
       .then((data) => {
         const balance = data.InvestorBalance;
-        if (balance < localStorage.getItem("value")) {
-          throw new Error("Saldo insuficiente para realizar a operação.");
+        const withdrawValue = Number(localStorage.getItem("withdrawValue"));
+  
+        if (balance < withdrawValue) {
+          this.insertPageError("Saldo insuficiente para realizar a operação.");
+          this.makeCountDownError();
+          return; 
         }
-
+  
         localStorage.setItem("InvestorBalance", balance);
       })
       .catch((error) => {
         console.error("Erro ao obter dados da carteira:", error);
+        this.insertPageError("Erro ao obter dados da carteira. Tente novamente mais tarde.");
       });
   }
-
+  
   insertPageSuccess() {
     this.shadow.querySelector("#containerAll").remove();
     const success = document.createElement("withdrawconclusion-component");
@@ -173,7 +178,7 @@ class WithdrawConfirmation extends HTMLElement {
 
   insertWithdrawData() {
     this.shadow.querySelector("#assetValue").innerHTML =
-      "R$ " + Number(Number(localStorage.getItem("value")).toFixed(4));
+      "R$ " + Number(Number(localStorage.getItem("withdrawValue")).toFixed(4));
     this.shadow.querySelector("#assetDate").innerHTML =
       new Date().toLocaleDateString();
   }
@@ -221,7 +226,7 @@ class WithdrawConfirmation extends HTMLElement {
 
   clearLocalStorage() {
     localStorage.removeItem("TokenInvestor");
-    localStorage.removeItem("value");
+    localStorage.removeItem("withdrawValue");
   }
 }
 

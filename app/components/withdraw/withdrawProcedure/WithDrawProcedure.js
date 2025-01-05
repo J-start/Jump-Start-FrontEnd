@@ -13,7 +13,7 @@ class WithDrawProcedure extends HTMLElement {
     );
 
     this.shadow
-      .querySelector("#insertValueOperation")
+      .querySelector("#buttonGo")
       .addEventListener("click", (event) => {
         event.preventDefault();
         const inputValue = this.shadow.querySelector("#valueInput").value;
@@ -22,8 +22,7 @@ class WithDrawProcedure extends HTMLElement {
           alert("Valor inválido");
         } else {
           localStorage.setItem("withdrawValue", inputValue);
-          this.shadow.querySelector(".sellingBlockAlt").remove();
-          this.insertProcedureDOM();
+          this.showComponentConfirmation();
         }
       });
   }
@@ -41,7 +40,7 @@ class WithDrawProcedure extends HTMLElement {
                  <input type="number" id="valueInput"> <br>
                  <div class="buttonFormat">
         <div class="Sacar">
-            <button>Sacar</button>
+            <button id = "buttonGo">Avançar</button>
         </div>
     </div>
             </form>
@@ -49,6 +48,8 @@ class WithDrawProcedure extends HTMLElement {
 
     
 </div>
+
+<div id = "containerComponentAlt"></div>
 
         `;
 
@@ -69,6 +70,13 @@ class WithDrawProcedure extends HTMLElement {
     link.setAttribute("rel", "stylesheet");
     link.setAttribute("href", linkStyle);
     return link;
+  }
+
+  showComponentConfirmation() {
+    this.shadow.querySelector(".sellingBlockAlt").style.display = "none";
+    const component = document.createElement("withdrawconfirmation-component");
+
+    this.shadow.querySelector("#containerComponentAlt").appendChild(component);
   }
 }
 
