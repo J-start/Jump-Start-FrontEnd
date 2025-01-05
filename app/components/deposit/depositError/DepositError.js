@@ -1,4 +1,4 @@
-class WithdrawError extends HTMLElement {
+class DepositError extends HTMLElement {
   shadow = this.attachShadow({ mode: "open" });
 
   constructor() {
@@ -6,10 +6,10 @@ class WithdrawError extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/withdraw/withdrawError/withdrawError-style.css"
+      "app/components/deposit/depositError/depositError-style.css"
     );
     this.createStyles(
-      "app/components/withdraw/withdrawError/withdrawError-style-responsive.css"
+      "app/components/deposit/depositError/depositError-style-responsive.css"
     );
     this.getAttribute("messageError")
       ? (this.shadow.querySelector("#messageError").textContent =
@@ -31,7 +31,7 @@ class WithdrawError extends HTMLElement {
         `;
 
     const componentRoot = document.createElement("div");
-    componentRoot.setAttribute("class", "withdrawerror-component");
+    componentRoot.setAttribute("class", "depositerror-component");
     componentRoot.innerHTML = template;
     return componentRoot;
   }
@@ -50,4 +50,4 @@ class WithdrawError extends HTMLElement {
   }
 }
 
-customElements.define("withdrawerror-component", WithdrawError);
+customElements.define("depositerror-component", DepositError);

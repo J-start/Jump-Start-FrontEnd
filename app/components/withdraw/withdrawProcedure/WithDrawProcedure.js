@@ -19,7 +19,7 @@ class WithDrawProcedure extends HTMLElement {
         const inputValue = this.shadow.querySelector("#valueInput").value;
 
         if (inputValue <= 0) {
-          alert("Valor inválido");
+          alert("Valor inválido. Deve ser maio que Zero.");
         } else {
           localStorage.setItem("withdrawValue", inputValue);
           this.showComponentConfirmation();
@@ -32,7 +32,7 @@ class WithDrawProcedure extends HTMLElement {
        <div class="sellingBlockAlt">
     <div class="PageReturn">
         <h1>Qual valor você deseja sacar ?</h1>
-        <p>Você pode comprar ativos e esperar por sua valorização, para que os possa vender.</p>
+        <p>Você pode realizar saque num valor igual ou menor ao que você possui em carteira.</p>
     </div>
     <div class="form-sendingValue">
             <form action="">

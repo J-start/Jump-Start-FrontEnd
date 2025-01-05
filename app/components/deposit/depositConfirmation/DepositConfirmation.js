@@ -1,4 +1,4 @@
-class WithdrawConfirmation extends HTMLElement {
+class DepositConfirmation extends HTMLElement {
   shadow = this.attachShadow({ mode: "open" });
 
   constructor() {
@@ -6,14 +6,14 @@ class WithdrawConfirmation extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style.css"
+      "app/components/deposit/depositConfirmation/depositConfirmation-style.css"
     );
     this.createStyles(
-      "app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style-responsive.css"
+      "app/components/deposit/depositConfirmation/depositConfirmation-style-responsive.css"
     );
 
-    this.insertWithdrawData();
-    localStorage.setItem("Operação", "Saque");
+    this.insertDepositData();
+    localStorage.setItem("Operação", "Depósito");
 
     this.shadow.querySelector(".back").addEventListener("click", () => {
       window.location.href = "operationWallet.html";
@@ -37,7 +37,7 @@ class WithdrawConfirmation extends HTMLElement {
         <tbody>
             <tr>
                 <th scope="row">Operação</th>
-                <td id="assetName">Saque</td>
+                <td id="assetName">Depósito</td>
                 <div class="line"></div>
             </tr>
 
@@ -66,7 +66,7 @@ class WithdrawConfirmation extends HTMLElement {
         </div>
 
         <div class="buttonSell">
-            <button id="sellAsset">Sacar</button>
+            <button id="sellAsset">Depositar</button>
         </div>
     </div>
     </div>
@@ -80,7 +80,7 @@ class WithdrawConfirmation extends HTMLElement {
         `;
 
     const componentRoot = document.createElement("div");
-    componentRoot.setAttribute("class", "withdrawconfirmation-component");
+    componentRoot.setAttribute("class", "depositconfirmation-component");
     componentRoot.innerHTML = template;
     return componentRoot;
   }
@@ -90,10 +90,9 @@ class WithdrawConfirmation extends HTMLElement {
     let code = "";
 
     const datasPost = JSON.stringify({
-      TokenInvestor: String(localStorage.getItem("TokenInvestor")),
-      WithdrawValue: parseFloat(localStorage.getItem("withdrawValue")),
+      Value: parseFloat(localStorage.getItem("Value")),
     });
-    const url = `${getUrl()}/withdraw/`;
+    const url = `${getUrl()}/deposit/`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -123,49 +122,42 @@ class WithdrawConfirmation extends HTMLElement {
       });
   }
 
-  makeWalletRequest() {
+  makeHistoricRequest(offset = 0) {
     const TOKEN = "aaaa";
-    const url = `${getUrl()}/wallet/datas/`;
-  
-    const dataInvestorWallet = JSON.stringify({
-      TokenInvestor: String(localStorage.getItem("TokenInvestor")),
+    const url = `${getUrl()}/history/operations/`;
+
+    const requestBody = JSON.stringify({
+      offset: offset,
     });
-  
+
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${TOKEN}`,
       },
-      body: dataInvestorWallet,
+      body: requestBody,
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Erro na requisição para a API de carteira.");
+          throw new Error("Erro ao buscar o histórico de operações.");
         }
         return response.json();
       })
       .then((data) => {
-        const balance = data.InvestorBalance;
-        const withdrawValue = Number(localStorage.getItem("withdrawValue"));
-  
-        if (balance < withdrawValue) {
-          this.insertPageError("Saldo insuficiente para realizar a operação.");
-          this.makeCountDownError();
-          return; 
-        }
-  
-        localStorage.setItem("InvestorBalance", balance);
+        this.displayHistoricData(data);
       })
       .catch((error) => {
-        console.error("Erro ao obter dados da carteira:", error);
-        this.insertPageError("Erro ao obter dados da carteira. Tente novamente mais tarde.");
+        console.error("Erro na requisição do histórico:", error);
+        this.insertPageError(
+          "Erro ao obter o histórico de operações. Tente novamente mais tarde."
+        );
       });
   }
-  
+
   insertPageSuccess() {
     this.shadow.querySelector("#containerAll").remove();
-    const success = document.createElement("withdrawconclusion-component");
+    const success = document.createElement("depositconclusion-component");
     this.shadow.querySelector(".containerOtherScreens").appendChild(success);
   }
 
@@ -173,12 +165,12 @@ class WithdrawConfirmation extends HTMLElement {
     this.shadow.querySelector("#containerAll").remove();
     this.shadow.querySelector(
       ".containerOtherScreens"
-    ).innerHTML = `<withdrawerror-component messageError="${messageError}"></withdrawerror-component>`;
+    ).innerHTML = `<depositerror-component messageError="${messageError}"></depositerror-component>`;
   }
 
-  insertWithdrawData() {
+  insertDepositData() {
     this.shadow.querySelector("#assetValue").innerHTML =
-      "R$ " + Number(Number(localStorage.getItem("withdrawValue")).toFixed(4));
+      "R$ " + Number(Number(localStorage.getItem("depositValue")).toFixed(4));
     this.shadow.querySelector("#assetDate").innerHTML =
       new Date().toLocaleDateString();
   }
@@ -225,9 +217,9 @@ class WithdrawConfirmation extends HTMLElement {
   }
 
   clearLocalStorage() {
-    localStorage.removeItem("TokenInvestor");
-    localStorage.removeItem("withdrawValue");
+    localStorage.removeItem("depositValue");
+    localStorage.removeItem("Operação");
   }
 }
 
-customElements.define("withdrawconfirmation-component", WithdrawConfirmation);
+customElements.define("depositconfirmation-component", DepositConfirmation);

@@ -1,4 +1,4 @@
-class WithdrawConclusion extends HTMLElement {
+class DepositConclusion extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -6,8 +6,8 @@ class WithdrawConclusion extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style.css")
-        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style-responsive.css")
+        this.createStyles("app/components/deposit/depositConclusion/depositConclusion-style.css")
+        this.createStyles("app/components/deposit/depositConclusion/depositConclusion-style-responsive.css")
 
         /*if(localStorage.getItem("typeOperation") == "BUY"){
             this.shadow.querySelector("#title").innerText = "Compra realizada com sucesso!"
@@ -31,7 +31,7 @@ class WithdrawConclusion extends HTMLElement {
         `
 
         const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "withdrawconclusion-component");
+        componentRoot.setAttribute("class", "depositconclusion-component");
         componentRoot.innerHTML = template;
         return componentRoot
 
@@ -53,4 +53,4 @@ class WithdrawConclusion extends HTMLElement {
     }
 }
 
-customElements.define("withdrawconclusion-component", WithdrawConclusion);
+customElements.define("depositconclusion-component", DepositConclusion);

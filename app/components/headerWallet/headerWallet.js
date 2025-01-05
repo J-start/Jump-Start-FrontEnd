@@ -34,6 +34,11 @@ class HeaderWallet extends HTMLElement {
       .addEventListener("click", () => {
         this.insertWithdrawPage();
       });
+    this.shadow
+      .querySelector("#buttonDeposit")
+      .addEventListener("click", () => {
+        this.insertDepositPage();
+      });
   }
 
   createHTML() {
@@ -178,7 +183,11 @@ class HeaderWallet extends HTMLElement {
     this.shadow.querySelector(".containerOtherScreens").appendChild(withdraw);
   }
 
-  insertDepositPage() {}
+  insertDepositPage() {
+    this.shadow.querySelector(".wrapAll").remove();
+    const deposit = document.createElement("deposit-component");
+    this.shadow.querySelector(".containerOtherScreens").appendChild(deposit);
+  }
 }
 
 customElements.define("headerwallet-component", HeaderWallet);

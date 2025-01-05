@@ -1,4 +1,4 @@
-class WithDrawProcedure extends HTMLElement {
+class DepositProcedure extends HTMLElement {
   shadow = this.attachShadow({ mode: "open" });
 
   constructor() {
@@ -6,10 +6,10 @@ class WithDrawProcedure extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/withdraw/withdrawProcedure/withdrawProcedure-style.css"
+      "app/components/deposit/depositProcedure/depositProcedure-style.css"
     );
     this.createStyles(
-      "app/components/withdraw/withdrawProcedure/withdraw-style-responsive.css"
+      "app/components/deposit/depositProcedure/deposit-style-responsive.css"
     );
 
     this.shadow
@@ -20,8 +20,10 @@ class WithDrawProcedure extends HTMLElement {
 
         if (inputValue <= 0) {
           alert("Valor inválido");
+        } else if (inputValue > 1000) {
+          alert("O valor deve ser igual ou menor que R$1.000,00 (mil reais)");
         } else {
-          localStorage.setItem("withdrawValue", inputValue);
+          localStorage.setItem("depositValue", inputValue);
           this.showComponentConfirmation();
         }
       });
@@ -31,8 +33,8 @@ class WithDrawProcedure extends HTMLElement {
     const template = `
        <div class="sellingBlockAlt">
     <div class="PageReturn">
-        <h1>Qual valor você deseja sacar ?</h1>
-        <p>Você pode comprar ativos e esperar por sua valorização, para que os possa vender.</p>
+        <h1>Qual valor você deseja depositar ?</h1>
+        <p>O valor máximo, acumulado, em depósitos ao dia é de R$1.000,00.</p>
     </div>
     <div class="form-sendingValue">
             <form action="">
@@ -54,7 +56,7 @@ class WithDrawProcedure extends HTMLElement {
         `;
 
     const componentRoot = document.createElement("div");
-    componentRoot.setAttribute("class", "withdraw-component");
+    componentRoot.setAttribute("class", "deposit-component");
     componentRoot.innerHTML = template;
     return componentRoot;
   }
@@ -74,10 +76,10 @@ class WithDrawProcedure extends HTMLElement {
 
   showComponentConfirmation() {
     this.shadow.querySelector(".sellingBlockAlt").style.display = "none";
-    const component = document.createElement("withdrawconfirmation-component");
+    const component = document.createElement("depositconfirmation-component");
 
     this.shadow.querySelector("#containerComponentAlt").appendChild(component);
   }
 }
 
-customElements.define("withdraw-component", WithDrawProcedure);
+customElements.define("deposit-component", DepositProcedure);
