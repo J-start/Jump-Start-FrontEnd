@@ -73,7 +73,7 @@ class WithDrawProcedure extends HTMLElement {
   }
 
   showComponentConfirmation() {
-    this.shadow.querySelector(".sellingBlockAlt").style.display = "none";
+    //this.shadow.querySelector(".sellingBlockAlt").style.display = "none";
     const component = document.createElement("withdrawconfirmation-component");
 
     this.shadow.querySelector("#containerComponentAlt").appendChild(component);
