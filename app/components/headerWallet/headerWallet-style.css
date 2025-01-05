@@ -1,0 +1,140 @@
+.wrapAll{
+    height: 100vh;
+    background-color: #1C2029;
+    margin-top: -40px;
+}
+
+.containerAllElementsBalance{
+    background-color: #444549;
+    margin-top: -20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 0 0 15px 15px;
+}
+.line{
+    background-color: #F1F1F1;
+    height: 1px;
+    width: 90%;
+}
+
+.containerTitleBalance{
+    padding-top: 25px;
+    color: white;
+}
+
+.containerBalance{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 90%;
+}
+
+a{
+    color: white;
+}
+.containerButtons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px; 
+    color: black;
+    width: 90%;
+}
+#buttonWithDraw, #buttonDeposit {
+    border: none;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: 600;
+    padding: 15px 30px;
+    width: 60%;
+    height: auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+#buttonWithDraw{
+    color: white;
+    background-color: #1465FF;
+}
+#buttonDeposit{
+    background-color: #C6FE1F;
+}
+#buttonWithDraw:hover{
+    background-color: white;
+    color: black;
+}
+
+#buttonDeposit:hover{
+    background-color: white;
+   
+}
+
+.wrapAll{
+    width: 100%;
+}
+
+.containerAllElementsHistory{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 70%;
+}
+
+#buttonAssetOperation, #buttonWalletOperation {
+    border: none;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: 600;
+    padding: 15px 30px;
+    width: 80%;
+    height: auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#buttonAssetOperation{
+    background-color: #C6FE1F;
+}
+#buttonAssetOperation:hover{
+    background-color: white;
+}
+
+#buttonWalletOperation:hover{
+    background-color: white;
+    color: black;
+}
+
+#buttonWalletOperation{
+    color: white;
+    background-color: #1465FF;
+}
+.containerAllElementsHeader{
+    width: 100%;
+    margin-top: 20px;
+    height: 90%;
+}
+.containerGraphicWallet{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.containerHistory{
+    background-color: #1C2029;
+    margin-left: 280px;
+}
+
+.home-component{
+    height: 100vh;
+    background-color: #1C2029;
+}

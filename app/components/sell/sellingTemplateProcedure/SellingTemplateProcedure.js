@@ -231,6 +231,8 @@ class SellingTemplateProcedure extends HTMLElement {
         localStorage.removeItem("assetValue")
         localStorage.removeItem("typeOperation")
         localStorage.removeItem("dateOperation")
+        localStorage.removeItem("walletAssets")
+        localStorage.removeItem("balance")
     }
 
 }

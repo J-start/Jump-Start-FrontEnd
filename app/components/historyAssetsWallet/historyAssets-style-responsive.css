@@ -1,0 +1,32 @@
+@media (min-width: 1024px) {
+    .containerHistory {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 65%;
+        max-height: none;
+        border-radius: 10px;
+        box-shadow: none;
+        padding: 20px 10px;
+        border: none;
+    }
+    .wrapHistory {
+        max-height: 500px; 
+        overflow-y: auto; 
+    }
+    .containerHistory p {
+        text-align: right;
+        margin: 0px;
+        font-size: 20px;
+        margin-right: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #333;
+    }
+}
+@media (min-width: 280px) and (max-width: 380px) {
+    .containerHistory {
+        width: 70%;
+    }
+}
