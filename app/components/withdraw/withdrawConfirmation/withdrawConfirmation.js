@@ -79,7 +79,7 @@ class WithdrawConfirmation extends HTMLElement {
         `;
 
     const componentRoot = document.createElement("div");
-    componentRoot.setAttribute("class", "withdrawconfirmation-component");
+    componentRoot.setAttribute("class", "withdrawconfirmation-componentContainer");
     componentRoot.innerHTML = template;
     return componentRoot;
   }
