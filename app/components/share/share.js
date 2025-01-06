@@ -83,14 +83,7 @@ class Share extends HTMLElement {
 
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
         let datas = []
-        const MILISECONDSUPDATE = 108000000
-        if(localStorage.getItem("shares") === null || (new Date() - new Date(localStorage.getItem("sharesDate"))) > MILISECONDSUPDATE){
-            datas = await this.makeRequest()
-            localStorage.setItem("shares", JSON.stringify(datas))
-            localStorage.setItem("sharesDate", new Date())
-        }else{
-            datas = JSON.parse(localStorage.getItem("shares"))
-        }
+        datas = await this.makeRequest()
         let detailsCrypto = await this.fetchCrypto()
         this.sortArray(datas,"NameShare")
         this.sortArray(detailsCrypto,"acronym")
