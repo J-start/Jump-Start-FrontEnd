@@ -73,9 +73,12 @@ class AssetGraphic extends HTMLElement {
             datas = data.map(item => {
                 return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) };
             });
-
+            if (data.length > 1) {
             this.valueVariation(data.length, data[0].CloseShare, "variationSecond")
             this.valueVariation(1, data[data.length - 2].CloseShare, "variationFirst")
+            }else{
+                this.valueVariation(1, data[0].CloseShare, "variationSecond")
+            }
 
         } else if (assetType === "COIN") {
             datas = data.map(item => {
@@ -115,6 +118,7 @@ class AssetGraphic extends HTMLElement {
 
     async makeGraphic() {
         const response = await this.makeRequest(this.buildUrl());
+        console.log("response ",response)
 
         if (!response || response.length === 0) {
             console.error("Nenhum dado retornado ou falha na requisição.");
