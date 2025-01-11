@@ -96,6 +96,7 @@ class NewsOrAsset extends HTMLElement {
           this.isOptionsAssetOpen = true;
           this.shadow.querySelector(".ContainerSwitchOption").innerHTML = "";
           this.shadow.querySelector(".containerChildrenElements").style.display = "block";
+          this.handleAcoesClick()
       }
     
       

@@ -19,6 +19,14 @@
     .wrapButtonSeeMore {
         width: 25%;
     }
+
+    .wait{
+        position: fixed;
+        top: 50%;
+        left: 56%;
+        transform: translate(-50%, -50%);
+    
+    }
 }
 
 @media screen and (min-width: 280px) and (max-width: 580px) {

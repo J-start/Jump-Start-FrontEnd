@@ -9,6 +9,7 @@ class HeaderWallet extends HTMLElement {
     this.createStyles(
       "app/components/headerWallet/headerWallet-style-responsive.css"
     );
+    this.shadow.querySelector("#balance").innerHTML = "Carregando...";
     this.makeRequest();
     this.fetchBalanceInvestor()
 
@@ -93,7 +94,7 @@ class HeaderWallet extends HTMLElement {
   }
 
   makeRequest() {
-    if(localStorage.getItem("token") === null){
+    if (localStorage.getItem("token") === null) {
       return
     }
     const TOKEN = localStorage.getItem("token");
@@ -106,15 +107,14 @@ class HeaderWallet extends HTMLElement {
       },
     })
       .then((response) => {
-        if (!response.ok) {
-          console.error("Erro na requisição");
-        }
         return response.json();
       })
       .then((data) => {
+        if (data.code) {
+          this.handleErrorApi(data.message)
+          return
+        }
         localStorage.setItem("walletAssets", JSON.stringify(data["Assets"]));
-        //localStorage.setItem("balance", JSON.stringify());
-        console.log(data["InvestorBalance"]);
         this.updateBalance(data["InvestorBalance"]);
       })
       .catch((error) => {
@@ -123,12 +123,12 @@ class HeaderWallet extends HTMLElement {
   }
 
   fetchBalanceInvestor() {
-    if(localStorage.getItem("token") === null){
+    if (localStorage.getItem("token") === null) {
       return
     }
     const TOKEN = localStorage.getItem("token");
     const url = `${getUrl()}/investor/name/`;
-  
+
     fetch(url, {
       method: "GET",
       headers: {
@@ -138,9 +138,6 @@ class HeaderWallet extends HTMLElement {
 
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro na requisição para a API de carteira.");
-        }
         return response.json();
       })
       .then((data) => {
@@ -149,8 +146,8 @@ class HeaderWallet extends HTMLElement {
         localStorage.setItem("balance", balance);
       })
       .catch((error) => {
+        console.log("error:  ", error);
         console.error("Erro ao obter dados da carteira:", error);
-        this.insertPageError("Erro ao obter dados da carteira. Tente novamente mais tarde.");
       });
   }
 
@@ -178,7 +175,6 @@ class HeaderWallet extends HTMLElement {
   updateBalance(balance) {
     console.log(balance);
     if (balance >= 0)
-      //const balance = JSON.parse(localStorage.getItem("balance"));
       this.shadow.querySelector("#balance").innerHTML =
         "R$ " + Number(balance).toFixed(2);
   }
@@ -223,6 +219,31 @@ class HeaderWallet extends HTMLElement {
     this.shadow.querySelector(".wrapAll").remove();
     const deposit = document.createElement("deposit-component");
     this.shadow.querySelector(".containerOtherScreens").appendChild(deposit);
+  }
+
+  handleErrorApi(message) {
+
+    if (this.contains(message, "token")) {
+      alert("Token expirado, realize o login novamente")
+      window.location.href = "signIn.html";
+      return
+    } else {
+      alert(message)
+      return
+    }
+  }
+
+  contains(message, word) {
+    let containWord = false
+    let chunks = String(message).split(" ")
+    chunks.forEach(e => {
+      if (e == word) {
+        containWord = true;
+        return
+      }
+    })
+
+    return containWord
   }
 }
 

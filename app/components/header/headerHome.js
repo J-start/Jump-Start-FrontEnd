@@ -58,15 +58,10 @@ class HeaderHome extends HTMLElement {
                  "Authorization": `Bearer ${TOKEN}`
             }
         }).then(response => {
-            if (!response.ok) {
-                console.error("Erro na requisição");
-                
-            }
             return response.json();
         }).then(data => {
             if (data.code) {
-                //TODO SEND INVESTOR TO LOGIN
-                this.shadow.querySelector("h1").innerHTML = this.messageHourDay();
+                window.location.href = "signIn.html"
                 return
             }
             this.shadow.querySelector("h1").innerHTML = `Olá, ${this.upperCaseFirstLetter(data.name)}`;

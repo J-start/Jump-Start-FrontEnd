@@ -13,6 +13,7 @@ class WalletAssets extends HTMLElement {
     createHTML() {
         const template = `
             <div class="modal-overlay" id="modalOverlay">
+           
                 <div class="modal-content">
                     <button class="close-button" id="closeButton">&times;</button>
                     <h2>Detalhes dos Ativos</h2>

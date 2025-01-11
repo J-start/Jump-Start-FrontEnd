@@ -12,8 +12,10 @@ class Share extends HTMLElement {
        
 
         this.buildComponent().then(() => {
-            
+        this.shadow.querySelector(".wait").remove()
         this.shadow.querySelectorAll(".value1").forEach((element) => {
+            
+            
             element.addEventListener("click", () => {
                 this.managerDisplay(
                     "Valor da ação na aberura do mercado",
@@ -38,14 +40,17 @@ class Share extends HTMLElement {
         });
     })
 
+    
+
     }
 
     createHTML() {
 
         const template =
             `
+        
         <div class="WrapAllElements">
-
+            <div class="wait"></div>
         </div>
 
         `
@@ -80,7 +85,7 @@ class Share extends HTMLElement {
     }
 
     async buildComponent() {
-
+        this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
         let datas = []
         datas = await this.makeRequest()
@@ -92,6 +97,8 @@ class Share extends HTMLElement {
             wrapAllElements.appendChild(BuildAsset2("SHARE", datas[i].NameShare, datas[i].OpenShare, datas[i].CloseShare,datas[i].CloseShare,detailsCrypto[i].urlImage));
 
         }
+
+        
    
     }
 

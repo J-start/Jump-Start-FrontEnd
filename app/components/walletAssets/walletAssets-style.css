@@ -42,7 +42,11 @@ h2{
     text-align: center;
     color: white;
 }
-
+.modal-overlay > h1{
+    color: white;
+    display: flex;
+    justify-content: center;
+}
 @media screen and (min-width: 1024px) {
 .modal-overlay {
     position: fixed;
