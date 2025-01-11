@@ -21,6 +21,7 @@ class Coin extends HTMLElement {
 
         const divToUpdate = this.shadow.querySelector(".divToUpdateValues");
         this.buildComponent().then(component => {
+            this.shadow.querySelector(".wait").remove()
             divToUpdate.appendChild(component);
 
             this.shadow.querySelectorAll(".value1").forEach((element) => {
@@ -57,7 +58,7 @@ class Coin extends HTMLElement {
         const template =
             `
             <div class="divToUpdateValues">
-            
+            <div class="wait"></div>
             </div>
 
 
@@ -120,7 +121,7 @@ class Coin extends HTMLElement {
 
     async buildComponent() {
 
-
+        this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         const wrapAllElements = document.createElement("div");
         wrapAllElements.classList.add("WrapAllElements");
 

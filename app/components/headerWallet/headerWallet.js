@@ -9,6 +9,7 @@ class HeaderWallet extends HTMLElement {
     this.createStyles(
       "app/components/headerWallet/headerWallet-style-responsive.css"
     );
+    this.shadow.querySelector("#balance").innerHTML = "Carregando...";
     this.makeRequest();
     this.fetchBalanceInvestor()
 

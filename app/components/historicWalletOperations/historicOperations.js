@@ -14,7 +14,7 @@ class HistoryOperation extends HTMLElement {
     this.createStyles(
       "app/components/historicWalletOperations/historicOperations-style-responsive.css"
     );
-
+    this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
     this.createHistory();
 
     this.shadow.querySelector("#close").addEventListener("click", () => {
@@ -27,6 +27,8 @@ class HistoryOperation extends HTMLElement {
   createHTML() {
     const template = `
        <div class="containerHistory">
+        <h1>Histórico de operações</h1>
+        <div class="wait"></div>
         <p id="close">X</p>
         <div class="wrapHistory">
         </div>
@@ -116,6 +118,7 @@ class HistoryOperation extends HTMLElement {
 
     let datas = await this.makeRequest();
     if (datas == null) {
+      this.shadow.querySelector(".wait").innerHTML = ""
       this.isFetching = false;
       return;
     }
@@ -130,6 +133,7 @@ class HistoryOperation extends HTMLElement {
 
     this.offset++;
     this.isFetching = false;
+    this.shadow.querySelector(".wait").innerHTML = ""
   }
 
   conversationType(type) {
