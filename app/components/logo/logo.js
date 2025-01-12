@@ -16,7 +16,7 @@ class Logo extends HTMLElement {
             `
    <div class="containerAllElements">
         <div class="containerLogo">
-            <img src="app/assets/images/logo.png" alt="logo">
+            <img src="app/assets/images/logo.PNG" alt="logo">
         </div>
 
         <div class="containerTitle">
