@@ -1,4 +1,4 @@
-const URL = "https://urchin-app-le8wo.ondigitalocean.app/";
+const URL = "https://starfish-app-rhfku.ondigitalocean.app";
 
 function getUrl(){
 
