@@ -95,8 +95,8 @@ class HeaderWallet extends HTMLElement {
 
   makeRequest() {
     if (localStorage.getItem("token") === null) {
-        window.location.href = "signIn.html";
-        return
+      window.location.href = "signIn.html";
+      return
     }
     const TOKEN = localStorage.getItem("token");
     const url = `${getUrl()}/wallet/datas/`;
