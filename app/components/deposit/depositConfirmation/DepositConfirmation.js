@@ -162,16 +162,15 @@ class DepositConfirmation extends HTMLElement {
   }
 
   makeCountDownSuccess() {
-    let count = 5;
+    let count = 3;
     const countDown = this.shadow.querySelector("#countDown");
     const interval = setInterval(() => {
       count--;
-      countDown.innerHTML = `Você será redirecionado para a página inicial em ${count} segundos`;
+      countDown.innerHTML = `Você será redirecionado para a carteira em ${count} segundos`;
       if (count === 0) {
         clearInterval(interval);
         this.clearLocalStorage();
-        this.clearLocalStorage();
-        window.location.href = "index.html";
+        window.location.href = "wallet.html";
       }
     }, 1000);
   }

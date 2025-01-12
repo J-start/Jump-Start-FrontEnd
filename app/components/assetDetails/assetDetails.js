@@ -10,9 +10,6 @@ class AssetDetails extends HTMLElement {
         this.createStyles("app/components/assetDetails/assetDetails-style.css")
         this.createStyles("app/components/assetDetails/assetDetails-style-responsive.css")
 
-        if(localStorage.getItem("token") === null){
-            window.location.href = "signIn.html"
-        }
 
         if (localStorage.getItem("assetType")) {
             this.showResponse()

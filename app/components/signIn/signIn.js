@@ -4,7 +4,7 @@ class SignIn extends HTMLElement {
     timeoutId = 0
     constructor() {
         super()
-
+        localStorage.clear()
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/signIn/signIn-style.css")
         this.createStyles("app/components/signIn/signIn-style-responsive.css")

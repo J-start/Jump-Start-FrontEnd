@@ -4,7 +4,7 @@ class SignUp extends HTMLElement {
     timeoutId 
     constructor() {
         super()
-
+        localStorage.clear()
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/signUp/signUp-style.css")
         this.createStyles("app/components/signUp/signUp-style-responsive.css")
@@ -112,7 +112,7 @@ class SignUp extends HTMLElement {
             }
 
             this.shadow.querySelector("#messageError").innerHTML = ""
-            window.location.href = "index.html"
+            window.location.href = "signIn.html"
         
         }).catch(error => {
             alert("Erro ao cadastrar, tente novamente")

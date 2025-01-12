@@ -17,6 +17,7 @@
     padding: 20px;
     z-index: 1000;
     overflow: hidden;
+
 }
 
 .containerHistory p {
@@ -26,12 +27,15 @@
     font-weight: bold;
     cursor: pointer;
     color: #333;
+    margin-bottom: 10px;
 }
 
 .wrapHistory {
     max-height: 400px;
     overflow-y: auto;
     padding-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .containerHead {

@@ -95,6 +95,7 @@ class HeaderWallet extends HTMLElement {
 
   makeRequest() {
     if (localStorage.getItem("token") === null) {
+      window.location.href = "signIn.html";
       return
     }
     const TOKEN = localStorage.getItem("token");
@@ -174,9 +175,16 @@ class HeaderWallet extends HTMLElement {
 
   updateBalance(balance) {
     console.log(balance);
-    if (balance >= 0)
-      this.shadow.querySelector("#balance").innerHTML =
-        "R$ " + Number(balance).toFixed(2);
+    if (balance >= 0){
+      const formattedBalance = Number(balance).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2 
+      });
+      this.shadow.querySelector("#balance").innerHTML = formattedBalance
+    }
+      
   }
 
   addHistoryAssetsComponent() {

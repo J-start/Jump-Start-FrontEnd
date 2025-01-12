@@ -99,7 +99,13 @@ class HistoryOperation extends HTMLElement {
     containerBody.classList.add("containerBody");
 
     const assetValue = document.createElement("h3");
-    assetValue.textContent = `Valor: ${history.OperationValue}`;
+    const formattedOperationValue = Number(history.OperationValue).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2 
+    });
+    assetValue.textContent = `Valor: ${formattedOperationValue}`;
 
     const operationDate = document.createElement("h3");
     operationDate.textContent = `Data: ${history.OperationDate}`;
@@ -138,10 +144,10 @@ class HistoryOperation extends HTMLElement {
 
   conversationType(type) {
     if (type == "DEPOSIT") {
-      return "DEPOSITO";
+      return "Depósito";
     }
     if (type == "WITHDRAW") {
-      return "SAQUE";
+      return "Saque";
     }
   }
 

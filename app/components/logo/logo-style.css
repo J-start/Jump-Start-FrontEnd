@@ -1,0 +1,24 @@
+.containerAllElements{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 20px;
+    margin-bottom: 0px;
+}
+.containerLogo{
+    display: flex;
+}
+
+.containerLogo > img{
+    width: 100px;
+    height: 100px;
+}
+.containerTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerTitle > h2{
+    color: white;
+}
