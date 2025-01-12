@@ -8,12 +8,6 @@ class WithdrawConclusion extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style.css")
         this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style-responsive.css")
-
-        /*if(localStorage.getItem("typeOperation") == "BUY"){
-            this.shadow.querySelector("#title").innerText = "Compra realizada com sucesso!"
-        }else{
-            this.shadow.querySelector("#title").innerText = "Venda realizada com sucesso!"
-        }*/
 }
 
     createHTML() {

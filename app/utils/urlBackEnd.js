@@ -1,4 +1,4 @@
-const URL = "https://king-prawn-app-2mm7p.ondigitalocean.app";
+const URL = "http://localhost:8080";
 
 function getUrl(){
 
