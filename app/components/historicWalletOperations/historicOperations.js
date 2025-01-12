@@ -14,7 +14,7 @@ class HistoryOperation extends HTMLElement {
     this.createStyles(
       "app/components/historicWalletOperations/historicOperations-style-responsive.css"
     );
-
+    this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
     this.createHistory();
 
     this.shadow.querySelector("#close").addEventListener("click", () => {
@@ -27,6 +27,8 @@ class HistoryOperation extends HTMLElement {
   createHTML() {
     const template = `
        <div class="containerHistory">
+        <h1>Histórico de operações</h1>
+        <div class="wait"></div>
         <p id="close">X</p>
         <div class="wrapHistory">
         </div>
@@ -54,7 +56,10 @@ class HistoryOperation extends HTMLElement {
   }
 
   async makeRequest() {
-    const TOKEN = "aaa";
+    if(localStorage.getItem("token") === null){
+      return
+    }
+    const TOKEN = localStorage.getItem("token");
     let body = { offset: this.offset };
     const url = `${getUrl()}/history/operations/`;
 
@@ -94,7 +99,13 @@ class HistoryOperation extends HTMLElement {
     containerBody.classList.add("containerBody");
 
     const assetValue = document.createElement("h3");
-    assetValue.textContent = `Valor: ${history.OperationValue}`;
+    const formattedOperationValue = Number(history.OperationValue).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2 
+    });
+    assetValue.textContent = `Valor: ${formattedOperationValue}`;
 
     const operationDate = document.createElement("h3");
     operationDate.textContent = `Data: ${history.OperationDate}`;
@@ -113,6 +124,7 @@ class HistoryOperation extends HTMLElement {
 
     let datas = await this.makeRequest();
     if (datas == null) {
+      this.shadow.querySelector(".wait").innerHTML = ""
       this.isFetching = false;
       return;
     }
@@ -127,14 +139,15 @@ class HistoryOperation extends HTMLElement {
 
     this.offset++;
     this.isFetching = false;
+    this.shadow.querySelector(".wait").innerHTML = ""
   }
 
   conversationType(type) {
     if (type == "DEPOSIT") {
-      return "DEPOSITO";
+      return "Depósito";
     }
     if (type == "WITHDRAW") {
-      return "SAQUE";
+      return "Saque";
     }
   }
 

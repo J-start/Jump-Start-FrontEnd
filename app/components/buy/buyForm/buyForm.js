@@ -28,6 +28,21 @@ class BuyForm extends HTMLElement {
             }
 
         })
+
+        this.shadow.querySelector("#quantityInput").addEventListener("input", () => {
+            if(this.calculateValue() !== null){
+                const value = this.calculateValue()
+
+                 if(value > Number(localStorage.getItem("balance"))){
+                     this.shadow.querySelector("#currentValue").style.color = "#FF4848"
+                     this.shadow.querySelector("#advanceButton").disabled = true
+                 }else{
+                    this.shadow.querySelector("#currentValue").style.color = "#1465FF"
+                    this.shadow.querySelector("#advanceButton").disabled = false
+                 }
+            }
+           
+        })
         
 }
 
@@ -37,6 +52,7 @@ class BuyForm extends HTMLElement {
             `
             <div class="containerShowWhatIsBuying">
                 <h3 id="assetName">Você está comprando </h3>
+                <h3 id="balance"></h3>
             </div>
             <div id="containerAll">
 
@@ -45,6 +61,7 @@ class BuyForm extends HTMLElement {
             </div>
             <div id="containerForm">
                 <input type="number" placeholder="" id="quantityInput" />
+                <p id="currentValue"></p>
                 <button id="advanceButton">Avançar</button>
             </div>
             </div>
@@ -86,14 +103,47 @@ class BuyForm extends HTMLElement {
            const assetName = localStorage.getItem("assetName")
             this.shadow.querySelector("#assetName").innerHTML = `Você está comprando ${assetName}` 
         }
+
+        this.showBalance()
         
     }
+
+    showBalance(){
+        if(localStorage.getItem("balance") === null){
+            window.location.href = "signIn.html"
+        }
+        const balance = Number(localStorage.getItem("balance")).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2  
+          });
+        this.shadow.querySelector("#balance").innerHTML = `Saldo: ${balance}`
+    }
+
     managerTradableShare(){
         if(localStorage.getItem("assetType") == "SHARE"){
             if(!isTadable()){
                window.location.href = "index.html"
             }
         }
+    }
+
+    calculateValue(){
+        if(localStorage.getItem("assetValue") == null || Number(this.shadow.querySelector("#quantityInput").value) == 0){
+            this.shadow.querySelector("#currentValue").style.display = "none"
+            return null
+        }
+         this.shadow.querySelector("#currentValue").style.display = "block"
+        let value = Number(localStorage.getItem("assetValue")) * Number(this.shadow.querySelector("#quantityInput").value)
+        const formattedValue = Number(value).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 3,
+            maximumFractionDigits: 4  
+          });
+          this.shadow.querySelector("#currentValue").innerHTML = `Valor total: ${formattedValue}`
+        return value
     }
         
 

@@ -7,11 +7,11 @@
   text-align: center;
   background-color: #1c2029;
   padding: 50px;
-  width: 100%; 
-  height: 100vh; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   box-sizing: border-box;
   margin-top: -13vh;
@@ -93,6 +93,7 @@ form {
 }
 
 #valueInput:focus {
+<<<<<<< HEAD
   outline: none; /* Remove a borda padrão ao focar */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Efeito sutil ao focar */
 }
@@ -100,3 +101,8 @@ form {
 .withdraw-component{
   margin-left: 280px;
 }
+=======
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+>>>>>>> 7a3f641a772b1c0025c5a0d65a24fdc6a29b674f

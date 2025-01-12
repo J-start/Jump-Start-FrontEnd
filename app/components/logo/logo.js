@@ -1,4 +1,4 @@
-class WithdrawConclusion extends HTMLElement {
+class Logo extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -6,26 +6,28 @@ class WithdrawConclusion extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style.css")
-        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style-responsive.css")
-}
+        this.createStyles("app/components/logo/logo-style.css")
+        this.createStyles("app/components/logo/logo-style-responsive.css")
+    }
 
     createHTML() {
 
         const template =
-        
-                `<div class="principalBlock">
-    <h1 id="title"></h1>
+            `
+   <div class="containerAllElements">
+        <div class="containerLogo">
+            <img src="app/assets/images/logo.png" alt="logo">
+        </div>
 
-    <div class="img">
-        <img src="app/assets/images/confirmation_icon.png" alt="confirmation_icon">
-    </div>
-</div>
-     
+        <div class="containerTitle">
+            <h2>JumpStart</h2>
+        </div>
+   </div>
+
         `
 
         const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "withdrawconclusion-component");
+        componentRoot.setAttribute("class", "home-component");
         componentRoot.innerHTML = template;
         return componentRoot
 
@@ -45,6 +47,8 @@ class WithdrawConclusion extends HTMLElement {
         link.setAttribute("href", linkStyle);
         return link
     }
+
+
 }
 
-customElements.define("withdrawconclusion-component", WithdrawConclusion);
+customElements.define("logo-component", Logo);

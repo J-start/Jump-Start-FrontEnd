@@ -23,6 +23,7 @@
         font-weight: bold;
         cursor: pointer;
         color: #333;
+        margin-bottom: 10px;
     }
 }
 @media (min-width: 280px) and (max-width: 380px) {

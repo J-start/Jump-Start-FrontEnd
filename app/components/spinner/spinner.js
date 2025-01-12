@@ -1,4 +1,4 @@
-class CDB extends HTMLElement {
+class Spinner extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -6,26 +6,20 @@ class CDB extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/cdb/cdb-style.css")
-        //this.createStyles("app/components/cdb/cdb-style-responsive.css")
-
+        this.createStyles("app/components/spinner/spinner-style-responsive.css")
+        this.createStyles("app/components/spinner/spinner-style.css")
     }
 
     createHTML() {
 
         const template =
             `
-    <div id="containerHeadHome">
-        <div id="headHomeContents">
-            <h1>Olá, Fulano</h1>
-        </div>
-    </div>
-    <div class="lineHeader"></div>
+            <div class="loader"></div>
 
         `
 
         const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "cdb-component");
+        componentRoot.setAttribute("class", "containerSpinner-component");
         componentRoot.innerHTML = template;
         return componentRoot
 
@@ -45,6 +39,8 @@ class CDB extends HTMLElement {
         link.setAttribute("href", linkStyle);
         return link
     }
+
+
 }
 
-customElements.define("cdb-component", CDB);
+customElements.define("spinner-component", Spinner);

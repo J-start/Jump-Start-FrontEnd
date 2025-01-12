@@ -14,6 +14,7 @@ class HistoryAssets extends HTMLElement {
     this.createStyles(
       "app/components/historyAssetsWallet/historyAssets-style-responsive.css"
     );
+    this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
     this.createHistory();
     this.shadow.querySelector("#close").addEventListener("click", () => {
       this.remove();
@@ -24,6 +25,8 @@ class HistoryAssets extends HTMLElement {
   createHTML() {
     const template = `
        <div class="containerHistory">
+        <h1>Histórico de compra e venda</h1>
+         <div class="wait"></div>
         <p id="close">X</p>
         <div class="wrapHistory">
         </div>
@@ -49,7 +52,10 @@ class HistoryAssets extends HTMLElement {
     return link;
   }
   async makeRequest() {
-    const TOKEN = "aaa";
+    if(localStorage.getItem("token") === null){
+      return
+    }
+    const TOKEN = localStorage.getItem("token");
     let body = { offset: this.offset };
     const url = `${getUrl()}/history/assets/`;
 
@@ -95,17 +101,24 @@ class HistoryAssets extends HTMLElement {
     containerBody.classList.add("containerBody");
 
     const assetValue = document.createElement("h3");
-    assetValue.textContent = `Valor: ${history.AssetValue}`;
+    const formattedAssetValue = Number(history.AssetValue).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2 
+    });
+    assetValue.textContent = `Valor: ${formattedAssetValue}`;
 
     const operationDate = document.createElement("h3");
     operationDate.textContent = `Data: ${history.OperationDate}`;
 
     const operationType = document.createElement("h3");
     operationType.textContent = `Tipo: ${history.OperationType}`;
-
+    
+    containerBody.appendChild(operationType);
     containerBody.appendChild(assetValue);
     containerBody.appendChild(operationDate);
-    containerBody.appendChild(operationType);
+    
 
     const parentElement = this.shadow.querySelector(".wrapHistory");
     parentElement.appendChild(containerHead);
@@ -118,6 +131,7 @@ class HistoryAssets extends HTMLElement {
 
     let datas = await this.makeRequest();
     if (datas == null) {
+      this.shadow.querySelector(".wait").innerHTML = ""
       this.isFetching = false;
       return;
     }
@@ -136,6 +150,7 @@ class HistoryAssets extends HTMLElement {
     datas.forEach((data) => this.createElment(data));
     this.offset++;
     this.isFetching = false;
+    this.shadow.querySelector(".wait").innerHTML = ""
   }
 
   conversationType(type) {

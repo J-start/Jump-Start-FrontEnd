@@ -9,6 +9,7 @@ class News extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/news/news-style.css")
         this.createStyles("app/components/news/news-style-responsive.css")
+        
         this.makeRequest()
         this.addInfiniteScrollListener();
     }
@@ -18,6 +19,7 @@ class News extends HTMLElement {
         const template =
             `
    <div class="containerAllNews">
+        <div class="wait"></div>
    </div>
 
         `
@@ -45,7 +47,9 @@ class News extends HTMLElement {
     }
 
     makeRequest() {
+        this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         if(this.isFetching){
+           this.shadow.querySelector(".wait").display = "none"
             return
         }
         this.isFetching = true
@@ -62,6 +66,7 @@ class News extends HTMLElement {
             return response.json();
         }).then(data => {
             if (data === null) {
+                 this.shadow.querySelector(".wait").innerHTML = ""
                 return
             }
             this.convertObject(data)
@@ -71,6 +76,8 @@ class News extends HTMLElement {
         });
         this.offset ++
         this.isFetching = false
+        
+        
     }
 
     convertObject(data){
@@ -83,6 +90,7 @@ class News extends HTMLElement {
             let dateNews = e['DateNews'];
             
             this.createNews(description,dateNews,url)
+            this.shadow.querySelector(".wait").innerHTML = ""
         })
     }
 

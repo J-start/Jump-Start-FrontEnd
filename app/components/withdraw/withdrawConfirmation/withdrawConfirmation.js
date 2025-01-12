@@ -20,7 +20,6 @@ class WithdrawConfirmation extends HTMLElement {
     });
     this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
       this.makeRequest();
-      this.makeWalletRequest();
     });
   }
 
@@ -80,13 +79,17 @@ class WithdrawConfirmation extends HTMLElement {
         `;
 
     const componentRoot = document.createElement("div");
-    componentRoot.setAttribute("class", "withdrawconfirmation-component");
+    componentRoot.setAttribute("class", "withdrawconfirmation-componentContainer");
     componentRoot.innerHTML = template;
     return componentRoot;
   }
 
   makeRequest() {
-    const TOKEN = "aaaa";
+    if(localStorage.getItem("token") === null){
+      window.location.href = "signIn.html"
+      return
+    }
+    const TOKEN = localStorage.getItem("token");
     let code = "";
 
     const datasPost = JSON.stringify({
@@ -104,6 +107,7 @@ class WithdrawConfirmation extends HTMLElement {
       body: datasPost,
     })
       .then((response) => {
+        console.log(response);
         if (!response.ok) {
           console.error("Erro na requisição");
         }
@@ -124,7 +128,7 @@ class WithdrawConfirmation extends HTMLElement {
   }
 
 
-
+  
   insertPageSuccess() {
     this.shadow.querySelector("#containerAll").remove();
     const success = document.createElement("withdrawconclusion-component");
@@ -163,18 +167,17 @@ class WithdrawConfirmation extends HTMLElement {
     const countDown = this.shadow.querySelector("#countDown");
     const interval = setInterval(() => {
       count--;
-      countDown.innerHTML = `Você será redirecionado para a página inicial em ${count} segundos`;
+      countDown.innerHTML = `Você será redirecionado para a carteira em ${count} segundos`;
       if (count === 0) {
         clearInterval(interval);
         this.clearLocalStorage();
-        this.clearLocalStorage();
-        window.location.href = "index.html";
+        window.location.href = "wallet.html";
       }
     }, 1000);
   }
 
   makeCountDownError() {
-    let count = 5;
+    let count = 3;
     const countDown = this.shadow.querySelector("#countDown");
     const interval = setInterval(() => {
       count--;
