@@ -101,17 +101,24 @@ class HistoryAssets extends HTMLElement {
     containerBody.classList.add("containerBody");
 
     const assetValue = document.createElement("h3");
-    assetValue.textContent = `Valor: ${history.AssetValue}`;
+    const formattedAssetValue = Number(history.AssetValue).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2 
+    });
+    assetValue.textContent = `Valor: ${formattedAssetValue}`;
 
     const operationDate = document.createElement("h3");
     operationDate.textContent = `Data: ${history.OperationDate}`;
 
     const operationType = document.createElement("h3");
     operationType.textContent = `Tipo: ${history.OperationType}`;
-
+    
+    containerBody.appendChild(operationType);
     containerBody.appendChild(assetValue);
     containerBody.appendChild(operationDate);
-    containerBody.appendChild(operationType);
+    
 
     const parentElement = this.shadow.querySelector(".wrapHistory");
     parentElement.appendChild(containerHead);
