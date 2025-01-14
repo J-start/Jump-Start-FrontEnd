@@ -75,16 +75,16 @@ class AssetGraphic extends HTMLElement {
             });
             if (data.length > 2) {
 
-                let dateShare = String(data[0].DateShare).replaceAll("-","/")
+                let dateShare = String(data[0].DateShare).replaceAll("-", "/")
                 let days1 = this.calcDelta(dateShare)
                 this.valueVariation(days1, data[0].CloseShare, "variationSecond")
 
-                let dateShare2 = String(data[data.length - 2].DateShare).replaceAll("-","/")
+                let dateShare2 = String(data[data.length - 2].DateShare).replaceAll("-", "/")
                 let days2 = this.calcDelta(dateShare2)
                 this.valueVariation(days2, data[data.length - 2].CloseShare, "variationFirst")
 
-            }else{
-                let dateShare = String(data[0].DateShare).replaceAll("-","/")
+            } else {
+                let dateShare = String(data[0].DateShare).replaceAll("-", "/")
                 let days = this.calcDelta(dateShare)
                 this.valueVariation(days, data[0].CloseShare, "variationSecond")
             }
@@ -233,8 +233,8 @@ class AssetGraphic extends HTMLElement {
     }
 
     valueVariation(days, value, div) {
-        
-        let variation = 100 - (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3) 
+
+        let variation = 100 - (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3)
         variation = variation.toFixed(1)
 
         if (days === 1) {
@@ -264,12 +264,6 @@ class AssetGraphic extends HTMLElement {
 
         return differenceDays;
     }
-
-
-
-
-
-
 
 }
 

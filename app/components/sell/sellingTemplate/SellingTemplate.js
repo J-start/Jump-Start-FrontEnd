@@ -46,6 +46,8 @@ class SellingTemplate extends HTMLElement {
     })
   }
 
+  
+
   createHTML() {
     const template = `
 
