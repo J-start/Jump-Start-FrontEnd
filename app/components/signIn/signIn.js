@@ -104,7 +104,7 @@ class SignIn extends HTMLElement {
         
         }).catch(error => {
             console.log(error)
-            alert("Erro ao realizar login, tente novamente")
+            alert("Erro ao realizar login, tente novamente",error)
         });
     }
 
