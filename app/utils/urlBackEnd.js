@@ -1,4 +1,4 @@
-const URL = "http://localhost:8080";
+const URL = "https://starfish-app-rhfku.ondigitalocean.app/";
 
 function getUrl(){
 

@@ -103,8 +103,7 @@ class SignIn extends HTMLElement {
             window.location.href = "index.html"
         
         }).catch(error => {
-            alert(error)
-            alert("Erro ao realizar login, tente novamente",error)
+            alert("Erro ao realizar login, tente novamente")
         });
     }
 
