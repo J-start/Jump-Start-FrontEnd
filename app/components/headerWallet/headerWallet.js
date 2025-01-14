@@ -174,7 +174,6 @@ class HeaderWallet extends HTMLElement {
   }
 
   updateBalance(balance) {
-    console.log(balance);
     if (balance >= 0){
       const formattedBalance = Number(balance).toLocaleString('pt-BR', {
         style: 'currency',

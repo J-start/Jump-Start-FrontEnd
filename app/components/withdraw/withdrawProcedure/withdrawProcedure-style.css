@@ -93,16 +93,6 @@ form {
 }
 
 #valueInput:focus {
-<<<<<<< HEAD
-  outline: none; /* Remove a borda padrão ao focar */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Efeito sutil ao focar */
-}
-
-.withdraw-component{
-  margin-left: 280px;
-}
-=======
   outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
->>>>>>> 7a3f641a772b1c0025c5a0d65a24fdc6a29b674f
