@@ -97,3 +97,10 @@ button:hover {
     margin-top: -5px;
     margin-bottom: -5px;
 }
+
+.wait {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 96vh;
+}

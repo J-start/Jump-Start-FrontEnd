@@ -37,9 +37,12 @@ class AssetDetails extends HTMLElement {
 
         const template =
             `
-            <div class="containerAssetAndBalance">
-              
-            </div>
+        <div class="wait">
+            <spinner-component></spinner-component>
+        </div>    
+        <div class="containerLoadElements">
+            
+            <div class="containerAssetAndBalance"></div>
             
             <div class="line"></div>
             
@@ -47,20 +50,24 @@ class AssetDetails extends HTMLElement {
                 <p>Cotação atual:</p>
                 <h2 id="valueAsset"></h2>
             </div>
+
             <div class="showMessageMarketClosed">
-                <h3>Mercado fechado. A compra e venda de ações é realizada em dias úteis, começando às 10:00h e finalizando às 18:00h</h3>
+                <h3>Mercado fechado. A compra e venda de ações é realizada em dias úteis, começando às 11:00h e finalizando às 18:00h</h3>
             </div>
-        <div class="lineGraphic"></div>
+
+            <div class="lineGraphic"></div>
+
             <div class="containerGraphicPage">
                 <graphic-component></graphic-component>
             </div>
 
-        <div class="lineGraphic"></div>
+            <div class="lineGraphic"></div>
 
             <div class="containerButtons">
                 <button id="buttonSell">Vender</button>
                 <button id="buttonBuy">Comprar</button>
             </div>
+        </div>
 
            
 
@@ -106,6 +113,7 @@ class AssetDetails extends HTMLElement {
 
 
     async showResponse() {
+        this.shadow.querySelector(".containerLoadElements").style.display = "none"
         const data = await this.makeRequestApi(this.buildUrl())
         const value = Number(this.getValueAsset(data))
         const formattedCurrency = value.toLocaleString('pt-BR', {
@@ -113,11 +121,13 @@ class AssetDetails extends HTMLElement {
             currency: 'BRL',
             minimumFractionDigits: 3,
             maximumFractionDigits: 4
-          });
+        });
 
         this.buildResponse()
         this.shadow.querySelector("#valueAsset").innerHTML = formattedCurrency
-
+        
+        this.shadow.querySelector(".wait").remove()
+        this.shadow.querySelector(".containerLoadElements").style.display = ""
 
 
 
@@ -183,7 +193,7 @@ class AssetDetails extends HTMLElement {
         containerAll.appendChild(containerAsset)
     }
 
-    createBalance(balance) {
+    createBalance() {
 
         const containerAll = this.shadow.querySelector(".containerAssetAndBalance");
 
@@ -200,16 +210,16 @@ class AssetDetails extends HTMLElement {
         const containerBalanceValue = document.createElement('div');
         containerBalanceValue.classList.add('containerBalanceValue');
         const balanceValue = document.createElement('h3');
-        if(localStorage.getItem("balance")){
+        if (localStorage.getItem("balance")) {
             const balance = localStorage.getItem("balance");
             const formattedCurrency = Number(balance).toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
-              });
+            });
             balanceValue.textContent = formattedCurrency;
-        }else{
+        } else {
             containerBalanceValue.style.display = "none"
             title.style.display = "none"
         }
@@ -232,15 +242,15 @@ class AssetDetails extends HTMLElement {
         }, 1000);
     }
 
-    managerTradableShare(){
-        if(localStorage.getItem("assetType") == "SHARE"){
-            if(!isTadable()){
+    managerTradableShare() {
+        if (localStorage.getItem("assetType") == "SHARE") {
+            if (!isTadable()) {
                 this.showMarketClosed()
             }
         }
     }
 
-    showMarketClosed(){
+    showMarketClosed() {
         const buyButton = this.shadow.querySelector('#buttonBuy');
         const sellButton = this.shadow.querySelector('#buttonSell');
         this.shadow.querySelector(".showMessageMarketClosed").style.display = "flex"

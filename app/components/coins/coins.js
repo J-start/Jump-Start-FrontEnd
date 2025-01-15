@@ -141,18 +141,16 @@ class Coin extends HTMLElement {
         const objects = this.convertObjectToArray(datas, positionObjects)
         let detailsCrypto = await this.fetchCrypto()
 
-
-
         this.sortArray(objects,"code")
         this.sortArray(detailsCrypto,"acronym")
-
-        console.log(detailsCrypto)
-        console.log(objects)
-
-
+        
+        this.shadow.querySelector(".divToUpdateValues").style.display = "none"
+        
         for (let i = 0; i < objects.length; i++) {
             wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3), objects[i].code, detailsCrypto[i].urlImage));
         }
+
+         this.shadow.querySelector(".divToUpdateValues").style.display = ""
 
         return wrapAllElements
     }

@@ -93,11 +93,14 @@ class Share extends HTMLElement {
         this.sortArray(datas,"NameShare")
         this.sortArray(detailsCrypto,"acronym")
 
+        this.shadow.querySelector(".WrapAllElements").style.display = "none"
+        
         for(let i = 0; i < datas.length; i++){
             wrapAllElements.appendChild(BuildAsset2("SHARE", datas[i].NameShare, datas[i].OpenShare, datas[i].CloseShare,datas[i].CloseShare,detailsCrypto[i].urlImage));
 
         }
 
+        this.shadow.querySelector(".WrapAllElements").style.display = ""
         
    
     }

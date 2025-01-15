@@ -45,7 +45,8 @@
     flex: 1;
 }
 
-#advanceButton,#backButton {
+#advanceButton,
+#backButton {
     width: 150px;
     height: 40px;
     border: none;
@@ -55,18 +56,53 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 10px;
 }
 
-#advanceButton:hover,#backButton:hover {
+#advanceButton:hover,
+#backButton:hover {
     background-color: #0056b3;
 }
-#countDown{
+
+#countDown {
     color: white;
     position: relative;
     top: -94%;
 
 }
-.containerSwitchScreensError{
+
+.containerSwitchScreensError {
     display: none;
+}
+
+#spinnerButton {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #1465FF;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 2s linear infinite;
+    margin: auto;
+
+}
+
+#advanceButton{
+    margin-bottom: -10px;
+}
+.wrapButton {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-direction: column;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

@@ -111,9 +111,13 @@ class Cripto extends HTMLElement {
         this.sortArray(datas)
         this.sortArray(detailsCrypto)
 
+        this.shadow.querySelector(".WrapAllElements").style.display = "none"
+
         for(let i = 0; i < datas.length; i++){
             wrapAllElements.appendChild(BuildAsset2("CRYPTO", datas[i].pair.replace("-BRL", ""), Number(datas[i].last).toFixed(2), Number(datas[i].last).toFixed(2),"",detailsCrypto[i].urlImage))
         }
+
+        this.shadow.querySelector(".WrapAllElements").style.display = ""
 
     }
 

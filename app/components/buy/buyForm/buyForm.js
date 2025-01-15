@@ -8,8 +8,18 @@ class BuyForm extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/buy/buyForm/buyForm-style.css")
         this.createStyles("app/components/buy/buyForm/buyForm-style-responsive.css")
+        
+        this.shadow.querySelector(".containerShowWhatIsBuying").style.display = "none"
+        this.shadow.querySelector("#containerAll").style.display = "none"
+        
         this.showWhatIsBuying()
         this.managerTradableShare()
+        
+        this.shadow.querySelector(".wait").remove()
+
+        this.shadow.querySelector(".containerShowWhatIsBuying").style.display = ""
+        this.shadow.querySelector("#containerAll").style.display = ""
+
         this.shadow.querySelector("#advanceButton").addEventListener("click", () => {
             const quantity = this.shadow.querySelector("#quantityInput").value
             if (quantity > 0) {
@@ -50,21 +60,28 @@ class BuyForm extends HTMLElement {
 
         const template =
             `
+            <div class="wait">
+                <spinner-component></spinner-component>
+            </div>
             <div class="containerShowWhatIsBuying">
                 <h3 id="assetName">Você está comprando </h3>
                 <h3 id="balance"></h3>
             </div>
+
             <div id="containerAll">
 
-            <div id="containerTitle">
-                <h1>Selecione o quanto quer<br> comprar</h1>
+                <div id="containerTitle">
+                    <h1>Selecione o quanto quer<br> comprar</h1>
+                </div>
+
+                <div id="containerForm">
+                    <input type="number" placeholder="" id="quantityInput" />
+                    <p id="currentValue"></p>
+                    <button id="advanceButton">Avançar</button>
+                </div>
+
             </div>
-            <div id="containerForm">
-                <input type="number" placeholder="" id="quantityInput" />
-                <p id="currentValue"></p>
-                <button id="advanceButton">Avançar</button>
-            </div>
-            </div>
+       
         `
 
         const componentRoot = document.createElement("div");

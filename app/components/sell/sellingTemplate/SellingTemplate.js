@@ -8,9 +8,14 @@ class SellingTemplate extends HTMLElement {
     this.createStyles("app/components/sell/sellingTemplate/sellingTemplate-style.css");
     this.createStyles("app/components/sell/sellingTemplate/sellingTemplate-style-responsive.css");
 
+   
+
     this.getQuantityAsset()
     this.showWhatIsSelling();
     this.managerTradableShare();
+
+    
+   
 
     this.shadow.querySelector("#insertValueOperation").addEventListener("click", (event) => {
       event.preventDefault();
@@ -33,41 +38,38 @@ class SellingTemplate extends HTMLElement {
     });
 
     this.shadow.querySelector("#valueInput").addEventListener("input", () => {
-      let input = Number(this.shadow.querySelector("#valueInput").value)
-      if (input > Number(this.quantity)) {
-        this.shadow.querySelector("#insertValueOperation").disabled = true
-        this.shadow.querySelector("#messageQuantityOutOfRange").style.display = "block"
-        this.shadow.querySelector("#messageQuantityOutOfRange").innerHTML = "Quantidade inválida"
-      } else {
-        this.shadow.querySelector("#insertValueOperation").disabled = false
-        this.shadow.querySelector("#messageQuantityOutOfRange").style.display = "none"
-      }
+      this.managerQuantityUser()
 
     })
   }
 
-  
+
 
   createHTML() {
     const template = `
+    <div class="wait">
+        <spinner-component></spinner-component>
+    </div>
 
-        <div class="sellingBlock">
-        <div class="containerShowWhatIsSelling">
-            <h3 id="assetName">Você está Vendendo </h3>
-            <h3 id="assetQuantity"></h3>
-        </div>
-        <div class="titlePage">
-            <h1>Digite o quanto quer vender</h1>
+    <div class="sellingBlock">
+
+          <div class="containerShowWhatIsSelling">
+              <h3 id="assetName">Você está Vendendo </h3>
+              <h3 id="assetQuantity"></h3>
+          </div>
+
+          <div class="titlePage">
+              <h1>Digite o quanto quer vender</h1>
+          </div>
+
+          <div class="form-sendingValue">
+              <form action="">
+                  <input type="number" id="valueInput"> <br>
+                  <p id="messageQuantityOutOfRange"></p>
+                  <button id="insertValueOperation">Avançar</button>
+              </form>
         </div>
 
-        <div class="form-sendingValue">
-            <form action="">
-              
-                 <input type="number" id="valueInput"> <br>
-                 <p id="messageQuantityOutOfRange"></p>
-                <button id="insertValueOperation">Avançar</button>
-            </form>
-        </div>
     </div>
 
     <div class="containerOtherScreens"></div>
@@ -100,14 +102,10 @@ class SellingTemplate extends HTMLElement {
   showWhatIsSelling() {
     if (localStorage.getItem("assetType") === "SHARE") {
       const assetName = localStorage.getItem("assetCode");
-      this.shadow.querySelector(
-        "#assetName"
-      ).innerHTML = `Você está vendendo ${assetName}`;
+      this.shadow.querySelector("#assetName").innerHTML = `Você está vendendo ${assetName}`;
     } else {
       const assetName = localStorage.getItem("assetName");
-      this.shadow.querySelector(
-        "#assetName"
-      ).innerHTML = `Você está vendendo ${assetName}`;
+      this.shadow.querySelector("#assetName").innerHTML = `Você está vendendo ${assetName}`;
     }
   }
 
@@ -120,6 +118,7 @@ class SellingTemplate extends HTMLElement {
   }
 
   getQuantityAsset() {
+    this.shadow.querySelector(".sellingBlock").style.display = "none"
     if (localStorage.getItem("token") == null) {
       window.location.href = "signIn.html";
     }
@@ -143,19 +142,9 @@ class SellingTemplate extends HTMLElement {
         return
       }
       this.quantity = data.quantity
-      console.log("Number(data.quantity) == 0 ", Number(data.quantity) == 0)
-      if (Number(data.quantity) == 0) {
-        this.shadow.querySelector("#assetName").style.display = "none"
-        this.shadow.querySelector("#valueInput").disabled = true;
-        this.shadow.querySelector("#assetQuantity").innerHTML = `Você não possui esse ativo em carteira`;
-        this.shadow.querySelector("#assetQuantity").style.color = "#FF4848"
-      } else {
-        this.shadow.querySelector("#valueInput").disable = false
-        this.shadow.querySelector("#assetName").style.display = "block"
-        this.shadow.querySelector("#assetQuantity").innerHTML = `Quantidade em carteira: ${data.quantity}`;
-        this.shadow.querySelector("#assetQuantity").style.color = "white"
-      }
-
+      this.managerAssetsWallet(this.quantity)
+      this.shadow.querySelector(".wait").remove()
+      this.shadow.querySelector(".sellingBlock").style.display = ""
     }).catch(error => {
 
       console.error('Erro na requisição:', error);
@@ -187,6 +176,32 @@ class SellingTemplate extends HTMLElement {
     })
 
     return containWord
+  }
+
+  managerAssetsWallet(quantity) {
+    if (Number(quantity) == 0) {
+      this.shadow.querySelector("#assetName").style.display = "none"
+      this.shadow.querySelector("#valueInput").disabled = true;
+      this.shadow.querySelector("#assetQuantity").innerHTML = `Você não possui esse ativo em carteira`;
+      this.shadow.querySelector("#assetQuantity").style.color = "#FF4848"
+    } else {
+      this.shadow.querySelector("#valueInput").disable = false
+      this.shadow.querySelector("#assetName").style.display = "block"
+      this.shadow.querySelector("#assetQuantity").innerHTML = `Quantidade em carteira: ${quantity}`;
+      this.shadow.querySelector("#assetQuantity").style.color = "white"
+    }
+  }
+
+  managerQuantityUser() {
+    let input = Number(this.shadow.querySelector("#valueInput").value)
+    if (input > Number(this.quantity)) {
+      this.shadow.querySelector("#insertValueOperation").disabled = true
+      this.shadow.querySelector("#messageQuantityOutOfRange").style.display = "block"
+      this.shadow.querySelector("#messageQuantityOutOfRange").innerHTML = "Quantidade inválida"
+    } else {
+      this.shadow.querySelector("#insertValueOperation").disabled = false
+      this.shadow.querySelector("#messageQuantityOutOfRange").style.display = "none"
+    }
   }
 }
 

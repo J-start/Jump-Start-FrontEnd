@@ -28,7 +28,9 @@
     color: #333;
     margin-bottom: 10px;
 }
-
+.wrapHistory{
+    display: none;
+}
 .wrapHistory {
     max-height: 400px;
     overflow-y: auto;
@@ -85,7 +87,7 @@
     justify-content: center;
 }
 
-.containerHistory>h1 {
+h1 {
     color: white;
     display: flex;
     justify-content: center;
