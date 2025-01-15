@@ -89,7 +89,7 @@ class DepositConfirmation extends HTMLElement {
       window.location.href = "signIn.html"
       return
     }
-    this.shadow.querySelector("#sellAsset").innerHTML = "depositando...."
+    this.shadow.querySelector("#sellAsset").innerHTML = "Depositando...."
     const TOKEN = localStorage.getItem("token");
     let code = "";
 
