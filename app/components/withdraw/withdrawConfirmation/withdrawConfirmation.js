@@ -91,7 +91,7 @@ class WithdrawConfirmation extends HTMLElement {
       window.location.href = "signIn.html"
       return
     }
-    this.shadow.querySelector("#sellAsset").innerHTML = "sacando...."
+    this.shadow.querySelector("#sellAsset").innerHTML = "Sacando...."
     const TOKEN = localStorage.getItem("token");
     const datasPost = JSON.stringify({
       value: parseFloat(localStorage.getItem("withdrawValue")),

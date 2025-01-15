@@ -10,7 +10,7 @@ class BuyConfirmation extends HTMLElement {
         this.createStyles("app/components/buy/buyConfirmation/buyConfirmation-style-responsive.css")
         
         this.shadow.querySelector("#containerAll").style.display = "none"
-        this.shadow.querySelector("#advanceButton").innerHTML = "avançar"
+        this.shadow.querySelector("#advanceButton").innerHTML = "Comprar"
         this.insertValuesAsset()
 
         this.shadow.querySelector("#containerAll").style.display = ""

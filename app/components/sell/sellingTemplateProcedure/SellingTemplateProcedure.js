@@ -93,6 +93,7 @@ class SellingTemplateProcedure extends HTMLElement {
         if(localStorage.getItem("token") === null){
             window.location.href = "signIn.html"
         }
+        this.shadow.querySelector("#sellAsset").innerHTML = "Vendendo..."
         const TOKEN = localStorage.getItem("token")
         let code = ""
         if (localStorage.getItem("assetType") != "SHARE"){
