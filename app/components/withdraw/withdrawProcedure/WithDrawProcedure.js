@@ -29,27 +29,25 @@ class WithDrawProcedure extends HTMLElement {
 
   createHTML() {
     const template = `
-       <div class="sellingBlockAlt">
-    <div class="PageReturn">
-        <h1>Qual valor você deseja sacar ?</h1>
-        <p>Você pode realizar saque num valor igual ou menor ao que você possui em carteira.</p>
-    </div>
-    <div class="form-sendingValue">
-            <form action="">
-              
-                 <input type="number" id="valueInput"> <br>
-                 <div class="buttonFormat">
-        <div class="Sacar">
-            <button id = "buttonGo">Avançar</button>
-        </div>
-    </div>
-            </form>
-        </div>
+      <div class="sellingBlockAlt">
+          <div class="PageReturn">
+              <h1>Qual valor você deseja sacar ?</h1>
+              <p>Você pode realizar saque num valor igual ou menor ao que você possui em carteira.</p>
+          </div>
 
-    
-</div>
+          <div class="form-sendingValue">
+              <form action="">
+                  <input type="number" id="valueInput"> <br>
+                  <div class="buttonFormat">
+                      <div class="Sacar">
+                          <button id="buttonGo">Avançar</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
 
-<div id = "containerComponentAlt"></div>
+      <div id="containerComponentAlt"></div>
 
         `;
 

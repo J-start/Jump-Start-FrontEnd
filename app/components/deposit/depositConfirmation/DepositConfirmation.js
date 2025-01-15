@@ -89,6 +89,7 @@ class DepositConfirmation extends HTMLElement {
       window.location.href = "signIn.html"
       return
     }
+    this.shadow.querySelector("#sellAsset").innerHTML = "depositando...."
     const TOKEN = localStorage.getItem("token");
     let code = "";
 
@@ -123,6 +124,8 @@ class DepositConfirmation extends HTMLElement {
         }
       })
       .catch((error) => {
+        this.insertPageError("tente novamente");
+        this.makeCountDownError();
         console.error("Erro na requisição:", error);
       });
   }
@@ -183,7 +186,7 @@ class DepositConfirmation extends HTMLElement {
       countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`;
       if (count === 0) {
         clearInterval(interval);
-        window.location.href = "index.html";
+        window.location.href = "wallet.html";
       }
     }, 1000);
   }

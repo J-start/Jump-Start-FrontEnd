@@ -11,12 +11,14 @@ class WithdrawConfirmation extends HTMLElement {
     this.createStyles(
       "app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style-responsive.css"
     );
-
+    this.shadow.querySelector("#containerAll").style.display = "none"
     this.insertWithdrawData();
     localStorage.setItem("Operação", "Saque");
 
+    this.shadow.querySelector("#containerAll").style.display = ""
+
     this.shadow.querySelector(".back").addEventListener("click", () => {
-      window.location.href = "operationWallet.html";
+      window.location.href = "wallet.html";
     });
     this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
       this.makeRequest();
@@ -85,13 +87,12 @@ class WithdrawConfirmation extends HTMLElement {
   }
 
   makeRequest() {
-    if(localStorage.getItem("token") === null){
+    if (localStorage.getItem("token") === null) {
       window.location.href = "signIn.html"
       return
     }
+    this.shadow.querySelector("#sellAsset").innerHTML = "sacando...."
     const TOKEN = localStorage.getItem("token");
-    let code = "";
-
     const datasPost = JSON.stringify({
       value: parseFloat(localStorage.getItem("withdrawValue")),
     });
@@ -123,12 +124,14 @@ class WithdrawConfirmation extends HTMLElement {
         }
       })
       .catch((error) => {
+        this.insertPageError("tente novamente");
+        this.makeCountDownError();
         console.error("Erro na requisição:", error);
       });
   }
 
 
-  
+
   insertPageSuccess() {
     this.shadow.querySelector("#containerAll").remove();
     const success = document.createElement("withdrawconclusion-component");
