@@ -27,10 +27,11 @@ class HistoryOperation extends HTMLElement {
   createHTML() {
     const template = `
        <div class="containerHistory">
-        <h1>Histórico de operações</h1>
+        
         <div class="wait"></div>
         <p id="close">X</p>
         <div class="wrapHistory">
+          <h1>Histórico de operações</h1>
         </div>
        </div>
         `;
@@ -116,6 +117,7 @@ class HistoryOperation extends HTMLElement {
     const parentElement = this.shadow.querySelector(".wrapHistory");
     parentElement.appendChild(containerHead);
     parentElement.appendChild(containerBody);
+    
   }
 
   async createHistory() {
@@ -136,6 +138,7 @@ class HistoryOperation extends HTMLElement {
     });
 
     datas.forEach((data) => this.createElment(data));
+    this.shadow.querySelector(".wrapHistory").style.display = "block"
 
     this.offset++;
     this.isFetching = false;

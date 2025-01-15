@@ -17,6 +17,9 @@ class WalletAssets extends HTMLElement {
                 <div class="modal-content">
                     <button class="close-button" id="closeButton">&times;</button>
                     <h2>Detalhes dos Ativos</h2>
+                    <div class="wait">
+                        <spinner-component></spinner-component>
+                    </div>
                     <canvas id="assetChart"></canvas>
                 </div>
             </div>
@@ -65,6 +68,7 @@ class WalletAssets extends HTMLElement {
                 return Number(finalValue).toFixed(2); 
             })
         );
+        this.shadow.querySelector(".wait").remove()
     
         const labels = assetArray.map(asset => asset.AssetName);
     
