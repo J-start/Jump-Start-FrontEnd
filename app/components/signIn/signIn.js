@@ -42,7 +42,7 @@ class SignIn extends HTMLElement {
                     <label for="password">Senha</label>
                    <div class="passwordContainer">
                     <input placeholder="Escolha uma senha" maxlength="20" minlength="8" type="password" id="password" name="password" required> 
-                    <img src="app/assets/images/see_password.svg" width="25px" height:"25px" alt="eye" id="passwordImage" class="eye">
+                    <img src="app/assets/images/close_password.svg" width="25px" height:"25px" alt="eye" id="passwordImage" class="eye">
                     </div>
                     <br>
                     <a href="signUp.html">Não tenho uma conta</a>
@@ -149,11 +149,11 @@ class SignIn extends HTMLElement {
         if(!this.isPasswordVisible){
             passwordElement.type = "text"
             this.isPasswordVisible = !this.isPasswordVisible
-            this.shadow.querySelector("#passwordImage").src = "app/assets/images/close_password.svg"
+            this.shadow.querySelector("#passwordImage").src = "app/assets/images/see_password.svg"
         }else{
             passwordElement.type = "password"
             this.isPasswordVisible = !this.isPasswordVisible
-            this.shadow.querySelector("#passwordImage").src = "app/assets/images/see_password.svg"
+            this.shadow.querySelector("#passwordImage").src = "app/assets/images/close_password.svg"
         }
         
   
