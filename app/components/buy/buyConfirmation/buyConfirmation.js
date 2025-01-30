@@ -8,8 +8,12 @@ class BuyConfirmation extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/buy/buyConfirmation/buyConfirmation-style.css")
         this.createStyles("app/components/buy/buyConfirmation/buyConfirmation-style-responsive.css")
-
+        
+        this.shadow.querySelector("#containerAll").style.display = "none"
+        this.shadow.querySelector("#advanceButton").innerHTML = "Comprar"
         this.insertValuesAsset()
+
+        this.shadow.querySelector("#containerAll").style.display = ""
 
         this.shadow.querySelector("#backButton").addEventListener("click", () => {
             window.location.href = "operation.html"
@@ -42,15 +46,15 @@ class BuyConfirmation extends HTMLElement {
                     <p class="infoValue" id="assetDate"></p>
                 </div>
             </div>
-            <button id="backButton" >Voltar</button>
+            <div class="wrapButton">
+            <button id="backButton" >  Voltar</button>
+            
             <button id="advanceButton" >Comprar</button>
-</div>
+            </div>
+            </div>
             <div class="containerOtherScreens"></div>
             <h4 id="countDown"></h4>
-            <div class="containerSwitchScreensError">
-                 <button id="backButton" >Voltar para a página inicial</button>
-                 <button id="advanceButton" >Tentar novamente</button>
-            </div>
+
             
         `
 
@@ -70,7 +74,12 @@ class BuyConfirmation extends HTMLElement {
 
     }
     makeRequest() {
-        const TOKEN = "aaa"
+        
+        if(localStorage.getItem("token") === null){
+            window.location.href = "signIn.html"
+        }
+        this.shadow.querySelector("#advanceButton").innerHTML = "<div id='spinnerButton'></div>"
+        const TOKEN = localStorage.getItem("token")
         let code = ""
         if (localStorage.getItem("assetType") != "SHARE"){
             code = "-BRL"
@@ -112,6 +121,8 @@ class BuyConfirmation extends HTMLElement {
             }
 
         }).catch(error => {
+            this.insertPageError("Tente novamente")
+            this.makeCountDownError()
             console.error('Erro na requisição:', error
             );
         });
@@ -156,6 +167,8 @@ class BuyConfirmation extends HTMLElement {
         localStorage.removeItem("assetValue")
         localStorage.removeItem("typeOperation")
         localStorage.removeItem("dateOperation")
+        localStorage.removeItem("walletAssets")
+        localStorage.removeItem("balance")
     }
 
     makeCountDownSuccess() {

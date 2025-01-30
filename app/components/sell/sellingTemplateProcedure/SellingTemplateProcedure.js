@@ -61,7 +61,7 @@ class SellingTemplateProcedure extends HTMLElement {
 
 <div class="buttonFormat">
         <div class="back">
-            <button>Voltar</button>
+            <button id="buttonBack">Voltar</button>
         </div>
 
         <div class="buttonSell">
@@ -90,7 +90,11 @@ class SellingTemplateProcedure extends HTMLElement {
     }
 
     makeRequest(){
-        const TOKEN = "aaaa"
+        if(localStorage.getItem("token") === null){
+            window.location.href = "signIn.html"
+        }
+        this.shadow.querySelector("#sellAsset").innerHTML = "<div id='spinnerButton'></div>"
+        const TOKEN = localStorage.getItem("token")
         let code = ""
         if (localStorage.getItem("assetType") != "SHARE"){
             code = "-BRL"
@@ -228,6 +232,8 @@ class SellingTemplateProcedure extends HTMLElement {
         localStorage.removeItem("assetValue")
         localStorage.removeItem("typeOperation")
         localStorage.removeItem("dateOperation")
+        localStorage.removeItem("walletAssets")
+        localStorage.removeItem("balance")
     }
 
 }

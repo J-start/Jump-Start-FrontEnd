@@ -42,3 +42,11 @@ h3 {
 a {
     color: #1465FF;
 }
+
+.wait{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}

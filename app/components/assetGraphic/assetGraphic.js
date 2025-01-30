@@ -73,9 +73,21 @@ class AssetGraphic extends HTMLElement {
             datas = data.map(item => {
                 return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) };
             });
+            if (data.length > 2) {
 
-            this.valueVariation(data.length, data[0].CloseShare, "variationSecond")
-            this.valueVariation(1, data[data.length - 2].CloseShare, "variationFirst")
+                let dateShare = String(data[0].DateShare).replaceAll("-", "/")
+                let days1 = this.calcDelta(dateShare)
+                this.valueVariation(days1, data[0].CloseShare, "variationSecond")
+
+                let dateShare2 = String(data[data.length - 2].DateShare).replaceAll("-", "/")
+                let days2 = this.calcDelta(dateShare2)
+                this.valueVariation(days2, data[data.length - 2].CloseShare, "variationFirst")
+
+            } else {
+                let dateShare = String(data[0].DateShare).replaceAll("-", "/")
+                let days = this.calcDelta(dateShare)
+                this.valueVariation(days, data[0].CloseShare, "variationSecond")
+            }
 
         } else if (assetType === "COIN") {
             datas = data.map(item => {
@@ -85,7 +97,7 @@ class AssetGraphic extends HTMLElement {
 
             let days = this.calcDelta(this.fomatDataTimestamp(data[1].timestamp))
             this.valueVariation(days, data[0].bid, "variationFirst")
-            console.log( data)
+
             days = this.calcDelta(this.fomatDataTimestamp(data[data.length - 1].timestamp))
             this.valueVariation(days, data[data.length - 1].bid, "variationSecond")
 
@@ -104,10 +116,8 @@ class AssetGraphic extends HTMLElement {
             datas = dataAux.map(item => {
                 return { "date": this.fomatDataTimestamp(item.date), "value": parseFloat(item.price).toFixed(3) };
             });
-            let days = this.calcDelta(this.fomatDataTimestamp(data[1].date))
-            if (days > 0) {
-                this.valueVariation(Math.ceil(days), data[0].price, "variationSecond")
-            }
+
+            //TODO ALTER LOGIC TO SHOW VARIATION CRYPTO. GET VALUES FROM BACK-END
         }
 
         return datas
@@ -115,7 +125,6 @@ class AssetGraphic extends HTMLElement {
 
     async makeGraphic() {
         const response = await this.makeRequest(this.buildUrl());
-
         if (!response || response.length === 0) {
             console.error("Nenhum dado retornado ou falha na requisição.");
             return;
@@ -224,9 +233,8 @@ class AssetGraphic extends HTMLElement {
     }
 
     valueVariation(days, value, div) {
-        console.log(value)
-        console.log(days)
-        let variation = (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3) - 100
+
+        let variation = 100 - (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3)
         variation = variation.toFixed(1)
 
         if (days === 1) {
@@ -245,7 +253,6 @@ class AssetGraphic extends HTMLElement {
     }
 
     calcDelta(date1) {
-
         const [dia1, mes1, ano1] = date1.split("/").map(Number);
         const dateObj1 = new Date(ano1, mes1 - 1, dia1);
         const date2 = new Date();
@@ -257,8 +264,6 @@ class AssetGraphic extends HTMLElement {
 
         return differenceDays;
     }
-
-
 
 }
 

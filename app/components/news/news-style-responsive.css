@@ -3,4 +3,11 @@
         margin-left: 280px;
         padding-top: 1px;
     }
+    .wait{
+        position: fixed;
+        top: 50%;
+        left: 56%;
+        transform: translate(-50%, -50%);
+    
+    }
 }

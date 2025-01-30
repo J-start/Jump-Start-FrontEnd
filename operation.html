@@ -1,42 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="app/assets/images/logo.PNG" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="app/assets/images/logo.PNG" type="image/x-icon"/>
     <script src="app/utils/urlBackEnd.js"></script>
     <script src="app/utils/validation.js"></script>
     <title>Operação</title>
 
     <style>
-        body {
-            margin: 0px;
-            padding: 0px;
-            font-family: "Roboto", sans-serif;
-            background-color: #1C2029;
-        }
+      body {
+        margin: 0px;
+        padding: 0px;
+        font-family: "Roboto", sans-serif;
+        background-color: #1C2029;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <menu-component top-sidebar="3" highlight="Home"></menu-component>
     <div id="containerPages"></div>
 
     <script>
-        const typeOperation = localStorage.getItem("typeOperation")
-        if (typeOperation == "SELL") {
-            document.title = "Página de venda"
-            const selling = document.createElement("selling-component")
-            document.getElementById("containerPages").appendChild(selling)
-
-        } else if (typeOperation == "BUY") {
-            document.title = "Página de compra"
-            const buy = document.createElement("buyform-component")
-            document.getElementById("containerPages").appendChild(buy)
-        }
-
+      const typeOperation = localStorage.getItem("typeOperation");
+      if (typeOperation == "SELL") {
+        document.title = "Página de venda";
+        const selling = document.createElement("selling-component");
+        document.getElementById("containerPages").appendChild(selling);
+      } else if (typeOperation == "BUY") {
+        document.title = "Página de compra";
+        const buy = document.createElement("buyform-component");
+        document.getElementById("containerPages").appendChild(buy);
+      }
     </script>
 
     <script src="app/components/sell/sellingTemplateConclusion/SellingTemplateConclusion.js"></script>
@@ -47,7 +43,7 @@
     <script src="app/components/sell/sellingTemplateError/SellingTemplateError.js"></script>
     <script src="app/components/buy/buyForm/buyForm.js"></script>
     <script src="app/components/buy/buyConfirmation/buyConfirmation.js"></script>
-
-</body>
-
+    <script src="app/components/spinner/spinner.js"></script>
+    
+  </body>
 </html>

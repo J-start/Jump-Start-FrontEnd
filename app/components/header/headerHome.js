@@ -47,7 +47,7 @@ class HeaderHome extends HTMLElement {
     }
     makeRequest() {
         const url = `${getUrl()}/investor/name/`;
-        const TOKEN = "aaa"
+        const TOKEN = localStorage.getItem("token")
         fetch(url, {
             method: "GET",
             headers: {
@@ -55,44 +55,50 @@ class HeaderHome extends HTMLElement {
                  "Authorization": `Bearer ${TOKEN}`
             }
         }).then(response => {
-            if (!response.ok) {
-                console.error("Erro na requisição");
-                
-            }
             return response.json();
         }).then(data => {
             if (data.code) {
-                //TODO SEND INVESTOR TO LOGIN
-                this.shadow.querySelector("h1").innerHTML = this.messageHourDay();
+                this.handleErrorApi(data.message)
                 return
             }
-            this.shadow.querySelector("h1").innerHTML = `Olá, ${this.upperCaseFirstLetter(data.name)}`;
+            this.shadow.querySelector("h1").innerHTML = `Olá, ${this.formatName(data.name)}`;
             localStorage.setItem("balance", data.balance);
 
         }).catch(error => {
-            
-            this.shadow.querySelector("h1").innerHTML = this.messageHourDay();
+        
             console.error('Erro na requisição:', error);
         });
     }
 
-    upperCaseFirstLetter(string) {
-        return String(string).charAt(0).toUpperCase() + String(string).slice(1);
+    formatName(string) {
+        let firstName = String(string).split(" ")[0]
+        return String(firstName).charAt(0).toUpperCase() + String(firstName).toLowerCase().slice(1);
     }
-    messageHourDay(){
-        const now = new Date();
-        let currentDateBrasil = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
-        const hour = currentDateBrasil.getHours();
-        if(hour < 12){
-            return "Bom dia"
+
+    handleErrorApi(message) {
+
+        if (this.contains(message, "token")) {
+          alert("Token expirado, realize o login novamente")
+          window.location.href = "signIn.html";
+          return
         }
-        if(hour >= 12 && hour < 18){
-            return "Boa tarde"
-        }
-        if(hour >= 18){
-            return "Boa noite"
-        }
-    }
+
+      }
+    
+      contains(message, word) {
+        let containWord = false
+        let chunks = String(message).split(" ")
+        chunks.forEach(e => {
+          if (e == word) {
+            containWord = true;
+            return
+          }
+        })
+    
+        return containWord
+      }
+    
+
 
 }
 

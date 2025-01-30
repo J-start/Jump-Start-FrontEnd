@@ -1,4 +1,4 @@
-class CDB extends HTMLElement {
+class WithdrawConclusion extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
 
@@ -6,26 +6,26 @@ class CDB extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/cdb/cdb-style.css")
-        //this.createStyles("app/components/cdb/cdb-style-responsive.css")
-
-    }
+        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style.css")
+        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style-responsive.css")
+}
 
     createHTML() {
 
         const template =
-            `
-    <div id="containerHeadHome">
-        <div id="headHomeContents">
-            <h1>Olá, Fulano</h1>
-        </div>
-    </div>
-    <div class="lineHeader"></div>
+        
+                `<div class="principalBlock">
+    <h1 id="title"></h1>
 
+    <div class="img">
+        <img src="app/assets/images/confirmation_icon.png" alt="confirmation_icon">
+    </div>
+</div>
+     
         `
 
         const componentRoot = document.createElement("div");
-        componentRoot.setAttribute("class", "cdb-component");
+        componentRoot.setAttribute("class", "withdrawconclusion-component");
         componentRoot.innerHTML = template;
         return componentRoot
 
@@ -47,4 +47,4 @@ class CDB extends HTMLElement {
     }
 }
 
-customElements.define("cdb-component", CDB);
+customElements.define("withdrawconclusion-component", WithdrawConclusion);

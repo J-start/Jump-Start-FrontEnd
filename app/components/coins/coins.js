@@ -21,6 +21,7 @@ class Coin extends HTMLElement {
 
         const divToUpdate = this.shadow.querySelector(".divToUpdateValues");
         this.buildComponent().then(component => {
+            this.shadow.querySelector(".wait").remove()
             divToUpdate.appendChild(component);
 
             this.shadow.querySelectorAll(".value1").forEach((element) => {
@@ -57,7 +58,7 @@ class Coin extends HTMLElement {
         const template =
             `
             <div class="divToUpdateValues">
-            
+            <div class="wait"></div>
             </div>
 
 
@@ -120,7 +121,7 @@ class Coin extends HTMLElement {
 
     async buildComponent() {
 
-
+        this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         const wrapAllElements = document.createElement("div");
         wrapAllElements.classList.add("WrapAllElements");
 
@@ -140,18 +141,16 @@ class Coin extends HTMLElement {
         const objects = this.convertObjectToArray(datas, positionObjects)
         let detailsCrypto = await this.fetchCrypto()
 
-
-
         this.sortArray(objects,"code")
         this.sortArray(detailsCrypto,"acronym")
-
-        console.log(detailsCrypto)
-        console.log(objects)
-
-
+        
+        this.shadow.querySelector(".divToUpdateValues").style.display = "none"
+        
         for (let i = 0; i < objects.length; i++) {
             wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3), objects[i].code, detailsCrypto[i].urlImage));
         }
+
+         this.shadow.querySelector(".divToUpdateValues").style.display = ""
 
         return wrapAllElements
     }

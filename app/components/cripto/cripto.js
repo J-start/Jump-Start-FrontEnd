@@ -10,7 +10,7 @@ class Cripto extends HTMLElement {
         this.createStyles("app/components/cripto/cripto-style-responsive.css")
 
         this.buildComponent().then(() => {
-
+        this.shadow.querySelector(".wait").remove()
         this.shadow.querySelectorAll(".value1").forEach((element) => {
             element.addEventListener("click", () => {
                 this.managerDisplay(
@@ -44,8 +44,7 @@ class Cripto extends HTMLElement {
         const template =
             `
     <div class="WrapAllElements">
-
-
+        <div class="wait"></div>
     </div>
 
         `
@@ -95,7 +94,7 @@ class Cripto extends HTMLElement {
     }
 
      async buildComponent() {
-
+        this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         let datas = []
         const MILISECONDSUPDATE = 36000000
         
@@ -112,9 +111,13 @@ class Cripto extends HTMLElement {
         this.sortArray(datas)
         this.sortArray(detailsCrypto)
 
+        this.shadow.querySelector(".WrapAllElements").style.display = "none"
+
         for(let i = 0; i < datas.length; i++){
             wrapAllElements.appendChild(BuildAsset2("CRYPTO", datas[i].pair.replace("-BRL", ""), Number(datas[i].last).toFixed(2), Number(datas[i].last).toFixed(2),"",detailsCrypto[i].urlImage))
         }
+
+        this.shadow.querySelector(".WrapAllElements").style.display = ""
 
     }
 
