@@ -26,10 +26,13 @@ class HistoryAssets extends HTMLElement {
     const template = `
        <div class="containerHistory">
        
-         <div class="wait"></div>
+         
+          
         <p id="close">X</p>
+        <h1 id="titleHistoryAssets">Histórico de compra e venda</h1>
+        <div class="wait"></div>
         <div class="wrapHistory">
-         <h1>Histórico de compra e venda</h1>
+        
         </div>
        </div>
         `;
@@ -132,8 +135,10 @@ class HistoryAssets extends HTMLElement {
 
     let datas = await this.makeRequest();
     if (datas == null) {
-      this.shadow.querySelector(".wait").innerHTML = ""
+      this.shadow.querySelector(".wait").remove()
       this.isFetching = false;
+      this.shadow.querySelector("#titleHistoryAssets").innerHTML = "Nenhuma operação realizada"
+      this.shadow.querySelector("#titleHistoryAssets").style.display = "flex"
       return;
     }
     console.log(datas);

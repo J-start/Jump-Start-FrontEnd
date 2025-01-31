@@ -30,8 +30,8 @@ class HistoryOperation extends HTMLElement {
         
         <div class="wait"></div>
         <p id="close">X</p>
+        <h1 id="titleHistoricOperation">Histórico de operações</h1>
         <div class="wrapHistory">
-          <h1>Histórico de operações</h1>
         </div>
        </div>
         `;
@@ -126,7 +126,9 @@ class HistoryOperation extends HTMLElement {
 
     let datas = await this.makeRequest();
     if (datas == null) {
-      this.shadow.querySelector(".wait").innerHTML = ""
+      this.shadow.querySelector(".wait").remove()
+      this.shadow.querySelector("#titleHistoricOperation").innerHTML = "Nenhuma operação realizada"
+      this.shadow.querySelector("#titleHistoricOperation").style.display = "flex"
       this.isFetching = false;
       return;
     }
