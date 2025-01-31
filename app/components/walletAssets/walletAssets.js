@@ -16,7 +16,7 @@ class WalletAssets extends HTMLElement {
            
                 <div class="modal-content">
                     <button class="close-button" id="closeButton">&times;</button>
-                    <h2>Detalhes dos Ativos</h2>
+                    <h2 id="titleAssets">Detalhes dos Ativos</h2>
                     <div class="wait">
                         <spinner-component></spinner-component>
                     </div>
@@ -57,7 +57,12 @@ class WalletAssets extends HTMLElement {
 
     async renderChart() {
         let assetArray = JSON.parse(localStorage.getItem("walletAssets"));
-        
+        if(assetArray === null){
+            this.shadow.querySelector("#assetChart").remove()
+            this.shadow.querySelector(".wait").remove()
+            this.shadow.querySelector("#titleAssets").innerHTML = "Nenhum ativo encontrado"
+            return
+        }
     
         const ctx = this.shadow.querySelector("#assetChart").getContext("2d");
     
