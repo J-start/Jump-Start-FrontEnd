@@ -125,17 +125,18 @@ class HistoryOperation extends HTMLElement {
     this.isFetching = true;
 
     let datas = await this.makeRequest();
-    if (datas == null) {
+    if (datas == null && this.offset == 0) {
       this.shadow.querySelector(".wait").remove()
       this.shadow.querySelector("#titleHistoricOperation").innerHTML = "Nenhuma operação realizada"
       this.shadow.querySelector("#titleHistoricOperation").style.display = "flex"
+     
       this.isFetching = false;
       return;
     }
-
+    this.shadow.querySelector("#titleHistoricOperation").style.display = "flex"
     datas = datas.map((data) => {
-      data.OperationDate = this.conversationDate(data.OperationDate);
-      data.OperationType = this.conversationType(data.OperationType);
+      data.OperationDate = this.conversionDate(data.OperationDate);
+      data.OperationType = this.conversionType(data.OperationType);
       return data;
     });
 
@@ -147,7 +148,7 @@ class HistoryOperation extends HTMLElement {
     this.shadow.querySelector(".wait").innerHTML = ""
   }
 
-  conversationType(type) {
+  conversionType(type) {
     if (type == "DEPOSIT") {
       return "Depósito";
     }
@@ -156,7 +157,7 @@ class HistoryOperation extends HTMLElement {
     }
   }
 
-  conversationDate(date) {
+  conversionDate(date) {
     return date.replaceAll("-", "/");
   }
 
