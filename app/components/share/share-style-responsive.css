@@ -1,7 +1,4 @@
 
-/* ----------------------- ----------------------------- ------------------------- ----------- */
-
-
 @media screen and (min-width: 1024px) {
     .WrapAllElements {
         display: grid;
@@ -11,6 +8,7 @@
         align-items: center;
         margin-top: 20px;
         margin-left: 280px;
+        overflow-x: hidden;
     }
     .wrapElement{
         flex-direction: column;

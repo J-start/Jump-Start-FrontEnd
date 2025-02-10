@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="app/utils/urlBackEnd.js"></script>
+    <title>Página ADM</title>
+</head>
+<body>
+    <script>
+    function isAdm() {
+        if (localStorage.getItem("token") === null) {
+            window.location.href = "signIn.html"
+        }
+        const TOKEN = localStorage.getItem("token")
+        const url = `${getUrl()}/investor/role/`;
+        fetch(url, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${TOKEN}`
+            }
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error("Erro na requisição")
+            }
+            return response.json();
+        }).then(data => {
+            if (!data.isAdm) {
+                alert("Você não tem permissão para acessar essa página")
+                window.location.href = "index.html"
+            }
+        }).catch(e => {
+            if (e != null) {
+                console.log(e)
+                alert("Aconteceu algum erro na autenticação, por favor faça o login novamente")
+                //window.location.href = "signIn.html"
+            }
+        })
+
+    }
+
+    isAdm()
+
+    </script>
+</body>
+</html>
