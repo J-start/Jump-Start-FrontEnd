@@ -1,47 +1,233 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="app/utils/urlBackEnd.js"></script>
-    <title>Página ADM</title>
-</head>
-<body>
-    <script>
-    function isAdm() {
-        if (localStorage.getItem("token") === null) {
-            window.location.href = "signIn.html"
+    <link rel="shortcut icon" href="app/assets/images/logo.PNG" type="image/x-icon" />
+    <title>Página Admin</title>
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            margin: 20px;
+            background-color: #1C2029;
         }
-        const TOKEN = localStorage.getItem("token")
-        const url = `${getUrl()}/investor/role/`;
-        fetch(url, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${TOKEN}`
-            }
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error("Erro na requisição")
-            }
-            return response.json();
-        }).then(data => {
-            if (!data.isAdm) {
-                alert("Você não tem permissão para acessar essa página")
-                window.location.href = "index.html"
-            }
-        }).catch(e => {
-            if (e != null) {
-                console.log(e)
-                alert("Aconteceu algum erro na autenticação, por favor faça o login novamente")
-                //window.location.href = "signIn.html"
-            }
-        })
 
-    }
+        #asset-container {
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+        }
 
-    isAdm()
+        h2,
+        p {
+            color: white;
+        }
+
+        .COIN,
+        .SHARE,
+        .CRYPTO {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            max-width: 300px;
+            text-align: center;
+            margin-bottom: 10px;
+            max-width: 200px;
+            height: 320px;
+            margin: auto;
+        }
+
+        .COIN img {
+            max-width: 50%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .SHARE img {
+            max-width: 70%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .CRYPTO img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+
+        }
+
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .popup-overlay,
+        #popup-overlay-new {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .popup-content h3 {
+            margin-top: 0;
+        }
+
+        .popup-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .popup-content button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .popup-content button:hover {
+            background-color: #0056b3;
+        }
+
+        #imageSpace {
+            display: none;
+            height: 100px;
+            width: 100px;
+        }
+
+        #close {
+            color: black;
+            margin-left: auto;
+            cursor: pointer;
+        }
+
+        #buttonAddMore {
+            margin-bottom: 20px;
+            background-color: #C6FE1F;
+            color: black;
+        }
+
+        /* Estilos específicos para o formulário dentro do popup-overlay-new */
+        #popup-overlay-new .popup-content,form {
+            background-color: #1C2029;
+            /* Fundo escuro para combinar com o tema */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <h1 style="color: white; text-align: center;">Tela de administração</h1>
+    <button id="buttonAddMore" onclick="addNewAsset()">Adicionar novo ativo</button>
+    <button onclick="backHome()">Home</button>
+
+    <div id="asset-container"> </div>
+    <div id="popup-overlay" class="popup-overlay">
+        <div class="popup-content">
+            <h3 id="close" onclick="closePopUp()">X</h3>
+            <h3 id="title">Alterar URL da Imagem</h3>
+            <input type="text" id="new-image-url" placeholder="Url da nova imagem">
+            <img id="imageSpace" src="" alt="">
+            <button onclick="alterImage()">Confirmar</button>
+        </div>
+    </div>
+
+    <div id="popup-overlay-new" class="popup-overlay">
+        <div class="popup-content"></div>
+        <h3 id="close-new" onclick="closePopUpNew()">X</h3>
+        <h3>Adicionar Novo Ativo</h3>
+        <form id="new-asset-form">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="acronym">Acrônimo:</label>
+            <input type="text" id="acronym" name="acronym" required>
+
+            <label for="urlImage">URL da Imagem:</label>
+            <input type="url" id="urlImage" name="urlImage" required>
+
+            <label for="typeAsset">Tipo de Ativo:</label>
+            <select id="typeAsset" name="typeAsset" required>
+                <option value="COIN">COIN</option>
+                <option value="SHARE">SHARE</option>
+                <option value="CRYPTO">CRYPTO</option>
+            </select>
+
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+    </div>
+
+    <script src="app/scripts/adm.js"></script>
+    <script src="app/scripts/adm-addAssets.js"></script>
+    <script>
+
+        isAdm()
+        getListAssets()
 
     </script>
 </body>
+
 </html>
