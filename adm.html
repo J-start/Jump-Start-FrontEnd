@@ -62,11 +62,13 @@
 
         form {
             margin-top: 20px;
+            width: 70%;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
+            margin-right: auto;
         }
 
         input {
@@ -74,6 +76,8 @@
             padding: 8px;
             margin-bottom: 10px;
             box-sizing: border-box;
+            border-radius: 5px;
+            border: none;
         }
 
         button {
@@ -100,6 +104,11 @@
             background-color: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+        }
+        #popup-overlay-new {
+            
+            align-items: center;
+            justify-content: center;
         }
 
         .popup-content {
@@ -159,10 +168,8 @@
             color: black;
         }
 
-        /* Estilos específicos para o formulário dentro do popup-overlay-new */
         #popup-overlay-new .popup-content,form {
             background-color: #1C2029;
-            /* Fundo escuro para combinar com o tema */
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -173,6 +180,15 @@
             justify-content: center;
             color: white;
         }
+       #close-new{
+            margin-left: auto;
+       }
+       #containerSelect{
+        display:flex ;
+        align-items: center;
+        margin-right: auto;
+       }
+
 
         
     </style>
@@ -195,10 +211,10 @@
     </div>
 
     <div id="popup-overlay-new" class="popup-overlay">
-        <div class="popup-content"></div>
-        <h3 id="close-new" onclick="closePopUpNew()">X</h3>
-        <h3>Adicionar Novo Ativo</h3>
+        
+        
         <form id="new-asset-form">
+            <h3 id="close-new" onclick="closePopUpAddAsset()">X</h3>
             <label for="name">Nome:</label>
             <input type="text" id="name" name="name" required>
 
@@ -207,13 +223,15 @@
 
             <label for="urlImage">URL da Imagem:</label>
             <input type="url" id="urlImage" name="urlImage" required>
-
+          
+            <div id="containerSelect">
             <label for="typeAsset">Tipo de Ativo:</label>
             <select id="typeAsset" name="typeAsset" required>
                 <option value="COIN">COIN</option>
                 <option value="SHARE">SHARE</option>
                 <option value="CRYPTO">CRYPTO</option>
             </select>
+        </div>
 
             <button type="submit">Adicionar</button>
         </form>

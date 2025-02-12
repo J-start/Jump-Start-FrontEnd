@@ -1,6 +1,8 @@
 let idGlobal = 0
+let listAssets = []
 document.addEventListener('DOMContentLoaded', async function () {
     const assetData = await getListAssets()
+    listAssets = assetData
     const assetContainer = document.getElementById('asset-container');
 
     function renderAssets(assets) {
