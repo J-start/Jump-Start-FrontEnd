@@ -11,7 +11,7 @@ document.getElementById("new-asset-form").addEventListener("submit", async (e) =
         return
     }
     if (!await validateFields(name,acronym, typeAsset)) {
-        console.log("invalido")
+        alert("Ativo inválido, tente novamente");
         return
     }
     const imageExists = await new Promise((resolve) => {
@@ -74,8 +74,8 @@ async function validateFields(name, acronym, typeAsset) {
     }else if(typeAsset == 'CRYPTO'){
         try {
             const isAcronymValid = await validateAcronym(acronym, typeAsset);
-            if (isAcronymValid == null) {
-
+            if (isAcronymValid == null || isAcronymValid == false) {
+                alert("Ativo inválido, tente novamente");
                 return
             }
             if (Array.isArray(isAcronymValid) && isAcronymValid.length === 0) {
@@ -89,6 +89,14 @@ async function validateFields(name, acronym, typeAsset) {
         } catch (error) {
             alert("Aconteceu um erro, tente novamente");
             return false;
+        }
+    }else if(typeAsset == 'SHARE'){
+        const isAcronymValid = await validateAcronym(acronym, typeAsset);
+        if (!isAcronymValid) {
+            alert("Ativo inválido, tente novamente");
+            return false;
+        }else{
+            return true;
         }
     }
 
@@ -111,6 +119,7 @@ async function makeRequestAsset(url) {
 
 async function validateAcronym(acronym, typeAsset) {
     if (typeAsset == 'SHARE') {
+        console.log("typeAsset ",typeAsset)
         return isShareValid(acronym); 
     } else if(typeAsset == 'COIN') {
         const url = generateUrlBasedOnType(acronym, typeAsset);
@@ -146,6 +155,7 @@ function isShareValid(acronym) {
     map1.set("EQTL3.SA", true);
     map1.set("GGBR4.SA", true);
     map1.set("HAPV3.SA", true);
+    console.log("map1.get(acronym)",map1.get(acronym))
     if (map1.get(acronym) == undefined) {
         return false
     }

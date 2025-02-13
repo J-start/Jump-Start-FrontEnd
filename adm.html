@@ -29,15 +29,17 @@
         .COIN,
         .SHARE,
         .CRYPTO {
-            border: 1px solid #ccc;
             padding: 15px;
             border-radius: 5px;
             max-width: 300px;
             text-align: center;
             margin-bottom: 10px;
             max-width: 200px;
-            height: 320px;
+            min-height: 320px;
             margin: auto;
+            -webkit-box-shadow: 17px 21px 33px -14px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 17px 21px 33px -14px rgba(0, 0, 0, 0.75);
+            box-shadow: 17px 21px 33px -14px rgba(0, 0, 0, 0.75);
         }
 
         .COIN img {
@@ -50,6 +52,9 @@
             max-width: 70%;
             height: auto;
             border-radius: 5px;
+        }
+        .COIN > button {
+            margin-top: auto;
         }
 
         .CRYPTO img {
@@ -105,8 +110,9 @@
             justify-content: center;
             align-items: center;
         }
+
         #popup-overlay-new {
-            
+
             align-items: center;
             justify-content: center;
         }
@@ -163,12 +169,14 @@
         }
 
         #buttonAddMore {
-            margin-bottom: 20px;
             background-color: #C6FE1F;
             color: black;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
-        #popup-overlay-new .popup-content,form {
+        #popup-overlay-new .popup-content,
+        form {
             background-color: #1C2029;
             padding: 20px;
             border-radius: 8px;
@@ -180,24 +188,35 @@
             justify-content: center;
             color: white;
         }
-       #close-new{
+
+        #close-new {
             margin-left: auto;
-       }
-       #containerSelect{
-        display:flex ;
-        align-items: center;
-        margin-right: auto;
-       }
+            cursor: pointer;
+        }
 
+        #containerSelect {
+            display: flex;
+            align-items: center;
+            margin-right: auto;
+        }
 
-        
+        .line {
+            height: 1px;
+            background-color: white;
+        }
+
+        .containerChangeImage {
+            height: 100%;
+        }
     </style>
 </head>
 
 <body>
     <h1 style="color: white; text-align: center;">Tela de administração</h1>
+    <div class="line"></div>
     <button id="buttonAddMore" onclick="addNewAsset()">Adicionar novo ativo</button>
     <button onclick="backHome()">Home</button>
+    <div class="line"></div>
 
     <div id="asset-container"> </div>
     <div id="popup-overlay" class="popup-overlay">
@@ -211,8 +230,8 @@
     </div>
 
     <div id="popup-overlay-new" class="popup-overlay">
-        
-        
+
+
         <form id="new-asset-form">
             <h3 id="close-new" onclick="closePopUpAddAsset()">X</h3>
             <label for="name">Nome:</label>
@@ -223,15 +242,15 @@
 
             <label for="urlImage">URL da Imagem:</label>
             <input type="url" id="urlImage" name="urlImage" required>
-          
+
             <div id="containerSelect">
-            <label for="typeAsset">Tipo de Ativo:</label>
-            <select id="typeAsset" name="typeAsset" required>
-                <option value="COIN">COIN</option>
-                <option value="SHARE">SHARE</option>
-                <option value="CRYPTO">CRYPTO</option>
-            </select>
-        </div>
+                <label for="typeAsset">Tipo de Ativo:</label>
+                <select id="typeAsset" name="typeAsset" required>
+                    <option value="COIN">COIN</option>
+                    <option value="SHARE">SHARE</option>
+                    <option value="CRYPTO">CRYPTO</option>
+                </select>
+            </div>
 
             <button type="submit">Adicionar</button>
         </form>
