@@ -87,14 +87,15 @@ class Share extends HTMLElement {
     async buildComponent() {
         this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         let datas = []
-        const MILISECONDSUPDATE = 36000000
-        if (localStorage.getItem("share") === null || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
+         const MILISECONDSUPDATE = 36000000
+         if (localStorage.getItem("share") === null || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
             datas = await this.makeRequest()
             localStorage.setItem("share", JSON.stringify(datas))
             localStorage.setItem("shareDate", new Date())
         } else {
             datas = JSON.parse(localStorage.getItem("share"))
-        }
+         }
+        datas = await this.makeRequest()
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
 
         let detailsShare = await this.fetchCrypto()
