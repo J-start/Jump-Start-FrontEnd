@@ -87,14 +87,14 @@ class Share extends HTMLElement {
     async buildComponent() {
         this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         let datas = []
-         const MILISECONDSUPDATE = 36000000
-          if (!localStorage.getItem("share") || localStorage.getItem("share") === "undefined" || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
-             datas = await this.makeRequest()
-             localStorage.setItem("share", JSON.stringify(datas))
-             localStorage.setItem("shareDate", new Date())
-         } else {
-             datas = JSON.parse(localStorage.getItem("share"))
-          }
+        const MILISECONDSUPDATE = 36000000
+        if (!localStorage.getItem("share") || localStorage.getItem("share") === "undefined" || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
+            datas = await this.makeRequest()
+            localStorage.setItem("share", JSON.stringify(datas))
+            localStorage.setItem("shareDate", new Date())
+        } else {
+            datas = JSON.parse(localStorage.getItem("share"))
+        }
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
 
         let detailsShare = await this.fetchCrypto()
@@ -152,11 +152,11 @@ class Share extends HTMLElement {
     insertUrlImageIntoCoinObject(share, imageObject) {
 
         const urls = new Map();
-        for(let i = 0;i<imageObject.length;i++){
-            urls.set(imageObject[i].acronym,imageObject[i].urlImage)
+        for (let i = 0; i < imageObject.length; i++) {
+            urls.set(imageObject[i].acronym, imageObject[i].urlImage)
         }
-        for(let j =0;j<share.length;j++){
-            if(urls.get(share[j].NameShare) != undefined){
+        for (let j = 0; j < share.length; j++) {
+            if (urls.get(share[j].NameShare) != undefined) {
                 share[j].imageUrl = urls.get(share[j].NameShare)
             }
         }
