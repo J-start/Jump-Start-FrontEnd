@@ -20,7 +20,9 @@
         width: 90%;
         display: flex;
         align-items: flex-start;
+        justify-content: space-between;
         margin-left: 280px;
+        margin-right: 20px;
     }
 
     .containerAllElementsBalance {
@@ -31,6 +33,7 @@
         padding: 20px;
         box-sizing: border-box;
         margin-left: 30px;
+        border-radius: 10px;
     }
 
     .containerAllElementsHistory {
@@ -39,8 +42,8 @@
         background-color: #444549;
         padding: 20px;
         box-sizing: border-box;
-        margin-left: 15px;
         height: 254px;
+        border-radius: 10px;
     }
 
     .containerTitleBalance {

@@ -104,7 +104,6 @@ class Coin extends HTMLElement {
 
     async makeRequest() {
         let listCoins = await this.fetchListCoins()
-        console.log(listCoins)
         this.coinsToFetch = listCoins
 
 
@@ -138,19 +137,21 @@ class Coin extends HTMLElement {
         datas = await this.makeRequest()
 
         const positionObjects = this.manipulationStringCoins()
-        const objects = this.convertObjectToArray(datas, positionObjects)
-        let detailsCrypto = await this.fetchCrypto()
+        let objects = this.convertObjectToArray(datas, positionObjects)
+        let detailsCoin = await this.fetchCrypto()
 
-        this.sortArray(objects,"code")
-        this.sortArray(detailsCrypto,"acronym")
-        
+        this.sortArray(objects, "code")
+        this.sortArray(detailsCoin, "acronym")
+
+        objects = this.insertUrlImageIntoCoinObject(objects, detailsCoin)
+
         this.shadow.querySelector(".divToUpdateValues").style.display = "none"
-        
+
         for (let i = 0; i < objects.length; i++) {
-            wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3), objects[i].code, detailsCrypto[i].urlImage));
+            wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3), objects[i].code, objects[i].imageUrl));
         }
 
-         this.shadow.querySelector(".divToUpdateValues").style.display = ""
+        this.shadow.querySelector(".divToUpdateValues").style.display = ""
 
         return wrapAllElements
     }
@@ -166,7 +167,7 @@ class Coin extends HTMLElement {
         return objects
     }
 
-    sortArray(datas,comparation) {
+    sortArray(datas, comparation) {
         datas.sort((a, b) => {
             if (String(a.name).toLocaleUpperCase() < String(b.name).toLocaleUpperCase()) {
                 return -1;
@@ -197,7 +198,14 @@ class Coin extends HTMLElement {
         this.toggle = !this.toggle;
 
     }
-
+    insertUrlImageIntoCoinObject(coin, imageObject) {
+        coin.forEach((e, i) => {
+            if (String(imageObject[i].acronym) == `${e.code}` + "-" + `${e.codein}`) {
+                e.imageUrl = imageObject[i].urlImage
+            }
+        })
+        return coin
+    }
 }
 
 
