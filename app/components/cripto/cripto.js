@@ -98,7 +98,7 @@ class Cripto extends HTMLElement {
         let datas = []
         const MILISECONDSUPDATE = 36000000
 
-        if (localStorage.getItem("cryptos") === null || (new Date() - new Date(localStorage.getItem("cryptosDate"))) > MILISECONDSUPDATE) {
+        if (localStorage.getItem("cryptos") === null || localStorage.getItem("cryptos") === undefined || (new Date() - new Date(localStorage.getItem("cryptosDate"))) > MILISECONDSUPDATE) {
             datas = await this.makeRequestDatasCrypto()
             localStorage.setItem("cryptos", JSON.stringify(datas))
             localStorage.setItem("cryptosDate", new Date())
