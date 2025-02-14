@@ -92,9 +92,7 @@ class Share extends HTMLElement {
              datas = await this.makeRequest()
              localStorage.setItem("share", JSON.stringify(datas))
              localStorage.setItem("shareDate", new Date())
-             console.log("enntrou")
          } else {
-            console.log("saiu")
              datas = JSON.parse(localStorage.getItem("share"))
           }
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
