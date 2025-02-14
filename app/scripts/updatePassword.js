@@ -31,7 +31,7 @@ async function makeRequestWithBody(url, bodyRequest) {
 }
 
 async function verifyToken() {
-    const URL = `${getUrl()}/investor/verify/code/`
+    const URL = `${getUrl()}/investor/verify/token/`
     const TOKEN = getTokenUrl()
 
     let bodyToken = {
