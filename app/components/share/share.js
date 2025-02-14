@@ -85,26 +85,29 @@ class Share extends HTMLElement {
     }
 
     async buildComponent() {
+        console.log("aaaaaaa")
         this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         let datas = []
          const MILISECONDSUPDATE = 36000000
-         if (!localStorage.getItem("share") || localStorage.getItem("share") === "undefined" || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
-            datas = await this.makeRequest()
-            localStorage.setItem("share", JSON.stringify(datas))
-            localStorage.setItem("shareDate", new Date())
-        } else {
-            datas = JSON.parse(localStorage.getItem("share"))
-         }
+        //  if (!localStorage.getItem("share") || localStorage.getItem("share") === "undefined" || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
+        //     datas = await this.makeRequest()
+        //     localStorage.setItem("share", JSON.stringify(datas))
+        //     localStorage.setItem("shareDate", new Date())
+        // } else {
+        //     datas = JSON.parse(localStorage.getItem("share"))
+        //  }
         datas = await this.makeRequest()
+        console.log(datas)
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
 
         let detailsShare = await this.fetchCrypto()
+        console.log(detailsShare)
 
         this.sortArray(datas, "NameShare")
         this.sortArray(detailsShare, "acronym")
 
         datas = this.insertUrlImageIntoCoinObject(datas, detailsShare)
-
+        console.log(datas)
         this.shadow.querySelector(".WrapAllElements").style.display = "none"
 
         for (let i = 0; i < datas.length; i++) {
@@ -152,11 +155,13 @@ class Share extends HTMLElement {
         return link
     }
     insertUrlImageIntoCoinObject(share, imageObject) {
-        share.forEach((e, i) => {
-            if (String(imageObject[i].acronym) == e.NameShare) {
-                e.imageUrl = imageObject[i].urlImage
+        for(let i = 0; i < share.length; i++){
+            for(let j=0; j < imageObject.length; j++){
+                if(share[i].NameShare == imageObject[j].acronym){
+                    share[i].imageUrl = imageObject[j].urlImage
+                }
             }
-        })
+        }
         return share
     }
 }
