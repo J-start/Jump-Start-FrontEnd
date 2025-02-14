@@ -113,7 +113,6 @@ class Coin extends HTMLElement {
     }
 
     async fetchCrypto() {
-        console.log("fetchCrypto")
         return await this.makeRequestAPI(`${getUrl()}/details/asset/?type=COIN`)
     }
 
@@ -125,17 +124,14 @@ class Coin extends HTMLElement {
 
         let datas = []
         const MILISECONDSUPDATE = 36000000
-        if (!localStorage.getItem("coins")|| localStorage.getItem("coins") === "undefined" ||  (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
+        if (!localStorage.getItem("coins") || !localStorage.getItem("lisCoins") || localStorage.getItem("coins") === "undefined" || (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
             datas = await this.makeRequest()
-            console.log(this.coinsToFetch)
             localStorage.setItem("coins", JSON.stringify(datas))
             localStorage.setItem("coinsDate", new Date())
             localStorage.setItem("lisCoins", this.coinsToFetch)
         } else {
             datas = JSON.parse(localStorage.getItem("coins"))
-            console.log(localStorage.getItem("lisCoins"))
             this.coinsToFetch = localStorage.getItem("lisCoins")
-
         }
 
         const positionObjects = this.manipulationStringCoins()
@@ -203,11 +199,11 @@ class Coin extends HTMLElement {
     insertUrlImageIntoCoinObject(coin, imageObject) {
 
         const urls = new Map();
-        for(let i = 0;i<imageObject.length;i++){
-            urls.set(imageObject[i].acronym,imageObject[i].urlImage)
+        for (let i = 0; i < imageObject.length; i++) {
+            urls.set(imageObject[i].acronym, imageObject[i].urlImage)
         }
-        for(let j =0;j<coin.length;j++){
-            if(urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`) != undefined){
+        for (let j = 0; j < coin.length; j++) {
+            if (urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`) != undefined) {
                 coin[j].imageUrl = urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`)
             }
         }
