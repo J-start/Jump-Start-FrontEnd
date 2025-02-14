@@ -105,7 +105,6 @@ class Cripto extends HTMLElement {
         } else {
             datas = JSON.parse(localStorage.getItem("cryptos"))
         }
-        datas = await this.makeRequestDatasCrypto()
         let detailsCrypto = await this.fetchCrypto()
 
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
@@ -145,11 +144,16 @@ class Cripto extends HTMLElement {
     }
 
     insertUrlImageIntoCryptoObject(crypto, imageObject) {
-        crypto.forEach((e, i) => {
-            if (imageObject[i].acronym == e.pair) {
-                e.imageUrl = imageObject[i].urlImage
+
+        const urls = new Map();
+        for(let i = 0;i<imageObject.length;i++){
+            urls.set(imageObject[i].acronym,imageObject[i].urlImage)
+        }
+        for(let j =0;j<crypto.length;j++){
+            if(urls.get(crypto[j].pair) != undefined){
+                crypto[j].imageUrl = urls.get(crypto[j].pair)
             }
-        })
+        }
         return crypto
     }
 }
