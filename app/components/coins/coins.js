@@ -126,7 +126,7 @@ class Coin extends HTMLElement {
 
         let datas = []
         const MILISECONDSUPDATE = 36000000
-        if (localStorage.getItem("coins") === null || localStorage.getItem("coins") === undefined ||  (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
+        if (!localStorage.getItem("coins")|| localStorage.getItem("coins") === "undefined" ||  (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
             datas = await this.makeRequest()
             localStorage.setItem("coins", JSON.stringify(datas))
             localStorage.setItem("coinsDate", new Date())

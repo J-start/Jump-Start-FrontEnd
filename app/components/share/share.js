@@ -88,7 +88,7 @@ class Share extends HTMLElement {
         this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         let datas = []
          const MILISECONDSUPDATE = 36000000
-         if (localStorage.getItem("share") === null || localStorage.getItem("share") === undefined || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
+         if (!localStorage.getItem("share") || localStorage.getItem("share") === "undefined" || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
             datas = await this.makeRequest()
             localStorage.setItem("share", JSON.stringify(datas))
             localStorage.setItem("shareDate", new Date())
