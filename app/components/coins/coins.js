@@ -123,15 +123,28 @@ class Coin extends HTMLElement {
         const wrapAllElements = document.createElement("div");
         wrapAllElements.classList.add("WrapAllElements");
 
-         let datas = await this.makeRequest()
+        let datas = []
+        const MILISECONDSUPDATE = 36000000
+        if (!localStorage.getItem("coins")|| localStorage.getItem("coins") === "undefined" ||  (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
+            datas = await this.makeRequest()
+            console.log(this.coinsToFetch)
+            localStorage.setItem("coins", JSON.stringify(datas))
+            localStorage.setItem("coinsDate", new Date())
+            localStorage.setItem("lisCoins", this.coinsToFetch)
+        } else {
+            datas = JSON.parse(localStorage.getItem("coins"))
+            console.log(localStorage.getItem("lisCoins"))
+            this.coinsToFetch = localStorage.getItem("lisCoins")
+
+        }
+
         const positionObjects = this.manipulationStringCoins()
 
         let objects = this.convertObjectToArray(datas, positionObjects)
         let detailsCoin = await this.fetchCrypto()
-        console.log(objects)
         this.sortArray(objects, "code")
         this.sortArray(detailsCoin, "acronym")
-        console.log(objects)
+
         objects = this.insertUrlImageIntoCoinObject(objects, detailsCoin)
 
         this.shadow.querySelector(".divToUpdateValues").style.display = "none"
