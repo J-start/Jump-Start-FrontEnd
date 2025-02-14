@@ -106,43 +106,32 @@ class Coin extends HTMLElement {
         let listCoins = await this.fetchListCoins()
         this.coinsToFetch = listCoins
 
-
         const url = `https://economia.awesomeapi.com.br/json/last/${listCoins}`
 
-        return this.makeRequestAPI(url)
+        return await this.makeRequestAPI(url)
 
     }
 
     async fetchCrypto() {
-        return this.makeRequestAPI(`${getUrl()}/details/asset/?type=COIN`)
+        console.log("fetchCrypto")
+        return await this.makeRequestAPI(`${getUrl()}/details/asset/?type=COIN`)
     }
 
 
     async buildComponent() {
-
         this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         const wrapAllElements = document.createElement("div");
         wrapAllElements.classList.add("WrapAllElements");
 
-        let datas = []
-        const MILISECONDSUPDATE = 36000000
-        if (!localStorage.getItem("coins")|| localStorage.getItem("coins") === "undefined" ||  (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
-            datas = await this.makeRequest()
-            localStorage.setItem("coins", JSON.stringify(datas))
-            localStorage.setItem("coinsDate", new Date())
-        } else {
-            datas = JSON.parse(localStorage.getItem("coins"))
-        }
-
-        datas = await this.makeRequest()
-
+         let datas = await this.makeRequest()
         const positionObjects = this.manipulationStringCoins()
+
         let objects = this.convertObjectToArray(datas, positionObjects)
         let detailsCoin = await this.fetchCrypto()
-
+        console.log(objects)
         this.sortArray(objects, "code")
         this.sortArray(detailsCoin, "acronym")
-
+        console.log(objects)
         objects = this.insertUrlImageIntoCoinObject(objects, detailsCoin)
 
         this.shadow.querySelector(".divToUpdateValues").style.display = "none"
@@ -199,11 +188,16 @@ class Coin extends HTMLElement {
 
     }
     insertUrlImageIntoCoinObject(coin, imageObject) {
-        coin.forEach((e, i) => {
-            if (String(imageObject[i].acronym) == `${e.code}` + "-" + `${e.codein}`) {
-                e.imageUrl = imageObject[i].urlImage
+
+        const urls = new Map();
+        for(let i = 0;i<imageObject.length;i++){
+            urls.set(imageObject[i].acronym,imageObject[i].urlImage)
+        }
+        for(let j =0;j<coin.length;j++){
+            if(urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`) != undefined){
+                coin[j].imageUrl = urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`)
             }
-        })
+        }
         return coin
     }
 }
