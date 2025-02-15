@@ -131,7 +131,8 @@ class AssetGraphic extends HTMLElement {
             console.error("Nenhum dado retornado ou falha na requisição.");
             return;
         }
-        if(response.code != 200){
+        if(response.code){
+            console.log(response)
             alert(response.message)
             return
         }
