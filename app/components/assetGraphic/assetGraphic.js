@@ -45,13 +45,10 @@ class AssetGraphic extends HTMLElement {
         try {
             const response = await fetch(urlparam);
 
-            if (!response.ok) {
-                throw new Error("Erro na requisição: " + response.statusText);
-            }
-
             return await response.json();
         } catch (error) {
             console.error("Erro na requisição:", error);
+           
             return [];
         }
     }
@@ -129,9 +126,15 @@ class AssetGraphic extends HTMLElement {
 
     async makeGraphic() {
         const response = await this.makeRequest(this.buildUrl());
+        console.log(response)
         if (!response || response.length === 0) {
             console.error("Nenhum dado retornado ou falha na requisição.");
             return;
+        }
+        if(response.code){
+            console.log(response)
+            alert(response.message)
+            return
         }
 
         const data = this.filterDatas(response);
