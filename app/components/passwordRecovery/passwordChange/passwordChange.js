@@ -56,6 +56,7 @@ class PasswordChange extends HTMLElement {
   </div>
 </div>
 <div id="login-component"></div>
+<div id="emailreceiver-component"></div>
     `;
 
     const componentRoot = document.createElement("div");
@@ -85,6 +86,13 @@ class PasswordChange extends HTMLElement {
     this.shadow.querySelector("#login-component").appendChild(component);
   }
 
+  showComponentForm() {
+    this.shadow.querySelector(".email-container").style.display = "none";
+    const component = document.createElement("emailreceiver-component");
+
+    this.shadow.querySelector("#emailreceiver-component").appendChild(component);
+  }
+
   async handleSubmit(event) {
     event.preventDefault();//PESQUISAR
 
@@ -108,6 +116,7 @@ class PasswordChange extends HTMLElement {
     } catch (error) {
       alert("Erro ao atualizar a senha. Tente novamente mais tarde.");
       console.error(error);
+      this.showComponentForm();
     }
   }
 }

@@ -22,7 +22,9 @@
   gap: 20px;
 }
 
-h1, p, label {
+h1,
+p,
+label {
   color: white;
 }
 
@@ -69,4 +71,11 @@ form {
 #email:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+logo-component {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
 }

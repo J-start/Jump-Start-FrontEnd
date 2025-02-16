@@ -19,6 +19,7 @@ class EmailReceiver extends HTMLElement {
   createHTML() {
     const template = `
       <div class="email-container">
+      <logo-component></logo-component>
         <div class="principalText">
           <h1>Digite um e-mail válido</h1>
         </div>
@@ -41,6 +42,7 @@ class EmailReceiver extends HTMLElement {
         </div>
       </div>
       <div id="confirmation-component"></div>
+      <script src="app/components/logo/logo.js"></script>
     `;
 
     const componentRoot = document.createElement("div");
@@ -96,7 +98,9 @@ class EmailReceiver extends HTMLElement {
         });
 
         if (!response.ok) {
-          throw new Error(`Não foi possível enviar o e-mail, digite novamente.`);
+          throw new Error(
+            `Não foi possível enviar o e-mail, digite novamente.`
+          );
         }
 
         const result = await response.json();
