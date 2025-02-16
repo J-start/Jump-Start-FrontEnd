@@ -86,7 +86,7 @@ class PasswordChange extends HTMLElement {
   }
 
   async handleSubmit(event) {
-    event.preventDefault();//PESQUISAR
+    event.preventDefault();
 
     const password = this.shadow.querySelector("#password").value;
     const confirmPassword =
