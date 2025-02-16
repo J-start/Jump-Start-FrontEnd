@@ -1,8 +1,8 @@
-.withdraw-component {
+.emailreceiver-component {
   background-color: #1c2029;
 }
 
-.sellingBlockAlt {
+.email-container {
   margin-top: -13vh;
   text-align: center;
   background-color: #1c2029;
@@ -14,21 +14,6 @@
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  margin-top: -13vh;
-}
-
-.PageReturn h1 {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: white;
-}
-
-.PageReturn p {
-  font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-  color: white;
 }
 
 .buttonFormat {
@@ -37,8 +22,12 @@
   gap: 20px;
 }
 
-button {
-  background-color: #007bff;
+h1, p, label {
+  color: white;
+}
+
+.submit-button {
+  background-color: #0d6efd;
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -47,25 +36,11 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
   min-width: 120px;
+  margin-top: 10px;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-.Sacar button {
-  background-color: #0d6efd;
-}
-
-.Sacar button:hover {
+.submit-button:hover {
   background-color: #0a58ca;
-}
-
-.form-sendingValue {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
 }
 
 form {
@@ -77,22 +52,21 @@ form {
   justify-content: center;
 }
 
-#valueInput {
-  width: 80%;
-  max-width: 500px;
-  height: 30px;
-  background-color: white;
+#email {
+  width: 100%;
+  max-width: 600px;
+  height: 40px;
+  background-color: #ccc;
   border: none;
   border-radius: 5px;
   padding: 10px;
   font-size: 16px;
-  resize: none;
-  background-color: #ccc;
   color: black;
   margin-top: 10%;
+  text-align: center;
 }
 
-#valueInput:focus {
+#email:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }

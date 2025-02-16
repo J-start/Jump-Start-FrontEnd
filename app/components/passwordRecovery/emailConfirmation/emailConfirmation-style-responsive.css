@@ -1,5 +1,6 @@
-@media screen and (min-width: 100px) and (max-width: 388px) {
-    .email-container {
+@media screen and (min-width: 100px) and (max-width: 523px) {
+
+    .principalBlock {
         text-align: center;
         background-color: #1C2029;
         padding: 50px;
@@ -11,11 +12,5 @@
         align-items: center;
         box-sizing: border-box;
     }
-}
 
-@media screen and (min-width: 280px) and (max-width: 1023px) {
-    .emailreceiver-component {
-        margin-left: 0px;
-    }
 }
-
