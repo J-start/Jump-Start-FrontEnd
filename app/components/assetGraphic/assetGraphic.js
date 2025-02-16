@@ -126,13 +126,11 @@ class AssetGraphic extends HTMLElement {
 
     async makeGraphic() {
         const response = await this.makeRequest(this.buildUrl());
-        console.log(response)
         if (!response || response.length === 0) {
             console.error("Nenhum dado retornado ou falha na requisição.");
             return;
         }
         if(response.code){
-            console.log(response)
             alert(response.message)
             return
         }

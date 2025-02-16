@@ -10,6 +10,11 @@ class PasswordChange extends HTMLElement {
     this.createStyles(
       "app/components/passwordRecovery/passwordChange/passwordchange-style-responsive.css"
     );
+    this.shadow.querySelector("#password-form").addEventListener("submit", (event) =>{
+      this.handleSubmit(event)
+      
+
+    })
   }
 
   createHTML() {
@@ -45,7 +50,7 @@ class PasswordChange extends HTMLElement {
         required
       />
       <div class="buttonFormat">
-        <input type="submit" value="Confirmar senha" class="submit-button" />
+      <button class="submit-button">Enviar</button>
       </div>
     </form>
   </div>
@@ -81,7 +86,7 @@ class PasswordChange extends HTMLElement {
   }
 
   async handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault();//PESQUISAR
 
     const password = this.shadow.querySelector("#password").value;
     const confirmPassword =

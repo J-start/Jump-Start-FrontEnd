@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  const token = getTokenUrl();
   await verifyToken();
 });
 
@@ -57,7 +56,7 @@ async function verifyToken() {
 async function updatePassword(newPassword) {
   const URL = `${getUrl()}/investor/update/password/`;
   const TOKEN = getTokenUrl();
-
+  alert(TOKEN)
   let bodyRequest = {
     token: TOKEN,
     newPassword: newPassword,
@@ -68,7 +67,7 @@ async function updatePassword(newPassword) {
   await makeRequestWithBody(URL, bodyRequest)
     .then((response) => {
       console.log(response);
-      if (response.status >= 200 && response.status < 300) {
+      if (response.code == 200) {
         alert("Senha atualizada com sucesso!");
       } else {
         alert("Erro ao atualizar a senha: " + response.message);
