@@ -56,7 +56,7 @@ async function verifyToken() {
 async function updatePassword(newPassword) {
   const URL = `${getUrl()}/investor/update/password/`;
   const TOKEN = getTokenUrl();
-  alert(TOKEN)
+  alert(TOKEN);
   let bodyRequest = {
     token: TOKEN,
     newPassword: newPassword,
