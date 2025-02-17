@@ -50,7 +50,7 @@ class PasswordChange extends HTMLElement {
         required
       />
       <div class="buttonFormat">
-      <button class="submit-button">Enviar</button>
+      <button id="submitButton" class="submit-button">Enviar</button>
       </div>
     </form>
   </div>
@@ -111,10 +111,13 @@ class PasswordChange extends HTMLElement {
     }
 
     try {
+      this.shadow.querySelector("#submitButton").innerHTML = "Enviando email ...";
       await updatePassword(password);
       this.showComponentConfirmation(); 
     } catch (error) {
       alert("Erro ao atualizar a senha. Tente novamente.");
+      this.shadow.querySelector("#submitButton").innerHTML = "Enviar";
+
       console.error(error);
       this.showComponentForm();
     }

@@ -70,8 +70,11 @@ async function updatePassword(newPassword) {
   const TOKEN = getTokenUrl();
   if (TOKEN == null) {
     this.showEmailReceiverComponent();
+    return
   }
-  alert(TOKEN);
+        this.shadow.querySelector("#buttonsending").value = "enviando email ...";
+
+
   let bodyRequest = {
     token: TOKEN,
     newPassword: newPassword,
@@ -84,8 +87,10 @@ async function updatePassword(newPassword) {
       console.log(response);
       if (response.code == 200) {
         alert("Senha atualizada com sucesso!");
+        window.location.href = "signIn.html";
+
       } else {
-        alert("Erro ao atualizar a senha: " + response.message);
+        alert(response.message);
       }
     })
     .catch((error) => {

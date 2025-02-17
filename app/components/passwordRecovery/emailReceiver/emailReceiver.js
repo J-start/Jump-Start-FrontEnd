@@ -37,7 +37,7 @@ class EmailReceiver extends HTMLElement {
               placeholder="exemplo@dominio.com"
               required
             />
-            <input type="submit" value="Enviar e-mail" class="submit-button" />
+            <input id="buttonsending" type="submit" value="Enviar e-mail" class="submit-button" />
           </form>
         </div>
       </div>
@@ -75,6 +75,7 @@ class EmailReceiver extends HTMLElement {
   addFormSubmitHandler() {
     const form = this.shadow.querySelector("#email-form");
     form.addEventListener("submit", async (event) => {
+      
       event.preventDefault();
 
       const emailInput = this.shadow.querySelector("#email");
@@ -84,6 +85,7 @@ class EmailReceiver extends HTMLElement {
         alert("Por favor, insira um e-mail válido.");
         return;
       }
+      this.shadow.querySelector("#buttonsending").value = "enviando email ...";
 
       const baseUrl = getUrl();
       const url = `${baseUrl}/investor/url/password/`;
@@ -109,6 +111,8 @@ class EmailReceiver extends HTMLElement {
       } catch (error) {
         console.error("Erro:", error);
         alert(`Erro: ${error.message}`);
+        this.shadow.querySelector("#buttonsending").value = "enviar email";
+
       }
     });
   }

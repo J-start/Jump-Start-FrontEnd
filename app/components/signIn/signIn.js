@@ -47,7 +47,7 @@ class SignIn extends HTMLElement {
                     <br>
                     <a href="signUp.html">Não tenho uma conta</a>
                     <br>
-                    <a href="#">Esqueci minha senha</a>
+                    <a href="sendingEmail.html">Esqueci minha senha</a>
                     <br>
                     <div class="containerButton">
                      <button type="submit">Login</button>
