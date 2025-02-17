@@ -114,7 +114,7 @@ class PasswordChange extends HTMLElement {
       await updatePassword(password);
       this.showComponentConfirmation(); 
     } catch (error) {
-      alert("Erro ao atualizar a senha. Tente novamente mais tarde.");
+      alert("Erro ao atualizar a senha. Tente novamente.");
       console.error(error);
       this.showComponentForm();
     }
