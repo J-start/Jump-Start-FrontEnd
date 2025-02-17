@@ -51,12 +51,11 @@ async function verifyToken() {
           alert("Token expirado, envie novamente seu e-mail.");
           window.location.href = "sendingEmail.html";
           return;
+        } else {
+          alert("Houve um erro inexperado. Solicite novamente");
+          window.location.href = "sendingEmail.html";
+          return;
         }
-        alert(
-          "Token inválido ou expirado. Por favor, insira seu email novamente."
-        );
-      } else {
-        alert(e.message);
       }
     })
     .catch((er) => {
@@ -106,4 +105,3 @@ function showComponentChanging() {
     );
   }
 }
-
