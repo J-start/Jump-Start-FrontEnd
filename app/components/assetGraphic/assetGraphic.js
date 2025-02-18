@@ -132,7 +132,6 @@ class AssetGraphic extends HTMLElement {
             return;
         }
         if(response.code){
-            console.log(response)
             alert(response.message)
             return
         }
