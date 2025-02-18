@@ -17,6 +17,9 @@
   .emailreceiver-component {
     margin-left: 0px;
   }
+  .email-form{
+    width: 80%;
+  }
 }
 
 @media (max-width: 768px) {

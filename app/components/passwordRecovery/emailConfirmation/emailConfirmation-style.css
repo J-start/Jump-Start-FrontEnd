@@ -17,6 +17,10 @@
     font-size: 2rem;
     margin: 10px 0;
 }
+.principalBlock h2{
+    color: white;
+    font-size: .2.1rem;
+}
 
 .principalBlock .img img {
     max-width: 100%;

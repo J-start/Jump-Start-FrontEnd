@@ -72,8 +72,6 @@ async function updatePassword(newPassword) {
     this.showEmailReceiverComponent();
     return
   }
-        this.shadow.querySelector("#buttonsending").value = "enviando email ...";
-
 
   let bodyRequest = {
     token: TOKEN,
@@ -94,7 +92,7 @@ async function updatePassword(newPassword) {
       }
     })
     .catch((error) => {
-      alert("Erro na requisição. Tente novamente mais tarde.");
+      document.getElementById("submitButton").innerHTML = "Enviar"
       console.error(error);
     });
 }

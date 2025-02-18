@@ -23,9 +23,12 @@
 }
 
 h1,
-p,
+h3,
 label {
   color: white;
+}
+.email-form{
+  width: 30%;
 }
 
 .submit-button {

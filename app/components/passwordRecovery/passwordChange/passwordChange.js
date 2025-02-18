@@ -24,7 +24,7 @@ class PasswordChange extends HTMLElement {
     <h1>Digite uma nova senha</h1>
   </div>
   <div>
-    <p>Atenção, a senha deve ter no mínimo 8 caracteres e no máximo 20.</p>
+    <h3 id="atention">Atenção, a senha deve ter no mínimo 8 caracteres e no máximo 20.</h3>
   </div>
 
   <div class="email-form">
@@ -94,7 +94,7 @@ class PasswordChange extends HTMLElement {
   }
 
   async handleSubmit(event) {
-    event.preventDefault();//PESQUISAR
+    event.preventDefault();
 
     const password = this.shadow.querySelector("#password").value;
     const confirmPassword =
@@ -111,15 +111,12 @@ class PasswordChange extends HTMLElement {
     }
 
     try {
-      this.shadow.querySelector("#submitButton").innerHTML = "Enviando email ...";
+      this.shadow.querySelector("#submitButton").innerHTML = "Atualizando senha ...";
       await updatePassword(password);
-      this.showComponentConfirmation(); 
     } catch (error) {
       alert("Erro ao atualizar a senha. Tente novamente.");
       this.shadow.querySelector("#submitButton").innerHTML = "Enviar";
-
-      console.error(error);
-      this.showComponentForm();
+      
     }
   }
 }
