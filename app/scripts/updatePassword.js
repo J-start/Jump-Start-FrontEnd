@@ -8,7 +8,7 @@ function getTokenUrl() {
 
   if (token == null) {
     alert("Erro, o token não foi informado. Não é possível recuperar a senha.");
-    //window.location.href = "index.html"
+    window.location.href = "sendingEmail.html";
   }
   console.log(token);
 
@@ -32,6 +32,9 @@ async function verifyToken() {
   const URL = `${getUrl()}/investor/verify/token/`;
   const TOKEN = getTokenUrl();
 
+  if (TOKEN == null) {
+    return;
+  }
   let bodyToken = {
     token: TOKEN,
   };
@@ -41,14 +44,23 @@ async function verifyToken() {
   await makeRequestWithBody(URL, bodyToken)
     .then((e) => {
       console.log(e);
-      if (e.status >= 200 && e.status < 300) {
+      if (e.code == 200) {
         showComponentChanging();
-      } else {
-        alert(e.message);
+      } else if (e.code) {
+        if (e.message == "token expirado") {
+          alert("Token expirado, envie novamente seu e-mail.");
+          window.location.href = "sendingEmail.html";
+          return;
+        } else {
+          alert("Houve um erro inexperado. Solicite novamente");
+          window.location.href = "sendingEmail.html";
+          return;
+        }
       }
     })
     .catch((er) => {
       alert("Erro ao verificar o token. Tente novamente mais tarde.");
+
       console.error(er);
     });
 }
@@ -56,7 +68,11 @@ async function verifyToken() {
 async function updatePassword(newPassword) {
   const URL = `${getUrl()}/investor/update/password/`;
   const TOKEN = getTokenUrl();
-  alert(TOKEN)
+  if (TOKEN == null) {
+    this.showEmailReceiverComponent();
+    return
+  }
+
   let bodyRequest = {
     token: TOKEN,
     newPassword: newPassword,
@@ -69,12 +85,14 @@ async function updatePassword(newPassword) {
       console.log(response);
       if (response.code == 200) {
         alert("Senha atualizada com sucesso!");
+        window.location.href = "signIn.html";
+
       } else {
-        alert("Erro ao atualizar a senha: " + response.message);
+        alert(response.message);
       }
     })
     .catch((error) => {
-      alert("Erro na requisição. Tente novamente mais tarde.");
+      document.getElementById("submitButton").innerHTML = "Enviar"
       console.error(error);
     });
 }

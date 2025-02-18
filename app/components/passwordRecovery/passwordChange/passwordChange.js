@@ -24,7 +24,7 @@ class PasswordChange extends HTMLElement {
     <h1>Digite uma nova senha</h1>
   </div>
   <div>
-    <p>Atenção, a senha deve ter no mínimo 8 caracteres e no máximo 20.</p>
+    <h3 id="atention">Atenção, a senha deve ter no mínimo 8 caracteres e no máximo 20.</h3>
   </div>
 
   <div class="email-form">
@@ -50,12 +50,13 @@ class PasswordChange extends HTMLElement {
         required
       />
       <div class="buttonFormat">
-      <button class="submit-button">Enviar</button>
+      <button id="submitButton" class="submit-button">Enviar</button>
       </div>
     </form>
   </div>
 </div>
 <div id="login-component"></div>
+<div id="emailreceiver-component"></div>
     `;
 
     const componentRoot = document.createElement("div");
@@ -85,6 +86,13 @@ class PasswordChange extends HTMLElement {
     this.shadow.querySelector("#login-component").appendChild(component);
   }
 
+  showComponentForm() {
+    this.shadow.querySelector(".email-container").style.display = "none";
+    const component = document.createElement("emailreceiver-component");
+
+    this.shadow.querySelector("#emailreceiver-component").appendChild(component);
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
 
@@ -103,11 +111,12 @@ class PasswordChange extends HTMLElement {
     }
 
     try {
+      this.shadow.querySelector("#submitButton").innerHTML = "Atualizando senha ...";
       await updatePassword(password);
-      this.showComponentConfirmation(); 
     } catch (error) {
-      alert("Erro ao atualizar a senha. Tente novamente mais tarde.");
-      console.error(error);
+      alert("Erro ao atualizar a senha. Tente novamente.");
+      this.shadow.querySelector("#submitButton").innerHTML = "Enviar";
+      
     }
   }
 }

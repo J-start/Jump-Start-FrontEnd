@@ -19,11 +19,12 @@ class EmailReceiver extends HTMLElement {
   createHTML() {
     const template = `
       <div class="email-container">
+      <logo-component></logo-component>
         <div class="principalText">
-          <h1>Digite um e-mail válido</h1>
+          <h1>Atualização de senha</h1>
         </div>
         <div>
-          <p>Atenção, este deve ser exatamente o e-mail que está cadastrado na plataforma.</p>
+          <h3>Atenção, este deve ser exatamente o e-mail que está cadastrado na plataforma.</h3>
         </div>
 
         <div class="email-form">
@@ -33,14 +34,15 @@ class EmailReceiver extends HTMLElement {
               type="email"
               id="email"
               name="email"
-              placeholder="exemplo@dominio.com"
+              placeholder="Digite seu email"
               required
             />
-            <input type="submit" value="Enviar e-mail" class="submit-button" />
+            <input id="buttonsending" type="submit" value="Enviar e-mail" class="submit-button" />
           </form>
         </div>
       </div>
       <div id="confirmation-component"></div>
+      <script src="app/components/logo/logo.js"></script>
     `;
 
     const componentRoot = document.createElement("div");
@@ -73,15 +75,17 @@ class EmailReceiver extends HTMLElement {
   addFormSubmitHandler() {
     const form = this.shadow.querySelector("#email-form");
     form.addEventListener("submit", async (event) => {
+
       event.preventDefault();
 
       const emailInput = this.shadow.querySelector("#email");
       const email = emailInput.value.trim();
 
-      if (!email) {
+      if (!email || !this.isEmailValid(email)) {
         alert("Por favor, insira um e-mail válido.");
         return;
       }
+      this.shadow.querySelector("#buttonsending").value = "enviando email ...";
 
       const baseUrl = getUrl();
       const url = `${baseUrl}/investor/url/password/`;
@@ -95,18 +99,27 @@ class EmailReceiver extends HTMLElement {
           body: JSON.stringify({ email }),
         });
 
-        if (!response.ok) {
-          throw new Error(`Não foi possível enviar o e-mail, digite novamente.`);
+        const result = await response.json();
+        if (result.code == 200) {
+          this.showComponentConfirmation();
+        } else {
+          alert(result.message)
+          this.shadow.querySelector("#buttonsending").value = "enviar email";
+          this.shadow.querySelector("#email").value = ""
         }
 
-        const result = await response.json();
-        console.log("Sucesso:", result);
-        this.showComponentConfirmation();
       } catch (error) {
-        console.error("Erro:", error);
-        alert(`Erro: ${error.message}`);
+        alert("Aconteceu um erro, tente novamente");
+        this.shadow.querySelector("#buttonsending").value = "enviar email";
+        this.shadow.querySelector("#email").value = ""
+
       }
     });
+  }
+
+  isEmailValid(email) {
+    const regex = /\S+@\S+\.\S+/;
+    return regex.test(email)
   }
 }
 
