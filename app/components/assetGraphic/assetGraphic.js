@@ -45,13 +45,10 @@ class AssetGraphic extends HTMLElement {
         try {
             const response = await fetch(urlparam);
 
-            if (!response.ok) {
-                throw new Error("Erro na requisição: " + response.statusText);
-            }
-
             return await response.json();
         } catch (error) {
             console.error("Erro na requisição:", error);
+           
             return [];
         }
     }
@@ -73,42 +70,55 @@ class AssetGraphic extends HTMLElement {
             datas = data.map(item => {
                 return { "date": item.DateShare, "value": parseFloat(item.CloseShare).toFixed(3) };
             });
+            if (data.length > 2) {
 
-            this.valueVariation(data.length, data[0].CloseShare, "variationSecond")
-            this.valueVariation(1, data[data.length - 2].CloseShare, "variationFirst")
+                let dateShare = String(data[0].DateShare).replaceAll("-", "/")
+                let days1 = this.calcDelta(dateShare)
+                this.valueVariation(days1, data[0].CloseShare, "variationSecond")
+
+                let dateShare2 = String(data[data.length - 2].DateShare).replaceAll("-", "/")
+                let days2 = this.calcDelta(dateShare2)
+                this.valueVariation(days2, data[data.length - 2].CloseShare, "variationFirst")
+
+            } else {
+                let dateShare = String(data[0].DateShare).replaceAll("-", "/")
+                let days = this.calcDelta(dateShare)
+                this.valueVariation(days, data[0].CloseShare, "variationSecond")
+            }
 
         } else if (assetType === "COIN") {
             datas = data.map(item => {
                 return { "date": this.fomatDataTimestamp(item.timestamp), "value": parseFloat(item.bid).toFixed(3) };
 
             });
-
+            
             let days = this.calcDelta(this.fomatDataTimestamp(data[1].timestamp))
-            this.valueVariation(days, data[0].bid, "variationFirst")
+            if(days > 0){
+                this.valueVariation(days, data[0].bid, "variationFirst")
+            }
 
             days = this.calcDelta(this.fomatDataTimestamp(data[data.length - 1].timestamp))
-            this.valueVariation(days, data[data.length - 1].bid, "variationSecond")
+            if(days > 0){
+                this.valueVariation(days, data[data.length - 1].bid, "variationSecond")
+            }
 
             datas = datas.reverse();
         } else {
 
-            const step = Math.floor(data.length / 30);
-            let atualPosition = 0;
-            let dataAux = [];
-
-            for (let i = 0; i < 30; i++) {
-                dataAux.push(data[atualPosition]);
-                atualPosition += step;
-            }
-
-            datas = dataAux.map(item => {
-                return { "date": this.fomatDataTimestamp(item.date), "value": parseFloat(item.price).toFixed(3) };
+            datas = data.map(item => {
+                return { "date": String(item.date).replaceAll("-", "/"), "value": parseFloat(item.value).toFixed(3) };
             });
-            let days = this.calcDelta(this.fomatDataTimestamp(data[1].date))
-            console.log(days)
-            if (days > 0) {
-                this.valueVariation(Math.ceil(days), data[0].price, "variationSecond")
+
+            let days = this.calcDelta(data[0].date.replaceAll("-", "/"))
+            if(days > 0){
+                this.valueVariation(days, data[0].value, "variationFirst")
             }
+            
+            let daysSecond = this.calcDelta(data[data.length - 2].date.replaceAll("-", "/"))
+            if(days > 0 && daysSecond != days){
+                this.valueVariation(daysSecond, data[data.length - 2].value, "variationSecond")
+            }
+        
         }
 
         return datas
@@ -116,10 +126,14 @@ class AssetGraphic extends HTMLElement {
 
     async makeGraphic() {
         const response = await this.makeRequest(this.buildUrl());
-
+        console.log(response)
         if (!response || response.length === 0) {
             console.error("Nenhum dado retornado ou falha na requisição.");
             return;
+        }
+        if(response.code){
+            alert(response.message)
+            return
         }
 
         const data = this.filterDatas(response);
@@ -191,41 +205,20 @@ class AssetGraphic extends HTMLElement {
         let asset = localStorage.getItem("assetCode")
 
         if (localStorage.getItem("assetType") === "SHARE") {
-            url = `http://localhost:8080/datas/share/?shareName=${asset}`
+            url = `${getUrl()}/datas/share/?shareName=${asset}`
         } else if (localStorage.getItem("assetType") === "COIN") {
             url = `https://economia.awesomeapi.com.br/json/daily/${asset}/30`
         } else {
-            const dates = this.getDateFormatted()
-            url = `https://api.mercadobitcoin.net/api/v4/${asset}/trades?limit=1000&from=${dates[0]}&to=${dates[1]}`
+            asset = asset + "-BRL"
+            url = `${getUrl()}/history/crypto/?crypto=${asset}`
         }
 
         return url
     }
 
-    getDateFormatted() {
-        const date = new Date();
-
-        let year = date.getFullYear();
-        let month = String(date.getMonth() + 1).padStart(2, '0');
-        let day = String(date.getDate()).padStart(2, '0');
-
-        const todayFomatted = `${year}-${month}-${day}`;
-
-        date.setDate(date.getDate() - 2);
-
-        year = date.getFullYear();
-        month = String(date.getMonth() + 1).padStart(2, '0');
-        day = String(date.getDate()).padStart(2, '0');
-
-        const twoDaysBefore = `${year}-${month}-${day}`;
-
-
-        return [twoDaysBefore, todayFomatted];
-    }
-
     valueVariation(days, value, div) {
 
-        let variation = (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3) - 100
+        let variation = 100 - (100 * value / Number(localStorage.getItem("assetValue")).toFixed(3)).toFixed(3)
         variation = variation.toFixed(1)
 
         if (days === 1) {
@@ -244,8 +237,8 @@ class AssetGraphic extends HTMLElement {
     }
 
     calcDelta(date1) {
-
         const [dia1, mes1, ano1] = date1.split("/").map(Number);
+        console.log(date1)
         const dateObj1 = new Date(ano1, mes1 - 1, dia1);
         const date2 = new Date();
         date2.setHours(0, 0, 0, 0);
@@ -256,8 +249,6 @@ class AssetGraphic extends HTMLElement {
 
         return differenceDays;
     }
-
-
 
 }
 

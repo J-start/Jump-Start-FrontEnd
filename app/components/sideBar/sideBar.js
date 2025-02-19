@@ -10,7 +10,9 @@ class SideBar extends HTMLElement {
         this.createStyles("app/components/sideBar/sideBar-style.css")
         this.createStyles("app/components/sideBar/sideBar-style-responsive.css")
         this.defineTopSideBar()
-
+        this.activateButton()
+     
+        this.isAdm()
         const openMenu = this.shadow.querySelector("#openMenu")
         const closeMenu = this.shadow.querySelector("#closeMenu")
         const sidebar = this.shadow.querySelector("#sidebar")
@@ -56,7 +58,7 @@ class SideBar extends HTMLElement {
             <img src="app/assets/images/logo.PNG" alt="logo jumpStart">
         </div>
 
-        <ul>
+        <ul id="menu">
 
             <li>
                 <a href="index.html"> 
@@ -72,7 +74,7 @@ class SideBar extends HTMLElement {
             </li>
 
             <li>
-                <a href="#"> 
+                <a href="wallet.html"> 
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
                         <div class="wrapImageMenu" id="imageWallet">
@@ -84,18 +86,6 @@ class SideBar extends HTMLElement {
                 </a>
             </li>
 
-           <li>
-                <a href="#"> 
-                    <div class="wrapItensMenu">
-                        <div class="containerItensMenu">
-                        <div class="wrapImageMenu" id="imageNotifications">
-                            <img src="app/assets/images/notifications_icon.png" alt="Notificações icone">  
-                        </div>
-                            <p>Notificações</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
 
             <li>
                 <a href="profile.html"> 
@@ -150,7 +140,7 @@ class SideBar extends HTMLElement {
             sideBar.classList.remove("active")
             openMenu.style.display = "block"
             closeMenu.style.display = "block"
-  
+
         }
     }
 
@@ -166,9 +156,92 @@ class SideBar extends HTMLElement {
         openMenu.style.display = "block"
     }
 
-    defineTopSideBar(){
+    defineTopSideBar() {
         this.shadow.querySelector("#openMenu").style.top = this.getAttribute("top-sidebar") + "%"
     }
+    activateButton() {
+        let button = this.getAttribute("highlight")
+        if (!button) {
+            return
+        }
+
+        this.shadow.querySelector("#imageHome").style.backgroundColor = "none"
+        this.shadow.querySelector("#imageWallet").style.backgroundColor = "none"
+        this.shadow.querySelector("#imageProfile").style.backgroundColor = "none"
+
+        this.shadow.querySelector(`#image${button}`).style.backgroundColor = "#1465FF"
+    }
+
+    async makeRequest() {
+        if (localStorage.getItem("token") === null) {
+            window.location.href = "signIn.html"
+        }
+        const TOKEN = localStorage.getItem("token")
+        const url = `${getUrl()}/investor/role/`;
+        return await fetch(url, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${TOKEN}`
+            }
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error("Erro na requisição")
+            }
+            return response.json();
+        })
+
+    }
+
+    async isAdm() {
+       await this.makeRequest().then(data => {
+            if (data.isAdm) {
+                this.createLinkAdm()
+            }
+        }).catch(e => {
+            if (e != null) {
+                console.log(e)
+                alert("Aconteceu algum erro na autenticação, por favor faça o login novamente")
+                //window.location.href = "signIn.html"
+            }
+        })
+    }
+
+    createLinkAdm() {
+        const menu = this.shadow.querySelector("#menu")
+
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = "adm.html";
+
+        const wrapItensMenu = document.createElement("div");
+        wrapItensMenu.classList.add("wrapItensMenu");
+
+        const containerItensMenu = document.createElement("div");
+        containerItensMenu.classList.add("containerItensMenu");
+
+        const wrapImageMenu = document.createElement("div");
+        wrapImageMenu.classList.add("wrapImageMenu");
+        wrapImageMenu.id = "imageAdmin";
+
+        const img = document.createElement("img");
+        img.src = "app/assets/images/admin_icon.png";
+        img.alt = "admin";
+
+        const p = document.createElement("p");
+        p.textContent = "Admin";
+
+        wrapImageMenu.appendChild(img);
+        containerItensMenu.appendChild(wrapImageMenu);
+        containerItensMenu.appendChild(p);
+        wrapItensMenu.appendChild(containerItensMenu);
+        a.appendChild(wrapItensMenu);
+        li.appendChild(a);
+        menu.appendChild(li);
+
+    }
+
+    
 }
 
 customElements.define("menu-component", SideBar);

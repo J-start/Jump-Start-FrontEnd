@@ -1,36 +1,39 @@
-.containerAssetAndBalance{
+.containerAssetAndBalance {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-left: 20px;
     margin-right: 20px;
-    
+
 }
 
-.line{
+.line {
     width: 90%;
     height: 1px;
     background-color: #0C5291;
     margin: auto;
 }
-.lineGraphic{
+
+.lineGraphic {
     width: 90%;
     height: 1px;
     background-color: white;
     margin: auto;
     margin-top: 0px;
 }
-.containerBalance{
+
+.containerBalance {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 50%;
 }
 
-.assetdetails-component{
+.assetdetails-component {
     margin-top: 70px;
 }
-.containerAssetValue{
+
+.containerAssetValue {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -39,26 +42,29 @@
     flex-direction: column;
     margin-top: 0px;
 }
-.containerAssetValue > p{
+
+.containerAssetValue>p {
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 0px;
 }
 
-.containerGraphicPage{
+.containerGraphicPage {
     width: 100%;
     margin-top: 15px;
 }
+
 .containerButtons {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    gap: 10px; 
+    gap: 10px;
 }
 
-#buttonBuy, #buttonSell {
+#buttonBuy,
+#buttonSell {
     border: none;
     cursor: pointer;
     font-size: 16px;
@@ -71,16 +77,39 @@
     color: white;
 }
 
-#buttonBuy:hover, #buttonSell:hover {
-    background-color: #1C2029; 
-    color: white; 
+#buttonBuy:hover,
+#buttonSell:hover {
+    background-color: #1C2029;
+    color: white;
 }
 
-#buttonSell{
-background-color: #C6FE1F;
-color: black;
+#buttonSell {
+    background-color: #C6FE1F;
+    color: black;
 }
 
-#buttonBuy{
-background-color: #1465FF;
+#buttonBuy {
+    background-color: #1465FF;
+}
+
+#buttonBuy:disabled,
+#buttonSell:disabled {
+    cursor: not-allowed;
+}
+
+.showMessageMarketClosed {
+    color: #FF4848;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    display: none;
+}
+
+.wait {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 96vh;
 }

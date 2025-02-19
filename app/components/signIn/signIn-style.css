@@ -1,0 +1,116 @@
+.containerTitle {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    color: white;
+}
+
+.containerForm {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form#signIn-form {
+    width: 90%;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    -webkit-box-shadow: 15px 8px 19px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 15px 8px 19px -5px rgba(0,0,0,0.75);
+    box-shadow: 15px 8px 19px -5px rgba(0,0,0,0.75);
+}
+
+label {
+    color: white;
+    margin-bottom: 5px;
+    font-size: 18px;
+    margin-right: auto;
+}
+
+form#signIn-form input {
+    display: block;
+    width: 99%;
+    margin-top: 10px;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+    height: 25px;
+}
+
+form#signIn-form button {
+    background-color: #1465FF;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+a {
+    color: white;
+    font-size: 18px;
+}
+
+.containerButton {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.containerButton>button:active {
+    position: relative;
+    top: 2px;
+}
+
+#messageError {
+    color: #FF4848;
+    display: flex;
+    justify-content: center;
+}
+
+#passwordImage {
+    position: absolute;
+    top: 21px;
+    right: 26px;
+    cursor: pointer;
+}
+#confirmPasswordImage{
+    position: absolute;
+    top: 21px;
+    right: 26px;
+    cursor: pointer;
+}
+.passwordContainer {
+    position: relative; 
+    width: 100%; 
+    display: flex;
+    align-items: center; 
+}
+
+form#signIn-form input {
+    display: block;
+    width: 100%; 
+    margin-top: 10px;
+    padding: 15px; 
+    border: none;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+    height: auto; 
+    box-sizing: border-box; 
+}
+
+.passwordContainer {
+    position: relative;
+    width: 100%;
+}
+
+.passwordContainer input {
+    padding-right: 40px; 
+}

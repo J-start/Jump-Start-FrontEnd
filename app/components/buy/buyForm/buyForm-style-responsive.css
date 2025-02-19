@@ -1,0 +1,25 @@
+
+
+/* Responsividade: telas menores que 480px */
+@media (max-width: 480px) {
+    #containerTitle h1 {
+        font-size: 24px; /* Reduz ainda mais o título */
+        margin-top: 20%; /* Ajusta a margem superior */
+    }
+
+    #quantityInput {
+        width: 85%; /* Ocupa toda a largura disponível */
+        height: 45px; /* Altura ajustada */
+
+       
+    }
+
+}
+
+@media (min-width: 280px) and (max-width: 1023px) {
+    .buyForm-component {
+        margin-left: 0px;
+    }
+}
+
+

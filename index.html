@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JumpStart</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="app/assets/images/logo.PNG" type="image/x-icon">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="app/assets/images/logo.PNG"type="image/x-icon"/>
     <script src="app/utils/buildStructureAsset.js"></script>
-</head>
+    <script src="app/utils/urlBackEnd.js"></script>
+  </head>
 
+  <body>
 
-<body>
     <header-component></header-component>
-    <menu-component top-sidebar="3"></menu-component> 
+    <menu-component top-sidebar="3" highlight="Home"></menu-component>
     <switch-component></switch-component>
-  
+    
 
-
-    <script src="app/components/sellingTemplateConclusion/SellingTemplateConclusion.js"></script>
-    <script src="app/components/sellingTemplateProcedure/SellingTemplateProcedure.js"></script>
-    <script src="app/components/sellingTemplateAlternative/SellingTemplateAlternative.js"></script>
-    <script src="app/components/sellingTemplate/SellingTemplate.js"></script>
+    <script src="app/components/sell/sellingTemplateConclusion/SellingTemplateConclusion.js"></script>
+    <script src="app/components/sell/sellingTemplateProcedure/SellingTemplateProcedure.js"></script>
+    <script src="app/components/sell/sellingTemplateAlternative/SellingTemplateAlternative.js"></script>
+    <script src="app/components/sell/sellingTemplate/SellingTemplate.js"></script>
     <script src="app/components/header/headerHome.js"></script>
     <script src="app/components/sideBar/sideBar.js"></script>
     <script src="app/components/newsOrAsset/newsOrAsset.js"></script>
     <script src="app/components/cripto/cripto.js"></script>
     <script src="app/components/coins/coins.js"></script>
     <script src="app/components/share/share.js"></script>
-    <script src="app/components/cdb/cdb.js"></script>
-    
-   
-</body>
+    <script src="app/components/news/news.js"></script>
+    <script src="app/components/spinner/spinner.js"></script>
 
-
+  </body>
 </html>

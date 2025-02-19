@@ -1,0 +1,78 @@
+.buyForm-component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    
+    color: white;
+    font-family: Arial, sans-serif;
+    background-color: #1C2029;
+    height: 100vh;
+    margin-left: 280px;
+}
+
+
+#containerTitle h1 {
+    font-size: 35px;
+    text-align: center;
+    margin-top: 15%;
+}
+
+#containerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#quantityInput {
+    width: 400px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 10%;
+    margin-top: 10%;
+    padding: 0 10px;
+    background-color: #ccc;
+    font-size: 16px;
+    color: black;
+}
+
+#advanceButton {
+    width: 150px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#advanceButton:hover {
+    background-color: #0056b3;
+}
+.containerShowWhatIsBuying{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 96%;
+    align-items: flex-start;
+    margin-left: 20px;
+    position: relative;
+    top: -60px;
+}
+#containerAll{
+    margin-top: -30px;
+}
+
+#balance{
+    margin-top: -10px;
+}
+
+#currentValue{
+    margin-top: -10px;
+}
+
+#advanceButton:disabled{
+    cursor: not-allowed;
+}

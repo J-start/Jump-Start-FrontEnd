@@ -9,35 +9,40 @@ class AssetDetails extends HTMLElement {
 
         this.createStyles("app/components/assetDetails/assetDetails-style.css")
         this.createStyles("app/components/assetDetails/assetDetails-style-responsive.css")
-        
-        if(localStorage.getItem("assetType")){
+
+
+        if (localStorage.getItem("assetType")) {
             this.showResponse()
-        }else{
+        } else {
             window.location.href = "index.html"
         }
-        
+
         document.title = localStorage.getItem("assetName")
 
         this.verifyLocalStorage()
-
+        this.managerTradableShare()
         this.shadow.querySelector("#buttonSell").addEventListener("click", () => {
-            localStorage.setItem("typeOperation","SELL")
+            localStorage.setItem("typeOperation", "SELL")
             window.location.href = "operation.html"
         })
 
         this.shadow.querySelector("#buttonBuy").addEventListener("click", () => {
-            localStorage.setItem("typeOperation","BUY")
+            localStorage.setItem("typeOperation", "BUY")
             window.location.href = "operation.html"
         })
+
     }
 
     createHTML() {
 
         const template =
             `
-            <div class="containerAssetAndBalance">
-              
-            </div>
+        <div class="wait">
+            <spinner-component></spinner-component>
+        </div>    
+        <div class="containerLoadElements">
+            
+            <div class="containerAssetAndBalance"></div>
             
             <div class="line"></div>
             
@@ -45,17 +50,24 @@ class AssetDetails extends HTMLElement {
                 <p>Cotação atual:</p>
                 <h2 id="valueAsset"></h2>
             </div>
-        <div class="lineGraphic"></div>
+
+            <div class="showMessageMarketClosed">
+                <h3>Mercado fechado. A compra e venda de ações é realizada em dias úteis, começando às 11:00h e finalizando às 18:00h</h3>
+            </div>
+
+            <div class="lineGraphic"></div>
+
             <div class="containerGraphicPage">
                 <graphic-component></graphic-component>
             </div>
 
-        <div class="lineGraphic"></div>
+            <div class="lineGraphic"></div>
 
             <div class="containerButtons">
                 <button id="buttonSell">Vender</button>
                 <button id="buttonBuy">Comprar</button>
             </div>
+        </div>
 
            
 
@@ -77,7 +89,7 @@ class AssetDetails extends HTMLElement {
         })
 
     }
-  
+
     createLink(linkStyle) {
         const link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
@@ -86,7 +98,6 @@ class AssetDetails extends HTMLElement {
     }
 
     async makeRequestApi(urlparam) {
-        
         return fetch(urlparam)
             .then(response => {
                 if (!response.ok) {
@@ -102,41 +113,49 @@ class AssetDetails extends HTMLElement {
 
 
     async showResponse() {
-
+        this.shadow.querySelector(".containerLoadElements").style.display = "none"
         const data = await this.makeRequestApi(this.buildUrl())
-        const value = this.getValueAsset(data)
-        
+        const value = Number(this.getValueAsset(data))
+        const formattedCurrency = value.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 3,
+            maximumFractionDigits: 4
+        });
+
         this.buildResponse()
-        this.shadow.querySelector("#valueAsset").innerHTML = "R$ "+value
+        this.shadow.querySelector("#valueAsset").innerHTML = formattedCurrency
+        
+        this.shadow.querySelector(".wait").remove()
+        this.shadow.querySelector(".containerLoadElements").style.display = ""
 
 
-      
-    
-}
 
-    buildUrl(){
+    }
+
+    buildUrl() {
         let url = ""
         let asset = localStorage.getItem("assetCode")
-    
-        if(localStorage.getItem("assetType") === "SHARE"){
-            url = `http://localhost:8080/data/share/?shareName=${asset}`
-        }else if(localStorage.getItem("assetType") === "COIN"){
-             url = `https://economia.awesomeapi.com.br/json/last/${asset}`
-        }else{
+        if (localStorage.getItem("assetType") === "SHARE") {
+            url = `${getUrl()}/data/share/?shareName=${asset}`
+        } else if (localStorage.getItem("assetType") === "COIN") {
+            url = `https://economia.awesomeapi.com.br/json/last/${asset}`
+        } else {
+            asset = asset + "-BRL"
             url = `https://api.mercadobitcoin.net/api/v4/tickers?symbols=${asset}`
         }
 
         return url
     }
 
-    getValueAsset(data){
+    getValueAsset(data) {
         let value = ""
-        if(localStorage.getItem("assetType") === "SHARE"){
+        if (localStorage.getItem("assetType") === "SHARE") {
             value = data.CloseShare
-        }else if(localStorage.getItem("assetType") === "CRYPTO"){
+        } else if (localStorage.getItem("assetType") === "CRYPTO") {
             value = parseFloat(data[0].last).toFixed(3)
-        }else{
-             let coin =String(localStorage.getItem("assetCode")).replace("-", "")
+        } else {
+            let coin = String(localStorage.getItem("assetCode")).replace("-", "") + "BRL"
             value = parseFloat(data[coin].bid).toFixed(3)
         }
 
@@ -144,13 +163,13 @@ class AssetDetails extends HTMLElement {
     }
 
     buildResponse() {
-        if(localStorage.getItem("assetType") === "SHARE"){
+        if (localStorage.getItem("assetType") === "SHARE") {
             this.createNameAsset(localStorage.getItem("assetName"), localStorage.getItem("assetCode"))
             this.createBalance()
-        }else if(localStorage.getItem("assetType") === "CRYPTO"){
-            this.createNameAsset("",localStorage.getItem("assetName"))
+        } else if (localStorage.getItem("assetType") === "CRYPTO") {
+            this.createNameAsset("", localStorage.getItem("assetName"))
             this.createBalance()
-        }else{
+        } else {
             this.createNameAsset(localStorage.getItem("assetCode").replace("-BRL", ""), String(localStorage.getItem("assetName")))
             this.createBalance()
         }
@@ -163,7 +182,7 @@ class AssetDetails extends HTMLElement {
         let containerAsset = document.createElement("div")
         containerAsset.setAttribute("class", "containerAsset")
         let h1 = document.createElement("h1")
-        
+
         h1.innerHTML = assetCode
         let h3 = document.createElement("h3")
         h3.innerHTML = assetName
@@ -174,10 +193,10 @@ class AssetDetails extends HTMLElement {
         containerAll.appendChild(containerAsset)
     }
 
-    createBalance(balance) {
+    createBalance() {
 
         const containerAll = this.shadow.querySelector(".containerAssetAndBalance");
-      
+
         const containerBalance = document.createElement('div');
         containerBalance.classList.add('containerBalance');
 
@@ -187,14 +206,26 @@ class AssetDetails extends HTMLElement {
         title.textContent = 'Seu saldo';
         containerBalanceTitle.appendChild(title);
 
-     
+
         const containerBalanceValue = document.createElement('div');
         containerBalanceValue.classList.add('containerBalanceValue');
         const balanceValue = document.createElement('h3');
-        balanceValue.textContent = 'R$ 1.000,00';
+        if (localStorage.getItem("balance")) {
+            const balance = localStorage.getItem("balance");
+            const formattedCurrency = Number(balance).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            balanceValue.textContent = formattedCurrency;
+        } else {
+            containerBalanceValue.style.display = "none"
+            title.style.display = "none"
+        }
         containerBalanceValue.appendChild(balanceValue);
 
-    
+
         containerBalance.appendChild(containerBalanceTitle);
         containerBalance.appendChild(containerBalanceValue);
 
@@ -208,7 +239,24 @@ class AssetDetails extends HTMLElement {
             if ((!localStorage.getItem("assetType")) || (!localStorage.getItem("assetName")) || (!localStorage.getItem("assetCode"))) {
                 window.location.href = "index.html";
             }
-        }, 1000); 
+        }, 1000);
+    }
+
+    managerTradableShare() {
+        if (localStorage.getItem("assetType") == "SHARE") {
+            if (!isTadable()) {
+                this.showMarketClosed()
+            }
+        }
+    }
+
+    showMarketClosed() {
+        const buyButton = this.shadow.querySelector('#buttonBuy');
+        const sellButton = this.shadow.querySelector('#buttonSell');
+        this.shadow.querySelector(".showMessageMarketClosed").style.display = "flex"
+        this.shadow.querySelector(".containerAssetValue").style.display = "none"
+        buyButton.disabled = true;
+        sellButton.disabled = true;
     }
 }
 

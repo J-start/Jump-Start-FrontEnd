@@ -1,0 +1,106 @@
+.selling-component{
+    margin-left: 280px;
+}
+.containerOtherScreens{
+    width: 100%;
+}
+.sellingBlock {
+    padding: 50px;
+    text-align: center;
+    background-color: #1C2029; 
+    width: 100%;
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    box-sizing: border-box; 
+  
+}
+
+.titlePage h1 {
+    margin-bottom: 0px;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+.form-sendingValue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#valueInput {
+    width: 80%; 
+    max-width: 500px; 
+    height: 30px; 
+    background-color: white; 
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    resize: none; 
+    background-color: #ccc;
+    color: black;
+    margin-top: 10%;
+}
+
+#valueInput:focus {
+    outline: none; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+}
+
+button {
+    background-color: #007bff; 
+    color: #ffffff; 
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3; 
+}
+
+.containerShowWhatIsSelling{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 103%;
+    align-items: flex-start;
+    position: relative;
+    top: -80px;
+    color: white;
+}
+
+#assetQuantity{
+    margin-top: -10px;
+}
+#insertValueOperation:disabled{
+    cursor: not-allowed;
+}
+
+#messageQuantityOutOfRange{
+    color:#FF4848;
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
+.wait {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 96vh;
+}

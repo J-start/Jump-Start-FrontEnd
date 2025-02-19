@@ -9,9 +9,38 @@ class Share extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/share/share-style.css")
         this.createStyles("app/components/share/share-style-responsive.css")
-       
 
-        this.buildComponent()
+
+        this.buildComponent().then(() => {
+            this.shadow.querySelector(".wait").remove()
+            this.shadow.querySelectorAll(".value1").forEach((element) => {
+
+
+                element.addEventListener("click", () => {
+                    this.managerDisplay(
+                        "Valor da ação na aberura do mercado",
+                        "Valor da ação no momento da abertura do mercado, considerando a última atualização."
+                    );
+                });
+            });
+
+            this.shadow.querySelectorAll(".value2").forEach((element) => {
+                element.addEventListener("click", () => {
+                    this.managerDisplay(
+                        "Valor da ação no último fechamento do mercado",
+                        "Valor da ação considerando o último fechamento do mercado, considerando a última atualização."
+                    );
+                });
+            });
+
+            this.shadow.querySelectorAll("#close").forEach((element) => {
+                element.addEventListener("click", () => {
+                    this.managerDisplay("", "");
+                });
+            });
+        })
+
+
 
     }
 
@@ -19,8 +48,9 @@ class Share extends HTMLElement {
 
         const template =
             `
+        
         <div class="WrapAllElements">
-
+            <div class="wait"></div>
         </div>
 
         `
@@ -32,31 +62,57 @@ class Share extends HTMLElement {
 
     }
 
+    async makeRequestAPI(url) {
+        return fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    alert("Erro na requisição");
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+    }
+
     async makeRequest() {
-        const url = `http://localhost:8080/datas/shares`
-         return fetch(url)
-             .then(response => {
-                 if (!response.ok) {
-                     alert("Erro na requisição");
-                 }
-                 return response.json();
-             })
-             .catch(error => {
-                 console.error('Erro na requisição:', error);
-             });
-     }
+        const url = `${getUrl()}/datas/shares`
+        return this.makeRequestAPI(url)
+    }
+
+    async fetchCrypto() {
+        return this.makeRequestAPI(`${getUrl()}/details/asset/?type=SHARE`)
+    }
 
     async buildComponent() {
-
+        this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
+        let datas = []
+        const MILISECONDSUPDATE = 36000000
+        if (!localStorage.getItem("share") || localStorage.getItem("share") === "undefined" || (new Date() - new Date(localStorage.getItem("shareDate"))) > MILISECONDSUPDATE) {
+            datas = await this.makeRequest()
+            localStorage.setItem("share", JSON.stringify(datas))
+            localStorage.setItem("shareDate", new Date())
+        } else {
+            datas = JSON.parse(localStorage.getItem("share"))
+        }
         const wrapAllElements = this.shadow.querySelector(".WrapAllElements");
 
-        const datas = await this.makeRequest()
+        let detailsShare = await this.fetchCrypto()
 
-        datas.forEach(element => {
+        this.sortArray(datas, "NameShare")
+        this.sortArray(detailsShare, "acronym")
 
-            wrapAllElements.appendChild(BuildAsset("SHARE", element.NameShare, element.OpenShare, element.CloseShare,element.CloseShare));
+        datas = this.insertUrlImageIntoCoinObject(datas, detailsShare)
+        this.shadow.querySelector(".WrapAllElements").style.display = "none"
 
-        })
+        for (let i = 0; i < datas.length; i++) {
+            wrapAllElements.appendChild(BuildAsset2("SHARE", datas[i].NameShare, datas[i].OpenShare, datas[i].CloseShare, datas[i].CloseShare, datas[i].imageUrl));
+
+        }
+
+        this.shadow.querySelector(".WrapAllElements").style.display = ""
+
+
     }
 
 
@@ -68,11 +124,43 @@ class Share extends HTMLElement {
         })
 
     }
+
+    sortArray(array, comparation) {
+        array.sort((a, b) => {
+            if (a[comparation] < b[comparation]) {
+                return -1;
+            }
+            if (a[comparation] > b[comparation]) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+    managerDisplay(title, message) {
+        this.shadow.querySelector('#title').innerHTML = title;
+        this.shadow.querySelector('#message').innerHTML = message;
+        this.shadow.querySelector('.containerMessageAbout').style.display = this.toggle ? 'none' : 'block';
+        this.toggle = !this.toggle;
+
+    }
     createLink(linkStyle) {
         const link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
         link.setAttribute("href", linkStyle);
         return link
+    }
+    insertUrlImageIntoCoinObject(share, imageObject) {
+
+        const urls = new Map();
+        for (let i = 0; i < imageObject.length; i++) {
+            urls.set(imageObject[i].acronym, imageObject[i].urlImage)
+        }
+        for (let j = 0; j < share.length; j++) {
+            if (urls.get(share[j].NameShare) != undefined) {
+                share[j].imageUrl = urls.get(share[j].NameShare)
+            }
+        }
+        return share
     }
 }
 

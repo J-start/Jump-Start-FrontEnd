@@ -1,0 +1,108 @@
+.buyConfirmation-component {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    background-color: #1C2029;
+    margin-left: 280px;
+    height: 99vh;
+}
+
+
+#containerTitle h1 {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 15%;
+}
+
+#containerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10%;
+    margin-top: 7%;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    padding: 10px 0;
+    border-bottom: 1px solid #555555;
+}
+
+.infoLabel {
+    font-size: 14px;
+    color: #cccccc;
+    text-align: left;
+    flex: 1;
+}
+
+.infoValue {
+    font-size: 14px;
+    color: #ffffff;
+    text-align: right;
+    flex: 1;
+}
+
+#advanceButton,
+#backButton {
+    width: 150px;
+    height: 46px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#advanceButton:hover,
+#backButton:hover {
+    background-color: #0056b3;
+}
+
+#countDown {
+    color: white;
+    position: relative;
+    top: -94%;
+
+}
+
+.containerSwitchScreensError {
+    display: none;
+}
+
+#spinnerButton {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #1465FF;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 2s linear infinite;
+    margin: auto;
+
+}
+
+#advanceButton{
+    margin-bottom: -10px;
+}
+.wrapButton {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-direction: column;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

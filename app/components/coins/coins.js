@@ -1,7 +1,7 @@
 class Coin extends HTMLElement {
 
     shadow = this.attachShadow({ mode: "open" });
-    coinsToFetch = "ARS-BRL,AUD-BRL,BOB-BRL,CAD-BRL,CHF-BRL,CLP-BRL,CNY-BRL,DKK-BRL,EUR-BRL,HKD-BRL,INR-BRL,JPY-BRL,MXN-BRL,NOK-BRL,PYG-BRL,RUB-BRL,SEK-BRL,TWD-BRL,USD-BRL,UYU-BRL"
+    coinsToFetch = ""
     constructor() {
         super()
 
@@ -11,19 +11,46 @@ class Coin extends HTMLElement {
 
         // setInterval(async () => {
         //     const divToUpdate = this.shadow.querySelector(".divToUpdateValues");
-    
-            
+
+
         //     divToUpdate.innerHTML = ""; 
-    
-            
+
+
         //    
         // }, 10000);
+
         const divToUpdate = this.shadow.querySelector(".divToUpdateValues");
         this.buildComponent().then(component => {
+            this.shadow.querySelector(".wait").remove()
             divToUpdate.appendChild(component);
+
+            this.shadow.querySelectorAll(".value1").forEach((element) => {
+                element.addEventListener("click", () => {
+                    this.managerDisplay(
+                        "Valor atual de câmbio para compra da moeda",
+                        "Dependendo do tipo de operação o valor pode variar, em algumas moedas essa variação é maior, em outras não"
+                    );
+                });
+            });
+
+            this.shadow.querySelectorAll(".value2").forEach((element) => {
+                element.addEventListener("click", () => {
+                    this.managerDisplay(
+                        "Valor atual de câmbio para venda da moeda",
+                        "Dependendo do tipo de operação o valor pode variar, em algumas moedas essa variação é maior, em outras não"
+                    );
+                });
+            });
+
+            this.shadow.querySelectorAll("#close").forEach((element) => {
+                element.addEventListener("click", () => {
+                    this.managerDisplay("", "");
+                });
+            });
+
         });
-          
-    
+
+
     }
 
     createHTML() {
@@ -31,7 +58,7 @@ class Coin extends HTMLElement {
         const template =
             `
             <div class="divToUpdateValues">
-            
+            <div class="wait"></div>
             </div>
 
 
@@ -58,9 +85,11 @@ class Coin extends HTMLElement {
         return link
     }
 
-    async makeRequest() {
-       const url = `https://economia.awesomeapi.com.br/json/last/${this.coinsToFetch}`
-       console.log(url)
+    async fetchListCoins() {
+        return this.makeRequestAPI(`${getUrl()}/asset/request/?type=COIN`)
+    }
+
+    async makeRequestAPI(url) {
         return fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -73,23 +102,55 @@ class Coin extends HTMLElement {
             });
     }
 
-    async buildComponent() {
-        const datas = await this.makeRequest()
-        
-        const positionObjects = this.manipulationStringCoins()
+    async makeRequest() {
+        let listCoins = await this.fetchListCoins()
+        this.coinsToFetch = listCoins
 
+        const url = `https://economia.awesomeapi.com.br/json/last/${listCoins}`
+
+        return await this.makeRequestAPI(url)
+
+    }
+
+    async fetchCrypto() {
+        return await this.makeRequestAPI(`${getUrl()}/details/asset/?type=COIN`)
+    }
+
+
+    async buildComponent() {
+        this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         const wrapAllElements = document.createElement("div");
         wrapAllElements.classList.add("WrapAllElements");
 
-        const objects = this.convertObjectToArray(datas, positionObjects)
+        let datas = []
+        const MILISECONDSUPDATE = 36000000
+        if (!localStorage.getItem("coins") || !localStorage.getItem("lisCoins") || localStorage.getItem("coins") === "undefined" || (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
+            datas = await this.makeRequest()
+            localStorage.setItem("coins", JSON.stringify(datas))
+            localStorage.setItem("coinsDate", new Date())
+            localStorage.setItem("lisCoins", this.coinsToFetch)
+        } else {
+            datas = JSON.parse(localStorage.getItem("coins"))
+            this.coinsToFetch = localStorage.getItem("lisCoins")
+        }
 
-        this.sortArray(objects)
+        const positionObjects = this.manipulationStringCoins()
 
-        objects.forEach(e => {
+        let objects = this.convertObjectToArray(datas, positionObjects)
+        let detailsCoin = await this.fetchCrypto()
+        this.sortArray(objects, "code")
+        this.sortArray(detailsCoin, "acronym")
 
-            wrapAllElements.appendChild(BuildAsset("COIN", String(e.name).replace("/Real Brasileiro", ""), Number(e.bid).toFixed(3), Number(e.ask).toFixed(3),`${String(e.code)}`+"-BRL",parseFloat(e.bid).toFixed(3)));
-       
-        })
+        objects = this.insertUrlImageIntoCoinObject(objects, detailsCoin)
+
+        this.shadow.querySelector(".divToUpdateValues").style.display = "none"
+
+        for (let i = 0; i < objects.length; i++) {
+            wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3), objects[i].code, objects[i].imageUrl));
+        }
+
+        this.shadow.querySelector(".divToUpdateValues").style.display = ""
+
         return wrapAllElements
     }
 
@@ -100,24 +161,25 @@ class Coin extends HTMLElement {
             objects.push(datas[positionsObjects[i]])
         }
 
+
         return objects
     }
 
-    sortArray(datas) {
+    sortArray(datas, comparation) {
         datas.sort((a, b) => {
-            if (a.name < b.name) {
+            if (String(a.name).toLocaleUpperCase() < String(b.name).toLocaleUpperCase()) {
                 return -1;
             }
-            if (a.name > b.name) {
+            if (String(a.name).toLocaleUpperCase() > String(b.name).toLocaleUpperCase()) {
                 return 1;
             }
             return 0;
         });
     }
 
-    manipulationStringCoins(){
-        let positionObjects = this.coinsToFetch.split(",")
+    manipulationStringCoins() {
 
+        let positionObjects = this.coinsToFetch.split(",")
         positionObjects = positionObjects.map((e, i) => {
 
             return e.replace("-", "")
@@ -127,6 +189,26 @@ class Coin extends HTMLElement {
         return positionObjects
     }
 
+    managerDisplay(title, message) {
+        this.shadow.querySelector('#title').innerHTML = title;
+        this.shadow.querySelector('#message').innerHTML = message;
+        this.shadow.querySelector('.containerMessageAbout').style.display = this.toggle ? 'none' : 'block';
+        this.toggle = !this.toggle;
+
+    }
+    insertUrlImageIntoCoinObject(coin, imageObject) {
+
+        const urls = new Map();
+        for (let i = 0; i < imageObject.length; i++) {
+            urls.set(imageObject[i].acronym, imageObject[i].urlImage)
+        }
+        for (let j = 0; j < coin.length; j++) {
+            if (urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`) != undefined) {
+                coin[j].imageUrl = urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`)
+            }
+        }
+        return coin
+    }
 }
 
 

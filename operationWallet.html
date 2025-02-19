@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="app/assets/images/logo.PNG"
+      type="image/x-icon"
+    />
+    <script src="app/utils/urlBackEnd.js"></script>
+    <title>Operação em Carteira</title>
+
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        font-family: "Roboto", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <menu-component top-sidebar="3"></menu-component>
+    <div id="containerPages"></div>
+
+    <script>
+      const typeOperation = localStorage.getItem("Operação");
+      if (typeOperation == "Saque") {
+        document.title = "Página de saque";
+        const withdraw = document.createElement("withdraw-component");
+        document.getElementById("containerPages").appendChild(withdraw);
+      } else if (typeOperation == "Depósito") {
+        document.title = "Página de depósito";
+        const deposit = document.createElement("deposit-component");
+        document.getElementById("containerPages").appendChild(deposit);
+      }
+    </script>
+
+    <script src="app/components/withdraw/withdrawProcedure/WithDrawProcedure.js"></script>
+    <script src="app/components/withdraw/withdrawConfirmation/WithdrawConfirmation.js"></script>
+    <script src="app/components/withdraw/withdrawConclusion/WithdrawConclusion.js"></script>
+    <script src="app/components/withdraw/withdrawError/WithdrawError.js"></script>
+
+    <script src="app/components/deposit/depositProcedure/DepositProcedure.js"></script>
+    <script src="app/components/deposit/depositConfirmation/DepositConfirmation.js"></script>
+    <script src="app/components/deposit/depositConclusion/DepositConclusion.js"></script>
+    <script src="app/components/deposit/depositError/DepositError.js"></script>
+    <script src="app/components/spinner/spinner.js"></script>
+  </body>
+</html>
+
