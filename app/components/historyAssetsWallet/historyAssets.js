@@ -26,10 +26,13 @@ class HistoryAssets extends HTMLElement {
     const template = `
        <div class="containerHistory">
        
-         <div class="wait"></div>
+         
+          
         <p id="close">X</p>
+        <h1 id="titleHistoryAssets">Histórico de compra e venda</h1>
+        <div class="wait"></div>
         <div class="wrapHistory">
-         <h1>Histórico de compra e venda</h1>
+        
         </div>
        </div>
         `;
@@ -131,19 +134,21 @@ class HistoryAssets extends HTMLElement {
     this.isFetching = true;
 
     let datas = await this.makeRequest();
-    if (datas == null) {
-      this.shadow.querySelector(".wait").innerHTML = ""
+    if (datas == null && this.offset == 0) {
+      this.shadow.querySelector(".wait").remove()
       this.isFetching = false;
+      this.shadow.querySelector("#titleHistoryAssets").innerHTML = "Nenhuma operação realizada"
+      this.shadow.querySelector("#titleHistoryAssets").style.display = "flex"
       return;
     }
-    console.log(datas);
+    this.shadow.querySelector("#titleHistoryAssets").style.display = "flex"
     datas = datas.map((data) => {
-      data.OperationDate = this.conversationDate(data.OperationDate);
+      data.OperationDate = this.conversionDate(data.OperationDate);
       data.AssetValue = Number(data.AssetValue * data.AssetQuantity).toFixed(2);
 
-      data.OperationType = this.conversationType(data.OperationType);
+      data.OperationType = this.conversionType(data.OperationType);
 
-      data.AssetType = this.conversationAssetType(data.AssetType);
+      data.AssetType = this.conversionAssetType(data.AssetType);
 
       return data;
     });
@@ -155,7 +160,7 @@ class HistoryAssets extends HTMLElement {
     this.shadow.querySelector(".wait").innerHTML = ""
   }
 
-  conversationType(type) {
+  conversionType(type) {
     if (type == "BUY") {
       return "COMPRA";
     }
@@ -163,7 +168,7 @@ class HistoryAssets extends HTMLElement {
       return "VENDA";
     }
   }
-  conversationAssetType(type) {
+  conversionAssetType(type) {
     if (type == "SHARE") {
       return "AÇÃO";
     }
@@ -173,11 +178,8 @@ class HistoryAssets extends HTMLElement {
     if (type == "CRYPTO") {
       return "CRYPTO";
     }
-    if (type == "AÇÃO") {
-      return "AÇÃO";
-    }
   }
-  conversationDate(date) {
+  conversionDate(date) {
     return date.replaceAll("-", "/");
   }
 

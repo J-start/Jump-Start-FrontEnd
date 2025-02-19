@@ -143,16 +143,27 @@ function defineFiledValuTwo(typeAsset) {
 function buildMapShareNames() {
     const shareNames = new Map();
 
-    shareNames.set('PETR4.SA', 'PETROBRAS PN (PETR4.SA)')
+    shareNames.set('PETR4.SA', 'PETROBRAS(PETR4.SA)')
     shareNames.set('BBAS3.SA', 'Banco do Brasil (BBAS3.SA)')
-    shareNames.set('ITSA4.SA', 'Itaúsa PN (ITSA4.SA)')
+    shareNames.set('ITSA4.SA', 'Itaúsa (ITSA4.SA)')
     shareNames.set('TRPL4.SA', 'CTEEP (TRPL4.SA)')
-    shareNames.set('VALE3.SA', 'Vale S.A (VALE3.SA)')
+    shareNames.set('VALE3.SA', 'Vale (VALE3.SA)')
     shareNames.set('CMIG4.SA', 'Cemig (CMIG4.SA)')
     shareNames.set('SANB11.SA', 'Banco Santander (SANB11.SA)')
-    shareNames.set('USIM5.SA', 'USIMINAS PNA (USIM5.SA)')
-    shareNames.set('ABEV3.SA', 'AMBEV S/A ON (ABEV3.SA)')
-    shareNames.set('MGLU3.SA', 'Magazine Luiza S.A. (MGLU3.SA)')
+    shareNames.set('USIM5.SA', 'USIMINAS (USIM5.SA)')
+    shareNames.set('ABEV3.SA', 'AMBEV (ABEV3.SA)')
+    shareNames.set('MGLU3.SA', 'Magazine Luiza MGLU3.SA)')
+    shareNames.set('ITUB4.SA', 'Itaú Unibanco (ITUB4.SA)')
+    shareNames.set('RENT3.SA', 'Localiza (RENT3.SA)')
+    shareNames.set('EQTL3.SA', 'Equatorial (EQTL3.SA)')
+    shareNames.set('GGBR4.SA', 'Gerdau (GGBR4.SA)')
+    shareNames.set('HAPV3.SA', 'Hapvida (HAPV3.SA)')
+    shareNames.set('BBDC3.SA', 'Bradesco (BBDC3.SA)')
+    shareNames.set('AMER3.SA', 'Americanas (AMER3.SA)')
+    shareNames.set('TAEE11.SA', 'Taesa (TAEE11.SA.SA)')
+    shareNames.set('TOTS3.SA', 'TOTVS (TOTS3.SA)')
+    shareNames.set('VIVT3.SA', 'Telefônica Brasil (VIVT3.SA)')
+    shareNames.set('EMBR3.SA', 'Embraer (EMBR3.SA)')
 
     return shareNames
 }

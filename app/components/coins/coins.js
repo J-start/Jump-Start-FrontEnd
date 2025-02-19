@@ -104,53 +104,52 @@ class Coin extends HTMLElement {
 
     async makeRequest() {
         let listCoins = await this.fetchListCoins()
-        console.log(listCoins)
         this.coinsToFetch = listCoins
-
 
         const url = `https://economia.awesomeapi.com.br/json/last/${listCoins}`
 
-        return this.makeRequestAPI(url)
+        return await this.makeRequestAPI(url)
 
     }
 
     async fetchCrypto() {
-        return this.makeRequestAPI(`${getUrl()}/details/asset/?type=COIN`)
+        return await this.makeRequestAPI(`${getUrl()}/details/asset/?type=COIN`)
     }
 
 
     async buildComponent() {
-
         this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
         const wrapAllElements = document.createElement("div");
         wrapAllElements.classList.add("WrapAllElements");
 
         let datas = []
         const MILISECONDSUPDATE = 36000000
-        if (localStorage.getItem("coins") === null || (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
+        if (!localStorage.getItem("coins") || !localStorage.getItem("lisCoins") || localStorage.getItem("coins") === "undefined" || (new Date() - new Date(localStorage.getItem("coinsDate"))) > MILISECONDSUPDATE) {
             datas = await this.makeRequest()
             localStorage.setItem("coins", JSON.stringify(datas))
             localStorage.setItem("coinsDate", new Date())
+            localStorage.setItem("lisCoins", this.coinsToFetch)
         } else {
             datas = JSON.parse(localStorage.getItem("coins"))
+            this.coinsToFetch = localStorage.getItem("lisCoins")
         }
-
-        datas = await this.makeRequest()
 
         const positionObjects = this.manipulationStringCoins()
-        const objects = this.convertObjectToArray(datas, positionObjects)
-        let detailsCrypto = await this.fetchCrypto()
 
-        this.sortArray(objects,"code")
-        this.sortArray(detailsCrypto,"acronym")
-        
+        let objects = this.convertObjectToArray(datas, positionObjects)
+        let detailsCoin = await this.fetchCrypto()
+        this.sortArray(objects, "code")
+        this.sortArray(detailsCoin, "acronym")
+
+        objects = this.insertUrlImageIntoCoinObject(objects, detailsCoin)
+
         this.shadow.querySelector(".divToUpdateValues").style.display = "none"
-        
+
         for (let i = 0; i < objects.length; i++) {
-            wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3), objects[i].code, detailsCrypto[i].urlImage));
+            wrapAllElements.appendChild(BuildAsset2("COIN", String(objects[i].name).replace("/Real Brasileiro", ""), Number(objects[i].bid).toFixed(3), Number(objects[i].ask).toFixed(3), objects[i].code, objects[i].imageUrl));
         }
 
-         this.shadow.querySelector(".divToUpdateValues").style.display = ""
+        this.shadow.querySelector(".divToUpdateValues").style.display = ""
 
         return wrapAllElements
     }
@@ -166,7 +165,7 @@ class Coin extends HTMLElement {
         return objects
     }
 
-    sortArray(datas,comparation) {
+    sortArray(datas, comparation) {
         datas.sort((a, b) => {
             if (String(a.name).toLocaleUpperCase() < String(b.name).toLocaleUpperCase()) {
                 return -1;
@@ -197,7 +196,19 @@ class Coin extends HTMLElement {
         this.toggle = !this.toggle;
 
     }
+    insertUrlImageIntoCoinObject(coin, imageObject) {
 
+        const urls = new Map();
+        for (let i = 0; i < imageObject.length; i++) {
+            urls.set(imageObject[i].acronym, imageObject[i].urlImage)
+        }
+        for (let j = 0; j < coin.length; j++) {
+            if (urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`) != undefined) {
+                coin[j].imageUrl = urls.get(`${coin[j].code}` + "-" + `${coin[j].codein}`)
+            }
+        }
+        return coin
+    }
 }
 
 
