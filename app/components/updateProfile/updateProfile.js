@@ -13,6 +13,16 @@ class UpdateProfile extends HTMLElement {
             .addEventListener("click", () => {
                 location.href = "sendingEmail.html";
             });
+
+        this.shadow.querySelector("#signup-form").addEventListener("submit", (event) => {
+            event.preventDefault()
+            const object =this.buildObjectToSend()
+            if(object === null){
+                return
+            }
+            console.log(object)
+            this.signUp(object)
+        })
     }
 
     createHTML() {
@@ -47,6 +57,42 @@ class UpdateProfile extends HTMLElement {
         return componentRoot;
     }
 
+    buildObjectToSend(){
+        const name = this.shadow.querySelector("#name").value
+        const email = this.shadow.querySelector("#email").value
+
+        if(!this.verifyFields(name, email)){
+            return null
+        }
+        return {
+            "name":name,
+            "email":email
+        }
+    }
+
+    verifyFields(name, email){
+
+        if(name === "" || email === ""){
+            return false
+        }
+        if(name.length < 3 || name.length > 30){
+            alert("O nome deve ter no mínimo 3 e no máximo 30 caracteres")
+            return false
+        }
+      
+        if(!this.isEmailValid(email)){
+            alert("Email inválido")
+            return false
+        }
+
+        return true
+    }
+
+    isEmailValid(email){
+        const regex = /\S+@\S+\.\S+/;
+        return regex.test(email)
+    }
+
     createStyles(...linksUser) {
         linksUser.forEach((e) => {
             const link = this.createLink(e);
@@ -60,6 +106,36 @@ class UpdateProfile extends HTMLElement {
         link.setAttribute("href", linkStyle);
         return link;
     }
+
+    signUp(datas) {
+        if(datas === null){
+            return
+        }
+        const url = `${getUrl()}/investor/datas/update`;
+        const TOKEN = localStorage.getItem("token")
+        fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${TOKEN}`
+            },
+            body: JSON.stringify(datas)
+        }).then(response => {
+            return response.json();
+        }).then(data => {
+            if(data.code != 200){
+                this.showMessageError(data.message)
+                return
+            }
+
+            this.shadow.querySelector("#messageError").innerHTML = ""
+            window.location.href = "profile.html"
+        
+        }).catch(error => {
+            alert("Erro ao cadastrar, tente novamente")
+        });
+    }
+
 
 }
 

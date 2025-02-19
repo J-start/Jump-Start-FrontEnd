@@ -12,8 +12,14 @@ class UserProfile extends HTMLElement {
         this.shadow
             .querySelector("#updateData")
             .addEventListener("click", () => {
-                location.href = "sendingEmail.html";
+                location.href = "updateProfile.html";
             });
+
+        this.shadow
+        .querySelector(".logout")
+        .addEventListener("click", () => {
+            this.logOut();
+        });
     }
 
     createHTML() {
@@ -92,6 +98,10 @@ class UserProfile extends HTMLElement {
         this.shadow.querySelector(".containerOtherScreens").appendChild(deposit);
       }
     
+    logOut(){
+        localStorage.removeItem("token")
+        window.location.href = "signIn.html"
+    }
 }
 
 customElements.define("user-profile", UserProfile);
