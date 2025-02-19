@@ -2,25 +2,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class BuyAsset_test:
+class SellAsset:
 
     def __init__(self, driver):
         self.driver = driver
-    
 
-
-    def clickButtonBuyCoin(self):
-        buttonCoin = self.findButtonBuyCoin()
-        if buttonCoin is None:
-            return 
-
+    def clickButtonSellAsset(self):
+        buttonBuy = self.findButtonBuyCoin()
+        if buttonBuy is None:
+            return
+        
         try:
-            buttonCoin.click()    
+            buttonBuy.click()
         except Exception as e:
-            print(f"Erro ao clicar no botão de compra de moeda :", str(e))
-            return None  
-    
-    def insertQuantityToBuyCoin(self):
+            print("Erro ao clicar no botão de vender ativo. Erro: ",str(e))
+        
+    def insertQuantityToSell(self):
         inputCoin = self.findFormCoinToInsertQuantity()
         if inputCoin is None:
             return
@@ -28,68 +25,69 @@ class BuyAsset_test:
         try:
             inputCoin.send_keys(10)
         except Exception as e:
-            print(f"Erro ao inserir quantidade formulario de compra moeda :", str(e))
+            print(f"Erro ao inserir quantidade formulario de venda moeda :", str(e))
             return None   
-
-    def clickButtonAdvanceBuyCoin(self):
+    
+    def clickButtonAdvanceToSell(self):
         buttonAdvance = self.findButtonAdvanceBuyCoin()
         if buttonAdvance is None:
             return None 
         try:
             buttonAdvance.click()
         except Exception as e:
-            print(f"Erro clicar em botão avançar mais compra moeda :", str(e))
-            return None     
-
-    def clickButtonConfirmationBuyCoin(self):  
-        buttonConfirmation = self.findButtonConfirmationBuyCoin()
-        if buttonConfirmation is None:
-            return 
+            print(f"Erro clicar em botão avançar mais vender moeda :", str(e))
+            return None  
+    
+    def clickButtonConfirmationSellAsset(self):
+        buttonSell = self.findButtonConfirmationSellCoin()
+        if buttonSell is None:
+            return
         
         try:
-            buttonConfirmation.click()
+             buttonSell.click()
         except Exception as e:
-            print(f"Erro ao cliccar em botão de confirmação de compra. :", str(e))
-            return None
+            print(f"Erro clicar em botão confirmar venda moeda :", str(e))
+            return None             
 
-    def findButtonConfirmationBuyCoin(self):
-        buyDOM = self.getDOMContaingComponent("buyform-component")
-        if buyDOM is None:
+    def findButtonConfirmationSellCoin(self):
+        sellDOM = self.getDOMContaingComponent("selling-component")
+        if sellDOM is None:
             return None
         
-        buyConfirmationDOM = self.findShadowBasedOn("buyconfirmation-component",buyDOM)
-        if buyConfirmationDOM is None:
+        sellConfirmationDOM = self.findShadowBasedOn("sellingpro-component",sellDOM)
+        if sellConfirmationDOM is None:
             return None
     
         try:
-            buttonConfirmation = buyConfirmationDOM.find_element(By.CSS_SELECTOR, ".wrapButton button:nth-of-type(2)")
+            buttonConfirmation = sellConfirmationDOM.find_element(By.CSS_SELECTOR, ".buttonSell #sellAsset")
             return buttonConfirmation
         except Exception as e:
             print(f"Erro ao encontrar botão de confirmação de compra. :", str(e))
             return None
-    
+        
     def findButtonAdvanceBuyCoin(self):
-        buyFormDOM = self.getDOMContaingComponent("buyform-component")
+        buyFormDOM = self.getDOMContaingComponent("selling-component")
         if buyFormDOM is None:
             return None 
 
         try:
-            buttonAdvance = buyFormDOM.find_element(By.CSS_SELECTOR, "#advanceButton")
+            buttonAdvance = buyFormDOM.find_element(By.CSS_SELECTOR, "#insertValueOperation")
             return buttonAdvance
         except Exception as e:
             print(f"Erro ao encontrar botão de avançar compra de moeda :", str(e))
             return None
-         
+
+    
     def findFormCoinToInsertQuantity(self):
-        buyFormDOM = self.getDOMContaingComponent("buyform-component")
+        buyFormDOM = self.getDOMContaingComponent("selling-component")
         if buyFormDOM is None:
             return None    
         try:    
-            inputCoin = buyFormDOM.find_element(By.CSS_SELECTOR, "#containerForm input")
+            inputCoin = buyFormDOM.find_element(By.CSS_SELECTOR, 'form #valueInput')
             return inputCoin
         except Exception as e:
             print(f"Erro ao encontrar formulario para inserir quantiddae moeda :", str(e))
-            return None   
+            return None  
 
     def findButtonBuyCoin(self):
         assetDetailsDOM = self.getDOMContaingComponent("assetdetails-component")
@@ -97,12 +95,12 @@ class BuyAsset_test:
             return
     
         try:
-            buttonBuy = assetDetailsDOM.find_element(By.CSS_SELECTOR, ".containerButtons button:nth-of-type(2)")
+            buttonBuy = assetDetailsDOM.find_element(By.CSS_SELECTOR, ".containerButtons button:nth-of-type(1)")
             return buttonBuy
         except Exception as e:
             print(f"Erro ao obter container do botão de comprar moeda. :", str(e))
             return None
-        
+
     def getDOMContaingComponent(self,component):
         try:
             findComponent = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, component)))

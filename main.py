@@ -6,42 +6,18 @@ from colorama import Fore, Style
 
 from test.classes.buyAsset import BuyAsset_test
 from test.classes.checkBuyAsset import CheckBuyAsset
+from test.classes.common import Common
+from test.classes.testOperations import TestOperation
 
-driver = webdriver.Chrome() 
+
 listTests = []
-listNameTests = ["Teste de compra","Teste de venda"]
-driver.get("C:/Users/User/Documents/jump-start-front/index.html")
+listNameTests = ["Teste compra de ativo","Teste venda de ativo"]
 
-def BuyAsset():
-    buyAssetObj = BuyAsset_test(driver)
-    time.sleep(2) 
-    buyAssetObj.clickButtonAlertIntialPage()
-    time.sleep(2) 
-    buyAssetObj.loginUserDefault()
-    time.sleep(2) 
-    buyAssetObj.clickButtonCoins()
-    time.sleep(2) 
-    buyAssetObj.clickButtonSeeMoreAboutCoin()
-    time.sleep(2) 
-    buyAssetObj.clickButtonBuyCoin()
-    time.sleep(2) 
-    buyAssetObj.insertQuantityToBuyCoin()
-    time.sleep(2) 
-    buyAssetObj.clickButtonAdvanceBuyCoin()
-    time.sleep(2) 
-    buyAssetObj.clickButtonConfirmationBuyCoin()
+tests = TestOperation()
+tests.testBuyAsset()
+tests.testSellAsset()
 
-def checkStatusAfterBuy():
-    checkAssetObj = CheckBuyAsset(driver)
-    listTests.append(checkAssetObj.verifyBuyAssetResponse())
-
-time.sleep(1) 
-BuyAsset()
-time.sleep(2) 
-
-checkStatusAfterBuy()
-
-time.sleep(3) 
+listTests = tests.obtainResultTests()
 
 print(Fore.BLUE+f"-------------- RESUMO DOS TESTES -------------- \n"+Style.RESET_ALL)
 

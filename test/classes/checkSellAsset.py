@@ -2,40 +2,40 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class CheckBuyAsset:
+class CheckSellAsset:
 
     def __init__(self, driver):
         self.driver = driver
 
 
-    def verifyBuyAssetResponse(self):
-        response = self.findReponseBuyOperation()
+    def verifySellAssetResponse(self):
+        response = self.findReponseSellOperation()
         if response is None:
-            print("Teste Compra de ativo falhou")
+            print("Teste venda de ativo falhou")
             return False
-        if str(response) == "Compra realizada com sucesso!":
-            print("Teste Compra de ativo realizado com sucesso")
+        if str(response) == "Venda realizada com sucesso!":
+            print("Teste Venda de ativo realizado com sucesso")
             return True
            
 
-    def findReponseBuyOperation(self):
-        buyDOM = self.getDOMContaingComponent("buyform-component")
+    def findReponseSellOperation(self):
+        buyDOM = self.getDOMContaingComponent("selling-component")
         if buyDOM is None:
             return None
         
-        buyConfirmationDOM = self.findShadowBasedOn("buyconfirmation-component",buyDOM)
-        if buyConfirmationDOM is None:
+        sellConfirmationDOM = self.findShadowBasedOn("sellingpro-component",buyDOM)
+        if sellConfirmationDOM is None:
             return None
 
-        conclusionDOM = self.findShadowBasedOn("sellingconc-component",buyConfirmationDOM)
-        if buyConfirmationDOM is None:
+        conclusionDOM = self.findShadowBasedOn("sellingconc-component",sellConfirmationDOM)
+        if sellConfirmationDOM is None:
             return None
         
         try:
             status = conclusionDOM.find_element(By.CSS_SELECTOR, ".principalBlock h1")
             return status.text
         except Exception as e:
-            print(f"Erro ao obter o status da operação de compra:", str(e))
+            print(f"Erro ao obter o status da operação de venda:", str(e))
             return None
 
 
