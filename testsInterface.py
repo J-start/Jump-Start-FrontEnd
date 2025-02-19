@@ -6,7 +6,7 @@ import time
 driver = webdriver.Chrome()  # Se necessário, passe o caminho do chromedriver
 
 # Abre a página HTML local
-driver.get("https://jumpstart.dev.br/")
+driver.get("C:/Users/User/Documents/jump-start-front/index.html")
 
 # Aguarda um pouco para garantir que a página carregou
 time.sleep(2)
