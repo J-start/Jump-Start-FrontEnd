@@ -1,0 +1,22 @@
+/* profile-style-responsive.css */
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+    .profile-card {
+        width: 70%;
+    }
+
+    .buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .profile-body {
+        margin-left: 0px;
+        width: 70%;
+    }
+
+    .profile-container {
+        width: 80%;
+    }
+}
+
