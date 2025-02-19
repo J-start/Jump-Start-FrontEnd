@@ -98,7 +98,7 @@ class SideBar extends HTMLElement {
             </li>
 
             <li>
-                <a href="#"> 
+                <a href="profile.html"> 
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
                         <div class="wrapImageMenu" id="imageProfile">
