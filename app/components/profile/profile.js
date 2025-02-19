@@ -76,9 +76,14 @@ class UserProfile extends HTMLElement {
                 this.handleErrorApi(data.message)
                 return
             }
-            this.shadow.querySelector("p").innerHTML = `${this.formatName(data.name)}`;
-            this.shadow.querySelector("p2").innerHTML = `${data.email}`;
-            localStorage.setItem("balance", data.balance);
+            this.shadow.querySelector("p").innerHTML = `Nome: ${data.name}`;
+            this.shadow.querySelector("p2").innerHTML = `Email: ${data.email}`;
+            const datasUser = {
+                "name":data.name,
+                "email":data.email
+            }
+
+            localStorage.setItem("datasProfile", JSON.stringify(datasUser));
 
         }).catch(error => {
 
@@ -86,11 +91,6 @@ class UserProfile extends HTMLElement {
         });
     }
     
-
-    formatName(string) {
-        let firstName = String(string).split(" ")[0]
-        return String(firstName).charAt(0).toUpperCase() + String(firstName).toLowerCase().slice(1);
-    }
 
     insertSendingEmailPage() {
         this.shadow.querySelector(".profile-container").remove();

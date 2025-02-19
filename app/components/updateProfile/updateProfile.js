@@ -8,6 +8,7 @@ class UpdateProfile extends HTMLElement {
         this.createStyles(
             "app/components/updateProfile/updateProfile-style-responsive.css"
         );
+        this.insertNameAndEmailPlaceholder()
         this.shadow
             .querySelector(".updatePasswordButton")
             .addEventListener("click", () => {
@@ -132,8 +133,21 @@ class UpdateProfile extends HTMLElement {
             window.location.href = "profile.html"
         
         }).catch(error => {
-            alert("Erro ao cadastrar, tente novamente")
+            
         });
+    }
+
+    insertNameAndEmailPlaceholder(){
+        if(!localStorage.getItem("datasProfile")){
+            alert("Ocorreu um erro ao buscar os dados do perfil, realize o login novamente")
+            localStorage.removeItem("token")
+            window.location.href = "signIn.html"
+            return
+        }
+        const dataProfile =JSON.parse(localStorage.getItem("datasProfile"))
+
+        this.shadow.querySelector("#name").value = dataProfile['name']
+        this.shadow.querySelector("#email").value = dataProfile['email']
     }
 
 

@@ -11,12 +11,15 @@
     }
 
     .profile-body {
-        margin-left: 0px;
         width: 70%;
     }
 
-    .profile-container {
-        width: 80%;
-    }
 }
 
+@media screen and (min-width: 1024px) {
+
+    .home-component{
+        width: calc(100% - 280px);
+        margin-left: 280px;
+    }
+}

@@ -2,9 +2,10 @@
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
-    margin-left: 20%;
+    margin-left: auto; /* Ajuste aqui */
+    margin-right: auto; /* Centraliza o conteúdo */
     align-items: center;
-    width: 100%;
+    width: 80%; /* Ajuste aqui */
 }
 
 .profile-container {
@@ -16,11 +17,12 @@
     padding: 20px;
     border-radius: 10px;
     width: 100%;
-    
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
 }
 
 .profile-card {
-    width: 50%;
+    width: 100%; /* Ajuste aqui */
+    max-width: 600px; /* Defina um valor máximo */
     padding: 40px;
     border: 1px solid white; 
     border-radius: 10px;
@@ -35,7 +37,6 @@
 .buttons {
     display: flex;
     gap: 10px;
-    padding-top: 20%;
 }
 
 button {
@@ -44,7 +45,7 @@ button {
     cursor: pointer;
     border-radius: 5px;
     font-family: "Roboto", sans-serif;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .logout {
@@ -58,6 +59,7 @@ button {
 }
 
 .header {
-    align-self: flex-start;
-    margin-left: 33%;
+    align-self: center; /* Centraliza o header */
+    text-align: center; /* Centraliza o texto */
+    width: 100%; /* Ocupa toda a largura */
 }
