@@ -42,8 +42,9 @@ class UpdateProfile extends HTMLElement {
                     <br>
 
                     <div class="buttons">
-                        <button class="updatePasswordButton">Mudar Senha</button>
-                        <button class="submitButton" type="submit">Cadastrar</button>
+                        <button class="submitButton" type="submit">Atualizar Dados</button>
+                        <button class="updatePasswordButton">Atualizar Senha</button>
+                       
                     </div>
                     
                    
@@ -125,7 +126,15 @@ class UpdateProfile extends HTMLElement {
             return response.json();
         }).then(data => {
             if(data.code != 200){
+                alert(data.message)
                 this.showMessageError(data.message)
+                return
+            }
+            const dataProfile = JSON.parse(localStorage.getItem("datasProfile"))
+            if(dataProfile.email != datas.email){
+                this.shadow.querySelector("#messageError").innerHTML = ""
+                alert("O email foi alterado, por conta disso é necessário realizar o login novamente")
+                window.location.href = "signIn.html"
                 return
             }
 
