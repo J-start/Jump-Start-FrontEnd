@@ -6,10 +6,10 @@ class WithdrawConfirmation extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style.css"
+      "../app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style.css"
     );
     this.createStyles(
-      "app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style-responsive.css"
+      "../app/components/withdraw/withdrawConfirmation/withdrawConfirmation-style-responsive.css"
     );
     this.shadow.querySelector("#containerAll").style.display = "none"
     this.insertWithdrawData();
@@ -18,7 +18,7 @@ class WithdrawConfirmation extends HTMLElement {
     this.shadow.querySelector("#containerAll").style.display = ""
 
     this.shadow.querySelector(".back").addEventListener("click", () => {
-      window.location.href = "wallet.html";
+      window.location.href = "../wallet.html";
     });
     this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
       this.makeRequest();
@@ -88,7 +88,7 @@ class WithdrawConfirmation extends HTMLElement {
 
   makeRequest() {
     if (localStorage.getItem("token") === null) {
-      window.location.href = "signIn.html"
+      window.location.href = "../signIn.html"
       return
     }
     this.shadow.querySelector("#sellAsset").innerHTML = "Sacando...."
@@ -174,7 +174,7 @@ class WithdrawConfirmation extends HTMLElement {
       if (count === 0) {
         clearInterval(interval);
         this.clearLocalStorage();
-        window.location.href = "wallet.html";
+        window.location.href = "../wallet.html";
       }
     }, 1000);
   }
@@ -187,7 +187,7 @@ class WithdrawConfirmation extends HTMLElement {
       countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`;
       if (count === 0) {
         clearInterval(interval);
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
       }
     }, 1000);
   }

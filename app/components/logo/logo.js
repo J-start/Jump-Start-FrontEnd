@@ -6,8 +6,8 @@ class Logo extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/logo/logo-style.css")
-        this.createStyles("app/components/logo/logo-style-responsive.css")
+        this.createStyles("../app/components/logo/logo-style.css")
+        this.createStyles("../app/components/logo/logo-style-responsive.css")
     }
 
     createHTML() {
@@ -16,7 +16,7 @@ class Logo extends HTMLElement {
             `
    <div class="containerAllElements">
         <div class="containerLogo">
-            <img src="app/assets/images/logo.PNG" alt="logo">
+            <img src="../app/assets/images/logo.PNG" alt="logo">
         </div>
 
         <div class="containerTitle">

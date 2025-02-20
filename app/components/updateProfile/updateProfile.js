@@ -4,15 +4,15 @@ class UpdateProfile extends HTMLElement {
         super();
 
         this.shadow.appendChild(this.createHTML());
-        this.createStyles("app/components/updateProfile/updateProfile-style.css");
+        this.createStyles("../app/components/updateProfile/updateProfile-style.css");
         this.createStyles(
-            "app/components/updateProfile/updateProfile-style-responsive.css"
+            "../app/components/updateProfile/updateProfile-style-responsive.css"
         );
         this.insertNameAndEmailPlaceholder()
         this.shadow
             .querySelector(".updatePasswordButton")
             .addEventListener("click", () => {
-                location.href = "sendingEmail.html";
+                location.href = "../sendingEmail.html";
             });
 
         this.shadow.querySelector("#signup-form").addEventListener("submit", (event) => {
@@ -134,12 +134,12 @@ class UpdateProfile extends HTMLElement {
             if(dataProfile.email != datas.email){
                 this.shadow.querySelector("#messageError").innerHTML = ""
                 alert("O email foi alterado, por conta disso é necessário realizar o login novamente")
-                window.location.href = "signIn.html"
+                window.location.href = "../signIn.html"
                 return
             }
 
             this.shadow.querySelector("#messageError").innerHTML = ""
-            window.location.href = "profile.html"
+            window.location.href = "../profile.html"
         
         }).catch(error => {
             
@@ -150,7 +150,7 @@ class UpdateProfile extends HTMLElement {
         if(!localStorage.getItem("datasProfile")){
             alert("Ocorreu um erro ao buscar os dados do perfil, realize o login novamente")
             localStorage.removeItem("token")
-            window.location.href = "signIn.html"
+            window.location.href = "../signIn.html"
             return
         }
         const dataProfile =JSON.parse(localStorage.getItem("datasProfile"))

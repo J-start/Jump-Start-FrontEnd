@@ -7,8 +7,8 @@ class News extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/news/news-style.css")
-        this.createStyles("app/components/news/news-style-responsive.css")
+        this.createStyles("../app/components/news/news-style.css")
+        this.createStyles("../app/components/news/news-style-responsive.css")
         
         this.makeRequest()
         this.addInfiniteScrollListener();

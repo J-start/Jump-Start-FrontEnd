@@ -5,10 +5,10 @@ class NewsOrAsset extends HTMLElement {
       super();
 
       this.shadow.appendChild(this.createHTML());
-      this.createStyles("app/components/newsOrAsset/newsOrAsset-style.css");
-      this.createStyles("app/components/newsOrAsset/newsOrAsset-style-responsive.css");
+      this.createStyles("../app/components/newsOrAsset/newsOrAsset-style.css");
+      this.createStyles("../app/components/newsOrAsset/newsOrAsset-style-responsive.css");
       if(localStorage.getItem("token") === null){
-          window.location.href = "signIn.html"
+          window.location.href = "../signIn.html"
       }
       this.handleResourcesClick()
       this.handleAcoesClick()

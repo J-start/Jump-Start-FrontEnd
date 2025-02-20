@@ -5,8 +5,8 @@ class SellingTemplate extends HTMLElement {
     super();
 
     this.shadow.appendChild(this.createHTML());
-    this.createStyles("app/components/sell/sellingTemplate/sellingTemplate-style.css");
-    this.createStyles("app/components/sell/sellingTemplate/sellingTemplate-style-responsive.css");
+    this.createStyles("../app/components/sell/sellingTemplate/sellingTemplate-style.css");
+    this.createStyles("../app/components/sell/sellingTemplate/sellingTemplate-style-responsive.css");
 
    
 
@@ -155,11 +155,11 @@ class SellingTemplate extends HTMLElement {
 
     if (this.contains(message, "token")) {
       alert("Token expirado, realize o login novamente")
-      window.location.href = "signIn.html";
+      window.location.href = "../signIn.html";
       return
     } else {
       alert("Aconteceu um erro, tente novamente")
-      window.location.href = "operation.html";
+      window.location.href = "../operation.html";
       return
     }
 

@@ -6,8 +6,8 @@ class SellingTemplateError extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sell/sellingTemplateError/sellingTemplateError-style.css")
-        this.createStyles("app/components/sell/sellingTemplateError/sellingTemplateError-style-responsive.css")
+        this.createStyles("../app/components/sell/sellingTemplateError/sellingTemplateError-style.css")
+        this.createStyles("../app/components/sell/sellingTemplateError/sellingTemplateError-style-responsive.css")
         this.getAttribute("messageError") ? this.shadow.querySelector("#messageError").textContent = this.getAttribute("messageError") : this.shadow.querySelector("#messageError").textContent = "Erro desconhecido"
     }
 
@@ -20,7 +20,7 @@ class SellingTemplateError extends HTMLElement {
     <h2 id="messageError"></h2>
 
     <div class="img">
-        <img width="195px" height:"195px" src="app/assets/images/error_icon.png" alt="confirmation_icon">
+        <img width="195px" height:"195px" src="../app/assets/images/error_icon.png" alt="confirmation_icon">
     </div>
 </div>
      

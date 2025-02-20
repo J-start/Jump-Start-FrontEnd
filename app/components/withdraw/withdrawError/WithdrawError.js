@@ -6,10 +6,10 @@ class WithdrawError extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/withdraw/withdrawError/withdrawError-style.css"
+      "../app/components/withdraw/withdrawError/withdrawError-style.css"
     );
     this.createStyles(
-      "app/components/withdraw/withdrawError/withdrawError-style-responsive.css"
+      "../app/components/withdraw/withdrawError/withdrawError-style-responsive.css"
     );
     this.getAttribute("messageError")
       ? (this.shadow.querySelector("#messageError").textContent =

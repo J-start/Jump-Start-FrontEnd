@@ -9,10 +9,10 @@ class HistoryAssets extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/historyAssetsWallet/historyAssets-style.css"
+      "../app/components/historyAssetsWallet/historyAssets-style.css"
     );
     this.createStyles(
-      "app/components/historyAssetsWallet/historyAssets-style-responsive.css"
+      "../app/components/historyAssetsWallet/historyAssets-style-responsive.css"
     );
     this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
     this.createHistory();

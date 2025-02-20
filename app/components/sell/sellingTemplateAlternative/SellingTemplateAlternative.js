@@ -6,8 +6,8 @@ class SellingTemplateAlternative extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sell/sellingTemplateAlternative/sellingTemplateAlternative-style.css")
-        this.createStyles("app/components/sell/sellingTemplateAlternative/sellingTemplateAlternative-style-responsive.css")
+        this.createStyles("../app/components/sell/sellingTemplateAlternative/sellingTemplateAlternative-style.css")
+        this.createStyles("../app/components/sell/sellingTemplateAlternative/sellingTemplateAlternative-style-responsive.css")
 
     }
 

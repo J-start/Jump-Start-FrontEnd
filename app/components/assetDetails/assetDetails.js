@@ -7,14 +7,14 @@ class AssetDetails extends HTMLElement {
 
         this.shadow.appendChild(this.createHTML())
 
-        this.createStyles("app/components/assetDetails/assetDetails-style.css")
-        this.createStyles("app/components/assetDetails/assetDetails-style-responsive.css")
+        this.createStyles("../app/components/assetDetails/assetDetails-style.css")
+        this.createStyles("../app/components/assetDetails/assetDetails-style-responsive.css")
 
 
         if (localStorage.getItem("assetType")) {
             this.showResponse()
         } else {
-            window.location.href = "index.html"
+            window.location.href = "../index.html"
         }
 
         document.title = localStorage.getItem("assetName")
@@ -23,12 +23,12 @@ class AssetDetails extends HTMLElement {
         this.managerTradableShare()
         this.shadow.querySelector("#buttonSell").addEventListener("click", () => {
             localStorage.setItem("typeOperation", "SELL")
-            window.location.href = "operation.html"
+            window.location.href = "../operation.html"
         })
 
         this.shadow.querySelector("#buttonBuy").addEventListener("click", () => {
             localStorage.setItem("typeOperation", "BUY")
-            window.location.href = "operation.html"
+            window.location.href = "../operation.html"
         })
 
     }
@@ -237,7 +237,7 @@ class AssetDetails extends HTMLElement {
     verifyLocalStorage() {
         setInterval(() => {
             if ((!localStorage.getItem("assetType")) || (!localStorage.getItem("assetName")) || (!localStorage.getItem("assetCode"))) {
-                window.location.href = "index.html";
+                window.location.href = "../index.html";
             }
         }, 1000);
     }

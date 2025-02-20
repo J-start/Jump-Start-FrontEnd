@@ -5,10 +5,10 @@ class PasswordChange extends HTMLElement {
     super();
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/passwordRecovery/passwordChange/passwordchange-style.css"
+      "../app/components/passwordRecovery/passwordChange/passwordchange-style.css"
     );
     this.createStyles(
-      "app/components/passwordRecovery/passwordChange/passwordchange-style-responsive.css"
+      "../app/components/passwordRecovery/passwordChange/passwordchange-style-responsive.css"
     );
     this.shadow.querySelector("#password-form").addEventListener("submit", (event) =>{
       this.handleSubmit(event)

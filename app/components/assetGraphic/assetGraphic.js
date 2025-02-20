@@ -5,8 +5,8 @@ class AssetGraphic extends HTMLElement {
         super();
 
         this.shadow.appendChild(this.createHTML());
-        this.createStyles("app/components/assetGraphic/assetGraphic-style.css");
-        this.createStyles("app/components/assetGraphic/assetGraphic-style-responsive.css");
+        this.createStyles("../app/components/assetGraphic/assetGraphic-style.css");
+        this.createStyles("../app/components/assetGraphic/assetGraphic-style-responsive.css");
 
 
     }

@@ -7,8 +7,8 @@ class SideBar extends HTMLElement {
 
         this.shadow.appendChild(this.createHTML())
 
-        this.createStyles("app/components/sideBar/sideBar-style.css")
-        this.createStyles("app/components/sideBar/sideBar-style-responsive.css")
+        this.createStyles("../app/components/sideBar/sideBar-style.css")
+        this.createStyles("../app/components/sideBar/sideBar-style-responsive.css")
         this.defineTopSideBar()
         this.activateButton()
      
@@ -55,7 +55,7 @@ class SideBar extends HTMLElement {
     <div id="sidebar" class="sidebar">
         <button id="closeMenu" class="close-btn">&times;</button>
         <div class="wrapImageLogo">
-            <img src="app/assets/images/logo.PNG" alt="logo jumpStart">
+            <img src="../app/assets/images/logo.PNG" alt="logo jumpStart">
         </div>
 
         <ul id="menu">
@@ -65,7 +65,7 @@ class SideBar extends HTMLElement {
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
                             <div class="wrapImageMenu" id="imageHome">
-                                <img src="app/assets/images/home_icon.png" alt="home">  
+                                <img src="../app/assets/images/home_icon.png" alt="home">  
                             </div>
                             <p>Home</p>
                         </div>
@@ -74,11 +74,11 @@ class SideBar extends HTMLElement {
             </li>
 
             <li>
-                <a href="wallet.html"> 
+                <a href="../wallet.html"> 
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
                         <div class="wrapImageMenu" id="imageWallet">
-                            <img src="app/assets/images/wallet_icon.png" alt="Carteira">  
+                            <img src="../app/assets/images/wallet_icon.png" alt="Carteira">  
                         </div>
                             <p>Carteira</p>
                         </div>
@@ -88,11 +88,11 @@ class SideBar extends HTMLElement {
 
 
             <li>
-                <a href="profile.html"> 
+                <a href="../profile.html"> 
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
                         <div class="wrapImageMenu" id="imageProfile">
-                            <img src="app/assets/images/profile_icon.png" alt="Perfil icone">  
+                            <img src="../app/assets/images/profile_icon.png" alt="Perfil icone">  
                         </div>
                             <p>Perfil</p>
                         </div>
@@ -174,7 +174,7 @@ class SideBar extends HTMLElement {
 
     async makeRequest() {
         if (localStorage.getItem("token") === null) {
-            window.location.href = "signIn.html"
+            window.location.href = "../signIn.html"
         }
         const TOKEN = localStorage.getItem("token")
         const url = `${getUrl()}/investor/role/`;
@@ -212,7 +212,7 @@ class SideBar extends HTMLElement {
 
         const li = document.createElement("li");
         const a = document.createElement("a");
-        a.href = "adm.html";
+        a.href = "../adm.html";
 
         const wrapItensMenu = document.createElement("div");
         wrapItensMenu.classList.add("wrapItensMenu");
@@ -225,7 +225,7 @@ class SideBar extends HTMLElement {
         wrapImageMenu.id = "imageAdmin";
 
         const img = document.createElement("img");
-        img.src = "app/assets/images/admin_icon.png";
+        img.src = "../app/assets/images/admin_icon.png";
         img.alt = "admin";
 
         const p = document.createElement("p");

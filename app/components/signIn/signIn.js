@@ -7,8 +7,8 @@ class SignIn extends HTMLElement {
         super()
         localStorage.clear()
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/signIn/signIn-style.css")
-        this.createStyles("app/components/signIn/signIn-style-responsive.css")
+        this.createStyles("../app/components/signIn/signIn-style.css")
+        this.createStyles("../app/components/signIn/signIn-style-responsive.css")
 
         this.shadow.querySelector("#signIn-form").addEventListener("submit", (event) => {
             event.preventDefault()
@@ -41,8 +41,8 @@ class SignIn extends HTMLElement {
                     <br>
                     <label for="password">Senha</label>
                    <div class="passwordContainer">
-                    <input placeholder="Escolha uma senha" maxlength="20" minlength="8" type="password" id="password" name="password" required> 
-                    <img src="app/assets/images/close_password.svg" width="25px" height:"25px" alt="eye" id="passwordImage" class="eye">
+                    <input placeholder="Digite sua senha" maxlength="20" minlength="8" type="password" id="password" name="password" required> 
+                    <img src="../app/assets/images/close_password.svg" width="25px" height:"25px" alt="eye" id="passwordImage" class="eye">
                     </div>
                     <br>
                     <a href="signUp.html">Não tenho uma conta</a>
@@ -103,7 +103,7 @@ class SignIn extends HTMLElement {
             }
             localStorage.setItem("token",data.token)
             this.shadow.querySelector("#messageError").innerHTML = ``
-            window.location.href = "index.html"
+            window.location.href = "../index.html"
         
         }).catch(error => {
             alert("Erro ao realizar login, tente novamente")
@@ -151,11 +151,11 @@ class SignIn extends HTMLElement {
         if(!this.isPasswordVisible){
             passwordElement.type = "text"
             this.isPasswordVisible = !this.isPasswordVisible
-            this.shadow.querySelector("#passwordImage").src = "app/assets/images/see_password.svg"
+            this.shadow.querySelector("#passwordImage").src = "../app/assets/images/see_password.svg"
         }else{
             passwordElement.type = "password"
             this.isPasswordVisible = !this.isPasswordVisible
-            this.shadow.querySelector("#passwordImage").src = "app/assets/images/close_password.svg"
+            this.shadow.querySelector("#passwordImage").src = "../app/assets/images/close_password.svg"
         }
         
   
