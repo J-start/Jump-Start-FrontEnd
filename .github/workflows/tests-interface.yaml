@@ -29,4 +29,4 @@ jobs:
         run: python -m http.server 8000 & 
 
       - name: Rodar testes Selenium
-        run: xvfb-run --auto-servernum python app/main.py
+        run: xvfb-run --auto-servernum python main.py
