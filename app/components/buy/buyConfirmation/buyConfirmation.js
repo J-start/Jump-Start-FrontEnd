@@ -6,8 +6,8 @@ class BuyConfirmation extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/buy/buyConfirmation/buyConfirmation-style.css")
-        this.createStyles("app/components/buy/buyConfirmation/buyConfirmation-style-responsive.css")
+        this.createStyles("../app/components/buy/buyConfirmation/buyConfirmation-style.css")
+        this.createStyles("../app/components/buy/buyConfirmation/buyConfirmation-style-responsive.css")
         
         this.shadow.querySelector("#containerAll").style.display = "none"
         this.shadow.querySelector("#advanceButton").innerHTML = "Comprar"
@@ -16,7 +16,7 @@ class BuyConfirmation extends HTMLElement {
         this.shadow.querySelector("#containerAll").style.display = ""
 
         this.shadow.querySelector("#backButton").addEventListener("click", () => {
-            window.location.href = "operation.html"
+            window.location.href = "../operation.html"
         })
         this.shadow.querySelector("#advanceButton").addEventListener("click", () => {
             this.makeRequest()
@@ -180,7 +180,7 @@ class BuyConfirmation extends HTMLElement {
             countDown.innerHTML = `Você será redirecionado para a página inicial em ${count} segundos`
             if (count === 0) {
                 clearInterval(interval)
-                window.location.href = "index.html"
+                window.location.href = "../index.html"
             }
         }, 1000)
     }
@@ -194,7 +194,7 @@ class BuyConfirmation extends HTMLElement {
             countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`
             if (count === 0) {
                 clearInterval(interval)
-                window.location.href = "index.html"
+                window.location.href = "../index.html"
             }
         }, 1000)
     }
@@ -208,7 +208,7 @@ class BuyConfirmation extends HTMLElement {
             countDown.innerHTML = `Só é possível comprar ou vender ações em dias úteis e em horarios fixos. Você será redirecionado para a página inicial em ${count} segundos`
             if (count === 0) {
                 clearInterval(interval)
-                window.location.href = "index.html"
+                window.location.href = "../index.html"
             }
         }, 1000)
     }

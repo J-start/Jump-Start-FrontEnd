@@ -4,9 +4,9 @@ class UserProfile extends HTMLElement {
         super();
 
         this.shadow.appendChild(this.createHTML());
-        this.createStyles("app/components/profile/profile-style.css");
+        this.createStyles("../app/components/profile/profile-style.css");
         this.createStyles(
-            "app/components/profile/profile-style-responsive.css"
+            "../app/components/profile/profile-style-responsive.css"
         );
         this.makeRequest();
         this.shadow
@@ -100,7 +100,7 @@ class UserProfile extends HTMLElement {
     
     logOut(){
         localStorage.removeItem("token")
-        window.location.href = "signIn.html"
+        window.location.href = "../signIn.html"
     }
 }
 

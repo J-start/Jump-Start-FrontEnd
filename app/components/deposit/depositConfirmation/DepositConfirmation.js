@@ -6,10 +6,10 @@ class DepositConfirmation extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/deposit/depositConfirmation/depositConfirmation-style.css"
+      "../app/components/deposit/depositConfirmation/depositConfirmation-style.css"
     );
     this.createStyles(
-      "app/components/deposit/depositConfirmation/depositConfirmation-style-responsive.css"
+      "../app/components/deposit/depositConfirmation/depositConfirmation-style-responsive.css"
     );
 
     this.insertDepositData();
@@ -173,7 +173,7 @@ class DepositConfirmation extends HTMLElement {
       if (count === 0) {
         clearInterval(interval);
         this.clearLocalStorage();
-        window.location.href = "wallet.html";
+        window.location.href = "../wallet.html";
       }
     }, 1000);
   }
@@ -186,7 +186,7 @@ class DepositConfirmation extends HTMLElement {
       countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`;
       if (count === 0) {
         clearInterval(interval);
-        window.location.href = "wallet.html";
+        window.location.href = "../wallet.html";
       }
     }, 1000);
   }

@@ -7,8 +7,8 @@ class Share extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/share/share-style.css")
-        this.createStyles("app/components/share/share-style-responsive.css")
+        this.createStyles("../app/components/share/share-style.css")
+        this.createStyles("../app/components/share/share-style-responsive.css")
 
 
         this.buildComponent().then(() => {

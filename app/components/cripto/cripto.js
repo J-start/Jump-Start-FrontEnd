@@ -6,8 +6,8 @@ class Cripto extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/cripto/cripto-style.css")
-        this.createStyles("app/components/cripto/cripto-style-responsive.css")
+        this.createStyles("../app/components/cripto/cripto-style.css")
+        this.createStyles("../app/components/cripto/cripto-style-responsive.css")
 
         this.buildComponent().then(() => {
             this.shadow.querySelector(".wait").remove()

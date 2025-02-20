@@ -5,9 +5,9 @@ class HeaderWallet extends HTMLElement {
     super();
 
     this.shadow.appendChild(this.createHTML());
-    this.createStyles("app/components/headerWallet/headerWallet-style.css");
+    this.createStyles("../app/components/headerWallet/headerWallet-style.css");
     this.createStyles(
-      "app/components/headerWallet/headerWallet-style-responsive.css"
+      "../app/components/headerWallet/headerWallet-style-responsive.css"
     );
     this.shadow.querySelector("#balance").innerHTML = "Carregando...";
     this.makeRequest();
@@ -95,7 +95,7 @@ class HeaderWallet extends HTMLElement {
 
   makeRequest() {
     if (localStorage.getItem("token") === null) {
-      window.location.href = "signIn.html";
+      window.location.href = "../signIn.html";
       return
     }
     const TOKEN = localStorage.getItem("token");
@@ -232,7 +232,7 @@ class HeaderWallet extends HTMLElement {
 
     if (this.contains(message, "token")) {
       alert("Token expirado, realize o login novamente")
-      window.location.href = "signIn.html";
+      window.location.href = "../signIn.html";
       return
     } else {
       alert(message)

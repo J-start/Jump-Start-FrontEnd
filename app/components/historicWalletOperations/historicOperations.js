@@ -9,10 +9,10 @@ class HistoryOperation extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/historicWalletOperations/historicOperations-style.css"
+      "../app/components/historicWalletOperations/historicOperations-style.css"
     );
     this.createStyles(
-      "app/components/historicWalletOperations/historicOperations-style-responsive.css"
+      "../app/components/historicWalletOperations/historicOperations-style-responsive.css"
     );
     this.shadow.querySelector(".wait").innerHTML = "<spinner-component></spinner-component>"
     this.createHistory();

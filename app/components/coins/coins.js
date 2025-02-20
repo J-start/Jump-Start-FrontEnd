@@ -6,8 +6,8 @@ class Coin extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/coins/coins-style.css")
-        this.createStyles("app/components/coins/coins-style-responsive.css")
+        this.createStyles("../app/components/coins/coins-style.css")
+        this.createStyles("../app/components/coins/coins-style-responsive.css")
 
         // setInterval(async () => {
         //     const divToUpdate = this.shadow.querySelector(".divToUpdateValues");

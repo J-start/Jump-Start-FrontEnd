@@ -6,8 +6,8 @@ class BuyForm extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/buy/buyForm/buyForm-style.css")
-        this.createStyles("app/components/buy/buyForm/buyForm-style-responsive.css")
+        this.createStyles("../app/components/buy/buyForm/buyForm-style.css")
+        this.createStyles("../app/components/buy/buyForm/buyForm-style-responsive.css")
         
         this.shadow.querySelector(".containerShowWhatIsBuying").style.display = "none"
         this.shadow.querySelector("#containerAll").style.display = "none"
@@ -141,7 +141,7 @@ class BuyForm extends HTMLElement {
     managerTradableShare(){
         if(localStorage.getItem("assetType") == "SHARE"){
             if(!isTadable()){
-               window.location.href = "index.html"
+               window.location.href = "../index.html"
             }
         }
     }

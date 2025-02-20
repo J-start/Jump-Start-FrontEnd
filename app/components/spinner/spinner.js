@@ -6,8 +6,8 @@ class Spinner extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/spinner/spinner-style-responsive.css")
-        this.createStyles("app/components/spinner/spinner-style.css")
+        this.createStyles("../app/components/spinner/spinner-style-responsive.css")
+        this.createStyles("../app/components/spinner/spinner-style.css")
     }
 
     createHTML() {

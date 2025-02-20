@@ -5,10 +5,10 @@ class EmailReceiver extends HTMLElement {
     super();
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/passwordRecovery/emailReceiver/emailreceiver-style.css"
+      "../app/components/passwordRecovery/emailReceiver/emailreceiver-style.css"
     );
     this.createStyles(
-      "app/components/passwordRecovery/emailReceiver/emailreceiver-style-responsive.css"
+      "../app/components/passwordRecovery/emailReceiver/emailreceiver-style-responsive.css"
     );
   }
 
@@ -42,7 +42,7 @@ class EmailReceiver extends HTMLElement {
         </div>
       </div>
       <div id="confirmation-component"></div>
-      <script src="app/components/logo/logo.js"></script>
+      <script src="../app/components/logo/logo.js"></script>
     `;
 
     const componentRoot = document.createElement("div");

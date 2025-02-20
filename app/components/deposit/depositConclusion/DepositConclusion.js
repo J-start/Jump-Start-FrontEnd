@@ -6,8 +6,8 @@ class DepositConclusion extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/deposit/depositConclusion/depositConclusion-style.css")
-        this.createStyles("app/components/deposit/depositConclusion/depositConclusion-style-responsive.css")
+        this.createStyles("../app/components/deposit/depositConclusion/depositConclusion-style.css")
+        this.createStyles("../app/components/deposit/depositConclusion/depositConclusion-style-responsive.css")
 
         /*if(localStorage.getItem("typeOperation") == "BUY"){
             this.shadow.querySelector("#title").innerText = "Compra realizada com sucesso!"

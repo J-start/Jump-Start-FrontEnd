@@ -8,8 +8,8 @@ class SignUp extends HTMLElement {
         super()
         localStorage.clear()
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/signUp/signUp-style.css")
-        this.createStyles("app/components/signUp/signUp-style-responsive.css")
+        this.createStyles("../app/components/signUp/signUp-style.css")
+        this.createStyles("../app/components/signUp/signUp-style-responsive.css")
 
         this.shadow.querySelector("#signup-form").addEventListener("submit", (event) => {
             event.preventDefault()
@@ -49,14 +49,14 @@ class SignUp extends HTMLElement {
                     <label for="password">Senha</label>
                    <div class="passwordContainer">
                     <input placeholder="Escolha uma senha" maxlength="20" minlength="8" type="password" id="password" name="password" required> 
-                    <img src="app/assets/images/close_password.svg" width="25px" height:"25px" alt="eye" id="passwordImage" class="eye">
+                    <img src="../app/assets/images/close_password.svg" width="25px" height:"25px" alt="eye" id="passwordImage" class="eye">
                     </div>
                     <br>
                     
                     <label for="confirm-password">Confirme a Senha</label>
                     <div class="passwordContainer">
                     <input placeholder="Confirme sua senha" maxlength="20" minlength="8" type="password" id="confirm-password" name="confirm-password" required>
-                    <img src="app/assets/images/close_password.svg" width="25px" height:"25px" alt="eye" id="confirmPasswordImage" class="eye">
+                    <img src="../app/assets/images/close_password.svg" width="25px" height:"25px" alt="eye" id="confirmPasswordImage" class="eye">
                     </div>
                     <br>
                     <a href="signIn.html">Já tenho uma conta</a>
@@ -114,7 +114,7 @@ class SignUp extends HTMLElement {
             }
 
             this.shadow.querySelector("#messageError").innerHTML = ""
-            window.location.href = "signIn.html"
+            window.location.href = "../signIn.html"
         
         }).catch(error => {
             alert("Erro ao cadastrar, tente novamente")
@@ -172,11 +172,11 @@ class SignUp extends HTMLElement {
         if(!this.isPasswordVisible){
             passwordElement.type = "text"
             this.isPasswordVisible = !this.isPasswordVisible
-            this.shadow.querySelector("#passwordImage").src = "app/assets/images/see_password.svg"
+            this.shadow.querySelector("#passwordImage").src = "../app/assets/images/see_password.svg"
         }else{
             passwordElement.type = "password"
             this.isPasswordVisible = !this.isPasswordVisible
-            this.shadow.querySelector("#passwordImage").src = "app/assets/images/close_password.svg"
+            this.shadow.querySelector("#passwordImage").src = "../app/assets/images/close_password.svg"
         }
     }
 
@@ -185,11 +185,11 @@ class SignUp extends HTMLElement {
         if(!this.isConfirmPasswordVisible){
             passwordElement.type = "text"
             this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible
-            this.shadow.querySelector("#confirmPasswordImage").src = "app/assets/images/see_password.svg"
+            this.shadow.querySelector("#confirmPasswordImage").src = "../app/assets/images/see_password.svg"
         }else{
             passwordElement.type = "password"
             this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible
-            this.shadow.querySelector("#confirmPasswordImage").src = "app/assets/images/close_password.svg"
+            this.shadow.querySelector("#confirmPasswordImage").src = "../app/assets/images/close_password.svg"
         }
     }
 

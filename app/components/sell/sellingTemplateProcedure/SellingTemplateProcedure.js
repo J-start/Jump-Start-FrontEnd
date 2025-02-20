@@ -6,13 +6,13 @@ class SellingTemplateProcedure extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style.css")
-        this.createStyles("app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style-responsive.css")
+        this.createStyles("../app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style.css")
+        this.createStyles("../app/components/sell/sellingTemplateProcedure/sellingTemplateProcedure-style-responsive.css")
 
         this.insertValuesAsset()
         
         this.shadow.querySelector(".back").addEventListener("click", () => {
-            window.location.href = "operation.html"
+            window.location.href = "../operation.html"
         })
         this.shadow.querySelector("#sellAsset").addEventListener("click", () => {
             this.makeRequest()
@@ -91,7 +91,7 @@ class SellingTemplateProcedure extends HTMLElement {
 
     makeRequest(){
         if(localStorage.getItem("token") === null){
-            window.location.href = "signIn.html"
+            window.location.href = "../signIn.html"
         }
         this.shadow.querySelector("#sellAsset").innerHTML = "<div id='spinnerButton'></div>"
         const TOKEN = localStorage.getItem("token")
@@ -192,7 +192,7 @@ class SellingTemplateProcedure extends HTMLElement {
                 clearInterval(interval)
                 this.clearLocalStorage()
                 this.clearLocalStorage()
-                window.location.href = "index.html"
+                window.location.href = "../index.html"
             }
         }, 1000)
     }
@@ -205,7 +205,7 @@ class SellingTemplateProcedure extends HTMLElement {
             countDown.innerHTML = `Você será redirecionado para tentar novamente em ${count} segundos`
             if (count === 0) {
                 clearInterval(interval)
-                window.location.href = "index.html"
+                window.location.href = "../index.html"
             }
         }, 1000)
     }
@@ -219,7 +219,7 @@ class SellingTemplateProcedure extends HTMLElement {
             if (count === 0) {
                 clearInterval(interval)
                 this.clearLocalStorage()
-                window.location.href = "index.html"
+                window.location.href = "../index.html"
             }
         }, 1000)
     }

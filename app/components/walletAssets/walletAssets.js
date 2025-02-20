@@ -6,7 +6,7 @@ class WalletAssets extends HTMLElement {
         super();
 
         this.shadow.appendChild(this.createHTML());
-        this.createStyles("app/components/walletAssets/walletAssets-style.css");
+        this.createStyles("../app/components/walletAssets/walletAssets-style.css");
         this.showModal()
     }
 

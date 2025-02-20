@@ -62,7 +62,7 @@ function BuildAsset2(typeAsset, nameAsset, valueField1, valueField2, codeCoin,ur
         localStorage.setItem("assetName", typeAsset === "SHARE" ? `${names.get(nameAsset)}` : `${nameAsset}`);
         localStorage.setItem("dateOperation", `${new Date().toLocaleString()}`);
         localStorage.setItem("assetValue", valueField2);
-        window.location.href = "details.html";
+        window.location.href = "../details.html";
     });
 
     const container = document.createElement('div');

@@ -6,10 +6,10 @@ class DepositError extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/deposit/depositError/depositError-style.css"
+      "../app/components/deposit/depositError/depositError-style.css"
     );
     this.createStyles(
-      "app/components/deposit/depositError/depositError-style-responsive.css"
+      "../app/components/deposit/depositError/depositError-style-responsive.css"
     );
     this.getAttribute("messageError")
       ? (this.shadow.querySelector("#messageError").textContent =
@@ -24,7 +24,7 @@ class DepositError extends HTMLElement {
     <h2 id="messageError"></h2>
 
     <div class="img">
-        <img width="195px" height:"195px" src="app/assets/images/error_icon.png" alt="confirmation_icon">
+        <img width="195px" height:"195px" src="../app/assets/images/error_icon.png" alt="confirmation_icon">
     </div>
 </div>
      

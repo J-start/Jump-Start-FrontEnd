@@ -6,8 +6,8 @@ class HeaderHome extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/header/headerHome-style.css")
-        this.createStyles("app/components/header/headerHome-style-responsive.css")
+        this.createStyles("../app/components/header/headerHome-style.css")
+        this.createStyles("../app/components/header/headerHome-style-responsive.css")
         this.makeRequest()
     }
 
@@ -79,7 +79,7 @@ class HeaderHome extends HTMLElement {
 
         if (this.contains(message, "token")) {
           alert("Token expirado, realize o login novamente")
-          window.location.href = "signIn.html";
+          window.location.href = "../signIn.html";
           return
         }
 

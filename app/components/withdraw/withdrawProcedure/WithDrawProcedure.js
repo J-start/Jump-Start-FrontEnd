@@ -6,10 +6,10 @@ class WithDrawProcedure extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/withdraw/withdrawProcedure/withdrawProcedure-style.css"
+      "../app/components/withdraw/withdrawProcedure/withdrawProcedure-style.css"
     );
     this.createStyles(
-      "app/components/withdraw/withdrawProcedure/withdraw-style-responsive.css"
+      "../app/components/withdraw/withdrawProcedure/withdraw-style-responsive.css"
     );
 
     this.shadow

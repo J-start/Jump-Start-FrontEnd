@@ -6,10 +6,10 @@ class DepositProcedure extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles(
-      "app/components/deposit/depositProcedure/depositProcedure-style.css"
+      "../app/components/deposit/depositProcedure/depositProcedure-style.css"
     );
     this.createStyles(
-      "app/components/deposit/depositProcedure/deposit-style-responsive.css"
+      "../app/components/deposit/depositProcedure/deposit-style-responsive.css"
     );
 
     this.shadow

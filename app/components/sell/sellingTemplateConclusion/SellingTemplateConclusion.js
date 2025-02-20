@@ -6,8 +6,8 @@ class SellingTemplateConclusion extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/sell/sellingTemplateConclusion/sellingTemplateConclusion-style.css")
-        this.createStyles("app/components/sell/sellingTemplateConclusion/sellingTemplateConclusion-style-responsive.css")
+        this.createStyles("../app/components/sell/sellingTemplateConclusion/sellingTemplateConclusion-style.css")
+        this.createStyles("../app/components/sell/sellingTemplateConclusion/sellingTemplateConclusion-style-responsive.css")
 
         if(localStorage.getItem("typeOperation") == "BUY"){
             this.shadow.querySelector("#title").innerText = "Compra realizada com sucesso!"

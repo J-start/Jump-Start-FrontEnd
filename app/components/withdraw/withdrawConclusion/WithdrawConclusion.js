@@ -6,8 +6,8 @@ class WithdrawConclusion extends HTMLElement {
         super()
 
         this.shadow.appendChild(this.createHTML())
-        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style.css")
-        this.createStyles("app/components/withdraw/withdrawConclusion/withdrawConclusion-style-responsive.css")
+        this.createStyles("../app/components/withdraw/withdrawConclusion/withdrawConclusion-style.css")
+        this.createStyles("../app/components/withdraw/withdrawConclusion/withdrawConclusion-style-responsive.css")
 }
 
     createHTML() {
@@ -18,7 +18,7 @@ class WithdrawConclusion extends HTMLElement {
     <h1 id="title"></h1>
 
     <div class="img">
-        <img src="app/assets/images/confirmation_icon.png" alt="confirmation_icon">
+        <img src="../app/assets/images/confirmation_icon.png" alt="confirmation_icon">
     </div>
 </div>
      
