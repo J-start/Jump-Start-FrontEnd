@@ -7,16 +7,39 @@ from test.classes.checkBuyAsset import CheckBuyAsset
 from test.classes.checkSellAsset import CheckSellAsset
 from test.classes.common import Common
 from test.classes.sellAsset import SellAsset
+from selenium.webdriver.chrome.options import Options
+import platform
 
 
 
 class TestOperation:
-    listTests = []    
-    def testBuyAsset(self):
-        
-        driver = webdriver.Chrome() 
-        driver.get("C:/Users/User/Documents/jump-start-front/index.html")
+    listTests = []  
 
+    def getWebDriverLinux(self):
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")  
+        chrome_options.add_argument("--no-sandbox") 
+        chrome_options.add_argument("--disable-dev-shm-usage") 
+
+        driver = webdriver.Chrome(options=chrome_options) 
+        return driver
+    
+    def getWebDriverWindows(self):
+        driver = webdriver.Chrome() 
+        return driver
+
+    def closeConnectionWebDriver(self,webDriver):
+        webDriver.quit()  
+
+    def testBuyAsset(self):
+        driver = ""
+        if platform.system() == "Linux":
+            driver = self.getWebDriverLinux()
+            driver.get("http://localhost:8000/index.html")
+        else:
+            driver = self.getWebDriverWindows()
+            driver.get("C:/Users/User/Documents/jump-start-front/index.html")
+        
         commomOperations = Common(driver)
         buyAssetObj = BuyAsset_test(driver)
         
@@ -40,12 +63,17 @@ class TestOperation:
         checkAssetObj = CheckBuyAsset(driver)
         time.sleep(2) 
         self.listTests.append(checkAssetObj.verifyBuyAssetResponse())  
-        driver.quit()
+
+        self.closeConnectionWebDriver(driver)
 
     def testSellAsset(self):
-        
-        driver = webdriver.Chrome() 
-        driver.get("C:/Users/User/Documents/jump-start-front/index.html")
+        driver = ""
+        if platform.system() == "Linux":
+            driver = self.getWebDriverLinux()
+            driver.get("http://localhost:8000/index.html")
+        else:
+            driver = self.getWebDriverWindows()  
+            driver.get("C:/Users/User/Documents/jump-start-front/index.html")   
         
         sellAsset = SellAsset(driver)
         
@@ -71,7 +99,8 @@ class TestOperation:
         checkAssetObj = CheckSellAsset(driver)
         time.sleep(2)
         self.listTests.append(checkAssetObj.verifySellAssetResponse()) 
-        driver.quit()
+        
+        self.closeConnectionWebDriver(driver)
 
     def obtainResultTests(self):
         return self.listTests
