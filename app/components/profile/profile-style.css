@@ -1,0 +1,65 @@
+.profile-body {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin-left: auto; /* Ajuste aqui */
+    margin-right: auto; /* Centraliza o conteúdo */
+    align-items: center;
+    width: 80%; /* Ajuste aqui */
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+.profile-card {
+    width: 100%; /* Ajuste aqui */
+    max-width: 600px; /* Defina um valor máximo */
+    padding: 40px;
+    border: 1px solid white; 
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.profile-card p {
+    margin: 5px 0;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 13px 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+}
+
+.logout {
+    background: #0c5494;
+    color: white;
+}
+
+.edit {
+    background: #1465FF;
+    color: white;
+}
+
+.header {
+    align-self: center; /* Centraliza o header */
+    text-align: center; /* Centraliza o texto */
+    width: 100%; /* Ocupa toda a largura */
+}

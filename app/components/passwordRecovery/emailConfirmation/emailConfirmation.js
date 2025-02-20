@@ -16,7 +16,7 @@ class EmailConfirmation extends HTMLElement {
         
                 `<div class="principalBlock">
     <h1 id="title">E-mail enviado com sucesso!</h1>
-
+    <h2 id="description">Confira sua caixa de email para atualizar sua senha. Se caso o email não aparecer, verifique sua caixa de span</h2>
     <div class="img">
         <img src="app/assets/images/confirmation_icon.png" alt="confirmation_icon">
     </div>
