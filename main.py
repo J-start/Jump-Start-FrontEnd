@@ -10,6 +10,7 @@ from test.classes.common import Common
 from test.classes.testOperations import TestOperation
 
 
+
 listTests = []
 listNameTests = ["Teste compra de ativo","Teste venda de ativo"]
 
