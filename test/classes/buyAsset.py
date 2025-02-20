@@ -17,8 +17,7 @@ class BuyAsset_test:
         try:
             buttonCoin.click()    
         except Exception as e:
-            print(f"Erro ao clicar no botão de compra de moeda :", str(e))
-            return None  
+            raise Exception(f"Erro ao clicar no botão de compra de moeda: {str(e)}") 
     
     def insertQuantityToBuyCoin(self):
         inputCoin = self.findFormCoinToInsertQuantity()
@@ -28,8 +27,7 @@ class BuyAsset_test:
         try:
             inputCoin.send_keys(10)
         except Exception as e:
-            print(f"Erro ao inserir quantidade formulario de compra moeda :", str(e))
-            return None   
+            raise Exception(f"Erro ao inserir quantidade formulario de compra moeda : {str(e)}")  
 
     def clickButtonAdvanceBuyCoin(self):
         buttonAdvance = self.findButtonAdvanceBuyCoin()
@@ -38,8 +36,7 @@ class BuyAsset_test:
         try:
             buttonAdvance.click()
         except Exception as e:
-            print(f"Erro clicar em botão avançar mais compra moeda :", str(e))
-            return None     
+            raise Exception(f"Erro clicar em botão avançar mais compra moeda :{str(e)}")     
 
     def clickButtonConfirmationBuyCoin(self):  
         buttonConfirmation = self.findButtonConfirmationBuyCoin()
@@ -49,8 +46,7 @@ class BuyAsset_test:
         try:
             buttonConfirmation.click()
         except Exception as e:
-            print(f"Erro ao cliccar em botão de confirmação de compra. :", str(e))
-            return None
+            raise Exception(f"Erro ao cliccar em botão de confirmação de compra. :{str(e)}")  
 
     def findButtonConfirmationBuyCoin(self):
         buyDOM = self.getDOMContaingComponent("buyform-component")
@@ -65,8 +61,7 @@ class BuyAsset_test:
             buttonConfirmation = buyConfirmationDOM.find_element(By.CSS_SELECTOR, ".wrapButton button:nth-of-type(2)")
             return buttonConfirmation
         except Exception as e:
-            print(f"Erro ao encontrar botão de confirmação de compra. :", str(e))
-            return None
+            raise Exception(f"Erro ao encontrar botão de confirmação de compra. :{str(e)}")
     
     def findButtonAdvanceBuyCoin(self):
         buyFormDOM = self.getDOMContaingComponent("buyform-component")
@@ -77,8 +72,7 @@ class BuyAsset_test:
             buttonAdvance = buyFormDOM.find_element(By.CSS_SELECTOR, "#advanceButton")
             return buttonAdvance
         except Exception as e:
-            print(f"Erro ao encontrar botão de avançar compra de moeda :", str(e))
-            return None
+            raise Exception(f"Erro ao encontrar botão de avançar compra de moeda :{str(e)}")
          
     def findFormCoinToInsertQuantity(self):
         buyFormDOM = self.getDOMContaingComponent("buyform-component")
@@ -88,8 +82,7 @@ class BuyAsset_test:
             inputCoin = buyFormDOM.find_element(By.CSS_SELECTOR, "#containerForm input")
             return inputCoin
         except Exception as e:
-            print(f"Erro ao encontrar formulario para inserir quantiddae moeda :", str(e))
-            return None   
+            raise Exception(f"Erro ao encontrar formulario para inserir quantiddae moeda :{str(e)}")
 
     def findButtonBuyCoin(self):
         assetDetailsDOM = self.getDOMContaingComponent("assetdetails-component")
@@ -100,8 +93,7 @@ class BuyAsset_test:
             buttonBuy = assetDetailsDOM.find_element(By.CSS_SELECTOR, ".containerButtons button:nth-of-type(2)")
             return buttonBuy
         except Exception as e:
-            print(f"Erro ao obter container do botão de comprar moeda. :", str(e))
-            return None
+            raise Exception(f"Erro ao obter container do botão de comprar moeda. :{str(e)}")
         
     def getDOMContaingComponent(self,component):
         try:
@@ -113,8 +105,7 @@ class BuyAsset_test:
 
             return shadowRoot
         except Exception as e:
-            print(f"Erro ao obter o Shadow DOM do ${component}. :", str(e))
-            return None
+            raise Exception(f"Erro ao obter o Shadow DOM do ${component}. :", str(e))
         
     def findShadowBasedOn(self,shadow,based):
         try:
@@ -122,5 +113,4 @@ class BuyAsset_test:
             shadowRoot = self.driver.execute_script("return arguments[0].shadowRoot", findComponent)
             return shadowRoot
         except Exception as e:
-            print(f"Erro ao obter o Shadow DOM do ${shadow} baseado em ${based}. :", str(e))
-            return None
+            raise Exception(f"Erro ao obter o Shadow DOM do ${shadow} baseado em ${based}. :", str(e))
