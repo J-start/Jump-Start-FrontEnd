@@ -35,10 +35,10 @@ class TestOperation:
         driver = ""
         if platform.system() == "Linux":
             driver = self.getWebDriverLinux()
-            driver.get("http://localhost:8000/index.html")
+            driver.get("http://localhost:8000/public/index.html")
         else:
             driver = self.getWebDriverWindows()
-            driver.get("C:/Users/User/Documents/jump-start-front/index.html")
+            driver.get("C:/Users/User/Documents/jump-start-front/public/index.html")
         
         commomOperations = Common(driver)
         buyAssetObj = BuyAsset_test(driver)
@@ -70,10 +70,10 @@ class TestOperation:
         driver = ""
         if platform.system() == "Linux":
             driver = self.getWebDriverLinux()
-            driver.get("http://localhost:8000/index.html")
+            driver.get("http://localhost:8000/public/index.html")
         else:
             driver = self.getWebDriverWindows()  
-            driver.get("C:/Users/User/Documents/jump-start-front/index.html")   
+            driver.get("C:/Users/User/Documents/jump-start-front/public/index.html")   
         
         sellAsset = SellAsset(driver)
         
