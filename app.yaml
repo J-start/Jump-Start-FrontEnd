@@ -1,5 +1,5 @@
 static_sites:
   - name: frontend
-    output_dir: app
+    output_dir: .
     routes:
       - path: /
