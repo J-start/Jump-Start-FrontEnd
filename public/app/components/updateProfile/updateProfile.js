@@ -12,7 +12,7 @@ class UpdateProfile extends HTMLElement {
         this.shadow
             .querySelector(".updatePasswordButton")
             .addEventListener("click", () => {
-                location.href = "sendingEmail.html";
+                window.location.href = "sendingEmail.html";
             });
 
         this.shadow.querySelector("#signup-form").addEventListener("submit", (event) => {
@@ -42,7 +42,7 @@ class UpdateProfile extends HTMLElement {
                     <br>
 
                     <div class="buttons">
-                        <button class="submitButton" type="submit">Atualizar Dados</button>
+                        <button id="updateDatas" class="submitButton" type="submit">Atualizar Dados</button>
                         <button class="updatePasswordButton">Atualizar Senha</button>
                        
                     </div>
