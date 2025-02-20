@@ -1,0 +1,23 @@
+@media screen and (min-width: 270px) and (max-width: 400px) {
+    .sidebar.active {
+        width: 220px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .overlay{
+        background-color: white;
+    
+    }
+    .closeMenu{
+        display: none;
+    }
+    .openMenu{
+        display: none;
+    }
+    .sidebar.active{
+        width: 280px;
+    }
+    
+    
+}
