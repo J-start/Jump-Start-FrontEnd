@@ -7,14 +7,11 @@ https://github.com/user-attachments/assets/a50fb15c-97cb-4b94-b4ba-c4db8439f3f6
 
 </div>
 
-
-
-## Tecnologias utizadadas
+## Tecnologias e ferramentas utizadadas
 - HTML
 - CSS
 - JavaScript
 - Chart.js
-- Docker
 - Digital Ocean
 
 ## Integração Contínua(CI)- Foi criado testes base de compra e venda de ativos utilizando selenium para verificação local e também foi adicionado o mesmo código ao github actions para integração contínua.
@@ -41,12 +38,12 @@ https://github.com/user-attachments/assets/a50fb15c-97cb-4b94-b4ba-c4db8439f3f6
 
 </div>
 
-Obs: No caso de rodar a api local é necessário que a contante `URL` seja `http://localhost:8080` 
+Obs: No caso de rodar a api local é necessário que a constante `URL` seja `http://localhost:8080` 
 
 ## Testes - Para executar os testes, siga os passos abaixo:
 - Navegue até a raiz do projeto com `cd Jump-Start-FrontEnd`
-- Certifique-se de ter o python instalado e a api estar funcioando, localmente ou remotamente
-- Instale as dependencias necessárias com `python -r requirements.txt`
+- Certifique-se de ter o python instalado e a api estar funcionando, localmente ou remotamente
+- Instale as dependências necessárias com `python -r requirements.txt`
 - Execute: `python main.py`
 
 
