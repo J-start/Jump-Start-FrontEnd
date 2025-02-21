@@ -14,6 +14,11 @@ https://github.com/user-attachments/assets/a50fb15c-97cb-4b94-b4ba-c4db8439f3f6
 - Chart.js
 - Digital Ocean
 
+## Api's utilizadas
+  - [awesomeapi](http://economia.awesomeapi.com.br/)
+  - [mercado bitcoin](https://api.mercadobitcoin.net/)
+  - [yfinance (python)](https://github.com/ranaroussi/yfinance)
+
 ## Integração Contínua(CI)- Foi criado testes base de compra e venda de ativos utilizando selenium para verificação local e também foi adicionado o mesmo código ao github actions para integração contínua.
 <div align="center">
 
