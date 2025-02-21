@@ -1,5 +1,14 @@
 # Jump-start - Uma aplicação para entender sobre a compra, venda e mercado de ativos financeiros
 
+
+<div align="center">
+  
+https://github.com/user-attachments/assets/a50fb15c-97cb-4b94-b4ba-c4db8439f3f6
+
+</div>
+
+
+
 ## Tecnologias utizadadas
 - HTML
 - CSS
