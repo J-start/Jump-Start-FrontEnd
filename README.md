@@ -7,7 +7,7 @@ https://github.com/user-attachments/assets/a50fb15c-97cb-4b94-b4ba-c4db8439f3f6
 
 </div>
 
-## Tecnologias e ferramentas utizadadas
+## Tecnologias e ferramentas utizadas
 - HTML
 - CSS
 - JavaScript
