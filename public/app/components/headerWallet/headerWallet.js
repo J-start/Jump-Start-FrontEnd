@@ -6,41 +6,46 @@ class HeaderWallet extends HTMLElement {
 
     this.shadow.appendChild(this.createHTML());
     this.createStyles("app/components/headerWallet/headerWallet-style.css");
-    this.createStyles(
-      "app/components/headerWallet/headerWallet-style-responsive.css"
-    );
+    this.createStyles("app/components/headerWallet/headerWallet-style-responsive.css");
     this.shadow.querySelector("#balance").innerHTML = "Carregando...";
-    this.makeRequest();
-    this.fetchBalanceInvestor()
 
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") {
-        this.makeRequest();
-      }
-    });
-    this.shadow.querySelector("#seeGraphic").addEventListener("click", () => {
-      this.insertGraphic();
-    });
-    this.shadow
-      .querySelector("#buttonAssetOperation")
-      .addEventListener("click", () => {
-        this.addHistoryAssetsComponent();
+    if (!localStorage.getItem("token") || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == "null") {
+      this.shadow.querySelector(".wrapAll").remove()
+      return
+    } else {
+      this.shadow.querySelector(".showThatUserHasNoLogin").remove()
+      this.makeRequest();
+      this.fetchBalanceInvestor()
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          this.makeRequest();
+        }
       });
-    this.shadow
-      .querySelector("#buttonWalletOperation")
-      .addEventListener("click", () => {
-        this.addHistoryOperationComponent();
+      this.shadow.querySelector("#seeGraphic").addEventListener("click", () => {
+        this.insertGraphic();
       });
-    this.shadow
-      .querySelector("#buttonWithDraw")
-      .addEventListener("click", () => {
-        this.insertWithdrawPage();
-      });
-    this.shadow
-      .querySelector("#buttonDeposit")
-      .addEventListener("click", () => {
-        this.insertDepositPage();
-      });
+      this.shadow
+        .querySelector("#buttonAssetOperation")
+        .addEventListener("click", () => {
+          this.addHistoryAssetsComponent();
+        });
+      this.shadow
+        .querySelector("#buttonWalletOperation")
+        .addEventListener("click", () => {
+          this.addHistoryOperationComponent();
+        });
+      this.shadow
+        .querySelector("#buttonWithDraw")
+        .addEventListener("click", () => {
+          this.insertWithdrawPage();
+        });
+      this.shadow
+        .querySelector("#buttonDeposit")
+        .addEventListener("click", () => {
+          this.insertDepositPage();
+        });
+    }
   }
 
   createHTML() {
@@ -68,7 +73,13 @@ class HeaderWallet extends HTMLElement {
                 </div>
             
             </div>
-
+            <div class="showThatUserHasNoLogin">
+              <h2>Faça login para visualizar sua carteira</h2>
+              <div class="containerButtonLogin">
+                <a href="signIn.html" id="loginButtonWallet">Login</a>
+              </div>
+              
+            </div>
             <div class="containerOtherScreens"></div>
    
         `;
@@ -94,10 +105,6 @@ class HeaderWallet extends HTMLElement {
   }
 
   makeRequest() {
-    if (localStorage.getItem("token") === null) {
-      window.location.href = "signIn.html";
-      return
-    }
     const TOKEN = localStorage.getItem("token");
     const url = `${getUrl()}/wallet/datas/`;
     fetch(url, {
@@ -124,9 +131,6 @@ class HeaderWallet extends HTMLElement {
   }
 
   fetchBalanceInvestor() {
-    if (localStorage.getItem("token") === null) {
-      return
-    }
     const TOKEN = localStorage.getItem("token");
     const url = `${getUrl()}/investor/name/`;
 
@@ -174,16 +178,16 @@ class HeaderWallet extends HTMLElement {
   }
 
   updateBalance(balance) {
-    if (balance >= 0){
+    if (balance >= 0) {
       const formattedBalance = Number(balance).toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL',
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2 
+        maximumFractionDigits: 2
       });
       this.shadow.querySelector("#balance").innerHTML = formattedBalance
     }
-      
+
   }
 
   addHistoryAssetsComponent() {

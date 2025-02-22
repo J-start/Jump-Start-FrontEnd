@@ -125,10 +125,20 @@ class BuyForm extends HTMLElement {
         
     }
 
-    showBalance(){
-        if(localStorage.getItem("balance") === null){
-            window.location.href = "signIn.html"
+    async showBalance(){
+        let balanceReturn = await this.fetchBalanceInvestor().then((data) => {
+            return data.balance;
+          })
+          .catch((error) => {
+            alert("Ocorreu um erro ao buscar os dados, tente novamente")
+            window.location.href = "index.html"
+            return null;
+          });
+
+        if (balanceReturn !== null) {
+            localStorage.setItem("balance", balanceReturn);
         }
+
         const balance = Number(localStorage.getItem("balance")).toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL',
@@ -145,6 +155,22 @@ class BuyForm extends HTMLElement {
             }
         }
     }
+
+    async fetchBalanceInvestor() {
+        const TOKEN = localStorage.getItem("token");
+        const url = `${getUrl()}/investor/name/`;
+    
+        return fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${TOKEN}`,
+          },
+    
+        }).then((response) => {
+            return response.json();
+          })
+      }
 
     calculateValue(){
         if(localStorage.getItem("assetValue") == null || Number(this.shadow.querySelector("#quantityInput").value) == 0){

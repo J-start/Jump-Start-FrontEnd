@@ -88,7 +88,7 @@ class SideBar extends HTMLElement {
 
 
             <li>
-                <a href="profile.html"> 
+                <a id="profile" href="profile.html"> 
                     <div class="wrapItensMenu">
                         <div class="containerItensMenu">
                         <div class="wrapImageMenu" id="imageProfile">
@@ -173,8 +173,8 @@ class SideBar extends HTMLElement {
     }
 
     async makeRequest() {
-        if (localStorage.getItem("token") === null) {
-            window.location.href = "signIn.html"
+        if (!localStorage.getItem("token") || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == "null") {
+            return
         }
         const TOKEN = localStorage.getItem("token")
         const url = `${getUrl()}/investor/role/`;
@@ -198,13 +198,7 @@ class SideBar extends HTMLElement {
             if (data.isAdm) {
                 this.createLinkAdm()
             }
-        }).catch(e => {
-            if (e != null) {
-                console.log(e)
-                alert("Aconteceu algum erro na autenticação, por favor faça o login novamente")
-                //window.location.href = "signIn.html"
-            }
-        })
+        }).catch(e => {})
     }
 
     createLinkAdm() {

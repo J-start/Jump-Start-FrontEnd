@@ -20,7 +20,7 @@ class Logo extends HTMLElement {
         </div>
 
         <div class="containerTitle">
-            <h2>JumpStart</h2>
+            <a id="linkIndex" href="index.html">JumpStart</a>
         </div>
    </div>
 

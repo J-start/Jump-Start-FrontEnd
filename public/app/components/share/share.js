@@ -18,7 +18,7 @@ class Share extends HTMLElement {
 
                 element.addEventListener("click", () => {
                     this.managerDisplay(
-                        "Valor da ação na aberura do mercado",
+                        "Valor da ação na abertura do mercado",
                         "Valor da ação no momento da abertura do mercado, considerando a última atualização."
                     );
                 });
@@ -28,7 +28,7 @@ class Share extends HTMLElement {
                 element.addEventListener("click", () => {
                     this.managerDisplay(
                         "Valor da ação no último fechamento do mercado",
-                        "Valor da ação considerando o último fechamento do mercado, considerando a última atualização."
+                        "Valor da ação considerando o último valor negociado, considerando a última atualização."
                     );
                 });
             });

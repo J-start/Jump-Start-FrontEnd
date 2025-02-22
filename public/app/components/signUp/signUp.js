@@ -6,7 +6,7 @@ class SignUp extends HTMLElement {
     isConfirmPasswordVisible = false
     constructor() {
         super()
-        localStorage.clear()
+        this.clearLocalStorage()
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/signUp/signUp-style.css")
         this.createStyles("app/components/signUp/signUp-style-responsive.css")
@@ -204,6 +204,14 @@ class SignUp extends HTMLElement {
         }, 5000);
     }
 
+    
+    clearLocalStorage(){
+        localStorage.removeItem("assetName")
+        localStorage.removeItem("assetCode")
+        localStorage.removeItem("assetType")
+        localStorage.removeItem("assetQuantity")
+        localStorage.removeItem("typeOperation")
+    }
 
 }
 

@@ -8,6 +8,12 @@ class UpdateProfile extends HTMLElement {
         this.createStyles(
             "app/components/updateProfile/updateProfile-style-responsive.css"
         );
+        if (!localStorage.getItem("token") || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == "null") {
+            window.location.href = "index.html"
+            return
+        }else{
+            this.verifyToken()
+        } 
         this.insertNameAndEmailPlaceholder()
         this.shadow
             .querySelector("#updatePassword")
@@ -159,6 +165,53 @@ class UpdateProfile extends HTMLElement {
         this.shadow.querySelector("#email").value = dataProfile['email']
     }
 
+    async verifyToken() {
+        const URL = `${getUrl()}/investor/verify/token/`;
+        const TOKEN = localStorage.getItem("token");
+      
+        if (TOKEN == null) {
+          return;
+        }
+        let bodyToken = {
+          token: TOKEN,
+        };
+      
+        bodyToken = JSON.stringify(bodyToken);
+      
+        await this.makeRequestWithBody(URL, bodyToken)
+          .then((e) => {
+          if (e.code > 200) {
+              if (e.message == "token expirado") {
+                alert("Token expirado");
+                window.location.href = "signIn.html";
+                return;
+              } else {
+                console.log(e)
+                alert("Houve um erro inexperado, faça o login novamente");
+                window.location.href = "signIn.html";
+                return;
+              }
+            }
+          })
+          .catch((er) => {
+            alert("Erro ao verificar o token. Tente novamente mais tarde.");
+            window.location.href = "signIn.html";
+            console.error(er);
+          });
+      }
+
+      async makeRequestWithBody(url, bodyRequest) {
+        return fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: bodyRequest,
+        }).then((response) => {
+          console.log(response);
+          return response.json();
+        });
+      }
 
 }
 

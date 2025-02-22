@@ -23,11 +23,21 @@ class AssetDetails extends HTMLElement {
         this.managerTradableShare()
         this.shadow.querySelector("#buttonSell").addEventListener("click", () => {
             localStorage.setItem("typeOperation", "SELL")
+            if (!localStorage.getItem("token") || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == "null") {
+                localStorage.setItem("pageContinue",this.builJsonPageReturnLogin())
+                window.location.href = "signIn.html";
+                return
+            }
             window.location.href = "operation.html"
         })
 
         this.shadow.querySelector("#buttonBuy").addEventListener("click", () => {
             localStorage.setItem("typeOperation", "BUY")
+            if (!localStorage.getItem("token") || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == "null") {
+                localStorage.setItem("pageContinue",this.builJsonPageReturnLogin())
+                window.location.href = "signIn.html";
+                return
+            }
             window.location.href = "operation.html"
         })
 
@@ -257,6 +267,17 @@ class AssetDetails extends HTMLElement {
         this.shadow.querySelector(".containerAssetValue").style.display = "none"
         buyButton.disabled = true;
         sellButton.disabled = true;
+    }
+
+    builJsonPageReturnLogin(){
+        const objectReturn = {
+            "assetName":localStorage.getItem("assetName"),
+            "assetCode":localStorage.getItem("assetCode"),
+            "assetType":localStorage.getItem("assetType"),
+            "typeOperation":localStorage.getItem("typeOperation")
+        }
+
+        return JSON.stringify(objectReturn)
     }
 }
 

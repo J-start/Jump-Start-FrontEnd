@@ -16,6 +16,28 @@
 
     }
 
+    .showThatUserHasNoLogin{
+        margin-left: 280px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: -20px;
+    
+    }
+
+    .containerButtonLogin{
+        width: 100px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1465FF;
+        border-radius: 5px;
+    }
+
+
     .containerAllElementsHeader {
         width: 90%;
         display: flex;

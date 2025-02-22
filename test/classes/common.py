@@ -1,12 +1,41 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 class Common:
 
     def __init__(self, driver):
         self.driver = driver
 
+    def navigateToLoginButton(self):
+        self.clickButtonProfile()
+        time.sleep(2)
+        self.clickMakeLogin()
+    
+    def clickButtonProfile(self):
+        menuComponent = self.getDOMContaingComponent("menu-component")    
+        if menuComponent is None:
+            return None
+        try:
+            buttonProfile = menuComponent.find_element(By.CSS_SELECTOR, '#menu li:nth-child(3) a')
+            buttonProfile.click()
+            return True
+        except Exception as e:
+            print("Erro ao clicar no botão de perfil:", str(e))
+            return None   
+    
+    def clickMakeLogin(self):
+        userComponent = self.getDOMContaingComponent("user-profile")    
+        if userComponent is None:
+            return None
+        try:
+            buttonProfile = userComponent.find_element(By.CSS_SELECTOR, '.containerButtonLogin > a')
+            buttonProfile.click()
+            return True
+        except Exception as e:
+            print("Erro ao clicar no botão de login:", str(e))
+            return None         
 
     def clickButtonAlertIntialPage(self):
         try:

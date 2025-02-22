@@ -24,7 +24,7 @@ class Cripto extends HTMLElement {
                 element.addEventListener("click", () => {
                     this.managerDisplay(
                         "Valor máximo da criptomoeda",
-                        "Valor máximo que a criptomoeda alcançou, considerando a última atualização."
+                        "Valor máximo que a criptomoeda alcançou no dia, considerando a última atualização."
                     );
                 });
             });
