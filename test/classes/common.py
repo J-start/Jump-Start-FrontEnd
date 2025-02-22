@@ -9,6 +9,7 @@ class Common:
         self.driver = driver
 
     def navigateToLoginButton(self):
+        time.sleep(2)
         self.clickButtonProfile()
         time.sleep(2)
         self.clickMakeLogin()
