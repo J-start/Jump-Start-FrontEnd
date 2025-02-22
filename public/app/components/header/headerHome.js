@@ -8,6 +8,7 @@ class HeaderHome extends HTMLElement {
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/header/headerHome-style.css")
         this.createStyles("app/components/header/headerHome-style-responsive.css")
+        
         this.makeRequest()
     }
 
@@ -48,6 +49,10 @@ class HeaderHome extends HTMLElement {
     makeRequest() {
         const url = `${getUrl()}/investor/name/`;
         const TOKEN = localStorage.getItem("token")
+        if (!localStorage.getItem("token") || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == "null") {
+            this.shadow.querySelector("h1").innerHTML = this.defineMessageBasedHourDay();
+            return
+        }
         fetch(url, {
             method: "GET",
             headers: {
@@ -96,6 +101,18 @@ class HeaderHome extends HTMLElement {
         })
     
         return containWord
+      }
+
+      defineMessageBasedHourDay(){
+        const now = new Date()
+        let currentDateBrasil = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+        if(currentDateBrasil.getHours() > 0 && currentDateBrasil.getHours() < 11){
+            return "Bom dia"
+        }else if(currentDateBrasil.getHours() > 11 && currentDateBrasil.getHours() < 18){
+            return "Boa tarde"
+        }else{
+            return "Boa noite"
+        }
       }
     
 

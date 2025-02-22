@@ -28,7 +28,7 @@ class Coin extends HTMLElement {
                 element.addEventListener("click", () => {
                     this.managerDisplay(
                         "Valor atual de câmbio para compra da moeda",
-                        "Dependendo do tipo de operação o valor pode variar, em algumas moedas essa variação é maior, em outras não"
+                        "Dependendo do tipo de operação o valor pode variar"
                     );
                 });
             });
@@ -37,7 +37,7 @@ class Coin extends HTMLElement {
                 element.addEventListener("click", () => {
                     this.managerDisplay(
                         "Valor atual de câmbio para venda da moeda",
-                        "Dependendo do tipo de operação o valor pode variar, em algumas moedas essa variação é maior, em outras não"
+                        "Dependendo do tipo de operação o valor pode variar"
                     );
                 });
             });

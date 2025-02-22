@@ -15,7 +15,7 @@ class AssetGraphic extends HTMLElement {
         const template = `
         <div class="containerGraphic">
             <canvas id="bidChart" width="400" height="200"></canvas> 
-            </div>
+        </div>
 
             <div id="variationFirst"></div>
             <div id="variationSecond"></div>
@@ -126,7 +126,6 @@ class AssetGraphic extends HTMLElement {
 
     async makeGraphic() {
         const response = await this.makeRequest(this.buildUrl());
-        console.log(response)
         if (!response || response.length === 0) {
             console.error("Nenhum dado retornado ou falha na requisição.");
             return;
@@ -238,7 +237,6 @@ class AssetGraphic extends HTMLElement {
 
     calcDelta(date1) {
         const [dia1, mes1, ano1] = date1.split("/").map(Number);
-        console.log(date1)
         const dateObj1 = new Date(ano1, mes1 - 1, dia1);
         const date2 = new Date();
         date2.setHours(0, 0, 0, 0);

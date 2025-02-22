@@ -5,7 +5,7 @@ class SignIn extends HTMLElement {
     isPasswordVisible = false
     constructor() {
         super()
-        localStorage.clear()
+        this.clearLocalStorage()
         this.shadow.appendChild(this.createHTML())
         this.createStyles("app/components/signIn/signIn-style.css")
         this.createStyles("app/components/signIn/signIn-style-responsive.css")
@@ -96,16 +96,18 @@ class SignIn extends HTMLElement {
         }).then(response => {
             return response.json();
         }).then(data => {
-            console.log(data)
             if(!data.token){
                 this.showMessageError(data.message)
                 return
             }
             localStorage.setItem("token",data.token)
             this.shadow.querySelector("#messageError").innerHTML = ``
-            window.location.href = "index.html"
+            
+            this.insertDatasToContinueOnLocalStorage()
+            this.redirectUser()
         
         }).catch(error => {
+            console.log(error)
             alert("Erro ao realizar login, tente novamente")
         });
     }
@@ -157,7 +159,7 @@ class SignIn extends HTMLElement {
             this.isPasswordVisible = !this.isPasswordVisible
             this.shadow.querySelector("#passwordImage").src = "app/assets/images/close_password.svg"
         }
-        
+       
   
     }
 
@@ -170,6 +172,38 @@ class SignIn extends HTMLElement {
         this.timeoutId = setInterval(() => {
              this.shadow.querySelector("#messageError").innerHTML = ""
         }, 5000);
+    }
+
+    clearLocalStorage(){
+        localStorage.removeItem("assetName")
+        localStorage.removeItem("assetCode")
+        localStorage.removeItem("assetType")
+        localStorage.removeItem("assetQuantity")
+        localStorage.removeItem("typeOperation")
+    }
+
+    insertDatasToContinueOnLocalStorage(){
+        if(!localStorage.getItem("pageContinue")){
+            return
+        }
+        const object = JSON.parse(localStorage.getItem("pageContinue"))
+        localStorage.setItem("assetCode",object['assetCode'])
+        localStorage.setItem("assetName",object['assetName'])
+        localStorage.setItem("assetType",object['assetType'])
+        localStorage.setItem("typeOperation",object['typeOperation'])
+    }
+
+    redirectUser(){
+        if(!localStorage.getItem("pageContinue")){
+            window.location.href = "index.html"
+            return
+        }
+        const object = JSON.parse(localStorage.getItem("pageContinue"))
+        if(object['typeOperation'] == "BUY" || object['typeOperation'] == "SELL"){
+            window.location.href = "operation.html"
+        }else{
+            window.location.href = "index.html"
+        }
     }
 
 

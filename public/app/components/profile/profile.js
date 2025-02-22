@@ -5,9 +5,12 @@ class UserProfile extends HTMLElement {
 
         this.shadow.appendChild(this.createHTML());
         this.createStyles("app/components/profile/profile-style.css");
-        this.createStyles(
-            "app/components/profile/profile-style-responsive.css"
-        );
+        this.createStyles("app/components/profile/profile-style-responsive.css");
+        if (!localStorage.getItem("token") || localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == "null") {
+            this.shadow.querySelector(".profile-container").remove()
+            return
+        }else{ 
+        this.shadow.querySelector(".showThatUserHasNoLogin").remove()
         this.makeRequest();
         this.shadow
             .querySelector("#updateData")
@@ -20,6 +23,7 @@ class UserProfile extends HTMLElement {
         .addEventListener("click", () => {
             this.logOut();
         });
+    }
     }
 
     createHTML() {
@@ -38,6 +42,13 @@ class UserProfile extends HTMLElement {
                         <button class="edit" id="updateData" >Alterar dados</button>
                     </div>
                 </div>
+            </div>
+            <div class="showThatUserHasNoLogin">
+              <h2>Faça login para visualizar seu perfil</h2>
+              <div class="containerButtonLogin">
+                <a href="signIn.html" id="loginButtonWallet">Login</a>
+              </div>
+              
             </div>
         `;
         const componentRoot = document.createElement("div");
@@ -73,7 +84,8 @@ class UserProfile extends HTMLElement {
             return response.json();
         }).then(data => {
             if (data.code) {
-                this.handleErrorApi(data.message)
+                alert("Ocorreu um erro, ao validar dados, realize o login novamente")
+                window.location.href = "signIn.html"
                 return
             }
             this.shadow.querySelector("p").innerHTML = `Nome: ${data.name}`;
@@ -99,9 +111,11 @@ class UserProfile extends HTMLElement {
       }
     
     logOut(){
-        localStorage.removeItem("token")
+        localStorage.clear()
         window.location.href = "signIn.html"
     }
+
+    
 }
 
 customElements.define("user-profile", UserProfile);
