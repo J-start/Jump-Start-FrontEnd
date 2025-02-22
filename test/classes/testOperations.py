@@ -44,7 +44,7 @@ class TestOperation:
         buyAssetObj = BuyAsset_test(driver)
         
         time.sleep(2) 
-        commomOperations.clickButtonAlertIntialPage()
+        commomOperations.navigateToLoginButton()
         time.sleep(2) 
         commomOperations.loginUserDefault() 
         time.sleep(2) 
@@ -80,7 +80,7 @@ class TestOperation:
         commomOperations = Common(driver)
 
         time.sleep(2) 
-        commomOperations.clickButtonAlertIntialPage()
+        commomOperations.navigateToLoginButton()
         time.sleep(2) 
         commomOperations.loginUserDefault() 
         time.sleep(2) 
