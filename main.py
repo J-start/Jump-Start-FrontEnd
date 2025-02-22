@@ -21,6 +21,7 @@ listTests = tests.obtainResultTests()
 print(Fore.BLUE+f"-------------- RESUMO DOS TESTES -------------- \n"+Style.RESET_ALL)
 
 for index, test in enumerate(listTests):
+    
     if test:
         print(Fore.GREEN+f"{listNameTests[index]} Passou"+Style.RESET_ALL)
     else:

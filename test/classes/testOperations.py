@@ -20,6 +20,8 @@ class TestOperation:
         chrome_options.add_argument("--headless")  
         chrome_options.add_argument("--no-sandbox") 
         chrome_options.add_argument("--disable-dev-shm-usage") 
+        chrome_options.add_argument("--disable-gpu")  
+        chrome_options.add_argument("--window-size=1920,1080")  
 
         driver = webdriver.Chrome(options=chrome_options) 
         return driver
@@ -44,7 +46,9 @@ class TestOperation:
         buyAssetObj = BuyAsset_test(driver)
         
         time.sleep(2) 
-        commomOperations.navigateToLoginButton()
+        commomOperations.clickButtonProfile()
+        time.sleep(2) 
+        commomOperations.clickMakeLogin()
         time.sleep(2) 
         commomOperations.loginUserDefault() 
         time.sleep(2) 
