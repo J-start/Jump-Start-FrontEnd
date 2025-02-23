@@ -11,8 +11,9 @@ https://github.com/user-attachments/assets/a50fb15c-97cb-4b94-b4ba-c4db8439f3f6
 - HTML
 - CSS
 - JavaScript
-- Chart.js
-- Digital Ocean
+- Python (Testes selenium)
+- Chart.js (Gráficos)
+- Digital Ocean (Deploy)
 
 ## Api's utilizadas
   - [awesomeapi](http://economia.awesomeapi.com.br/)
@@ -43,7 +44,7 @@ https://github.com/user-attachments/assets/a50fb15c-97cb-4b94-b4ba-c4db8439f3f6
 
 </div>
 
-Obs: No caso de rodar a api local é necessário que a constante `URL` seja `http://localhost:8080` 
+Obs: No caso de executar a api local é necessário que a constante `URL`, que está no arquivo `urlBackEnd.js`, seja `http://localhost:8080` 
 
 ## Testes - Para executar os testes, siga os passos abaixo:
 - Navegue até a raiz do projeto com `cd Jump-Start-FrontEnd`
